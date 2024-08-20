@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+    <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
+
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="../css/main-menu.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+    <title>Reblium Avatar System</title>
+<!-- Hotjar Tracking Code for https://reblium.netlify.app/ -->
+<script>
+  (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:3683678,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>
+
+  </head>
+
+  <style>
+    /* CSS for styling the item list container */
+.item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* Adjust as needed */
+  grid-gap: 10px;
+
+}
+
+/* Base styling for flip card within item list */
+.item-card.flip-item-card {
+  background-color: transparent;
+  width: 60px;
+  height: 60px;
+  perspective: 1000px;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid var(--secondary-color);
+}
+
+/* Front side of the flip card within item list */
+.item-image.flip-item-card-front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transform-style: preserve-3d;
+  border-radius: 50%;
+  transition: transform 0.6s;
+  backface-visibility: hidden;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Styling for the front side content within item list */
+.item-image.flip-item-card-front img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* Back side of the flip card within item list */
+.item-price.flip-item-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #7c7c7c;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 50%;
+  transform: rotateY(180deg) ;
+  transition: transform 0.6s, scale 0.6s; 
+  backface-visibility: hidden;
+  z-index: 1;
+}
+
+/* Styling for the back side content within item list */
+.item-card.flip-item-card:hover .flip-item-card-front {
+  transform: rotateY(180deg) ; 
+}
+
+/* Hover effect for the flip card back within item list */
+.item-card.flip-item-card:hover .flip-item-card-back {
+  transform: rotateY(0deg); 
+}
+  </style>
+<body>
+  <nav class="navbar">
+    <img src="/src/reblium_logo.png" class="nav-logo" onclick="showExitConfirmation();" alt="Icon">
+
+    <div class="nav-user">
+      
+      <div style="display: none;" >
+        <a >avatar-id: <span id="avatarId"></span></a><br>
+        <a >Persona Name: <span id="avatarName"></span></a> <br>
+      </div>
+
+      <div>          
+        <a><span style="display: none;" id="userEmail"></span></a>
+        <img id="userImage">
+      </div>
+      <div class="beta-text">
+        Early Access
+      </div>
+      <div>
+        <a class="credits" style="display: none;">Credits
+          <span id="exportCredits"></span>
+          <button class="add-credits-btn" id="openPopupBtn">
+            <i class="fas fa-plus"></i>
+          </button>
+        </a>
+      </div>
+      
+
+    </div>
+  </nav>
+
+  
+
+  <div id="creditsPopup" class="credits-popup" style="display: none;">
+    <div class="popup-header">
+        <h2>Get Credits</h2>
+        <button class="close-button">
+          <i class="fas fa-xmark" style="color: #ffffff;"></i>
+        </button>
+    </div>
+    <p>Select the plan that best suits your needs and unlock the full potential of Meshy.</p>
+    <div class="credit-options">
+        <!-- Starter Plan -->
+        <div class="credit-plan">
+            <h3>Starter</h3>
+            <div class="price">$4</div>
+            <div class="credits">200 credits</div>
+            <div class="rate">$2.00 / 100 credits</div>
+            <button class="continue-btn">Continue</button>
+        </div>
+        <!-- Enthusiast Plan -->
+        <div class="credit-plan highlighted">
+            <h3>Enthusiast</h3>
+            <div class="price">$16 <span class="discount">-20%</span></div>
+            <div class="credits">1000 credits</div>
+            <div class="rate">$1.60 / 100 credits</div>
+            <button class="continue-btn">Continue</button>
+        </div>
+        <!-- Maestro Plan -->
+        <div class="credit-plan">
+            <h3>Maestro</h3>
+            <div class="price">$36 <span class="discount">-40%</span></div>
+            <div class="credits">3000 credits</div>
+            <div class="rate">$1.20 / 100 credits</div>
+            <button class="continue-btn">Continue</button>
+        </div>
+    </div>
+    <div class="popup-footer">
+        <a href="#">Any questions? Check our Frequently Asked Questions</a>
+    </div>
+</div>
+
+
+<div class="dashboard" id="dashboard">
+    
+    <div class="overlay-menu">
+        <div id="newButton" class="menu">
+            <a href="#discoverSection"><i class="fas fa-compass"></i> Discover</a>
+            <a href="#lookbookSection"><i class="fas fa-bookmark"></i> Templates</a>
+            <a href="#avatarSection"><i class="fas fa-user"></i> My Library</a>
+            <a href="#storeSection"><i class="fas fa-store"></i> Store</a>
+            <a href="#inventorySection"><i class="fas fa-store"></i> Inventory</a>
+
+
+            <a href="https://docs.google.com/forms/d/1Ij42slrQ8_9sk1QXS75_mcarriruBubydKDlbDZpKS0/viewform?edit_requested=true" target="_blank"><i class="fas fa-comments"></i> Feedback</a>
+            <a href="index.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            <a href="https://discord.gg/AA9tDP8Djg" target="_blank"><i class="fas fa-cog"></i> Settings</a>
+        </div>        
+    </div>
+
+    <div class="avatar-section" id="toggleAvatarSection">
+
+      <div class="avatar-header" id="inventorySection">
+        <h2>Inventory</h2>
+
+        
+      </div>  
+
+      <div class="avatar-header" id="storeSection">
+        <h2>Store</h2>
+
+        <div id="dropdown-container" class="my-4">
+          <!-- The dropdown will be dynamically inserted here by the JavaScript -->
+        </div>
+      
+             
+        <div id="itemList" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-6">
+          <!-- Items will be added here -->
+        </div>
+      
+        
+      </div>  
+    
+    
+      <div class="avatar-header" id="discoverSection">
+            <h2>Discover</h2>
+
+
+
+
+            <!--
+            <div class="header-actions">
+                <p>Community showcase</p>
+                <div class="ranking">
+                  <a class="ranking-btn selected" id="recent-btn"><i class="fa-solid fa-fire-flame-simple" style="color: #b04233;"></i>Recent</a>
+                  <a class="ranking-btn" id="top-btn"><i class="fa-regular fa-star" style="color: #f5c500;"></i>Top</a>
+                </div>
+            </div>
+            <div class="community">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <img src="src/discover/image 125.png" alt="Community Member" style="width:100%;height:100%; border-radius: 25px;">
+                      </div>
+                      <div class="flip-card-back">
+                        <p>Avatar Name</p> 
+                        <button class="vote-button" >Vote</button>
+                        <div class="vote-count">Votes: <span id="voteCountForMemberID">0</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <img src="src/discover/image 126.png" alt="Community Member" style="width:100%;height:100%; border-radius: 25px;">
+                      </div>
+                      <div class="flip-card-back">
+                        <p>Avatar Name</p> 
+                        <button class="vote-button" >Vote</button>
+                        <div class="vote-count">Votes: <span id="voteCountForMemberID">0</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <img src="src/discover/image 127.png" alt="Community Member" style="width:100%;height:100%; border-radius: 25px;">
+                      </div>
+                      <div class="flip-card-back">
+                        <p>Avatar Name</p> 
+                        <button class="vote-button" >Vote</button>
+                        <div class="vote-count">Votes: <span id="voteCountForMemberID">0</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <img src="src/discover/image 274.png" alt="Community Member" style="width:100%;height:100%; border-radius: 25px;">
+                      </div>
+                      <div class="flip-card-back">
+                        <p>Avatar Name</p> 
+                        <button class="vote-button" >Vote</button>
+                        <div class="vote-count">Votes: <span id="voteCountForMemberID">0</span></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="flip-card">
+                    <div class="flip-card-inner">
+                      <div class="flip-card-front">
+                        <img src="src/discover/image 275.png" alt="Community Member" style="width:100%;height:100%; border-radius: 25px;">
+                      </div>
+                      <div class="flip-card-back">
+                        <p>Avatar Name</p> 
+                        <button class="vote-button" >Vote</button>
+                        <div class="vote-count">Votes: <span id="voteCountForMemberID">0</span></div>
+                      </div>
+                    </div>
+                  </div>
+            </div>-->
+
+            <div class="header-actions">
+                <p style="margin-top: 30px;">Explore our curated selection of learning resources and AI generated personas.</p>
+            </div>
+            
+            <div class="bottom-images">
+                <div class="bottom-image" id="sci-fi-world">
+                    <img src="src/discover/runner (2).png" alt="Sci Fi World">
+                    <div class="bottom-image-text">
+                        <h3>SCI FI WORLD</h3>
+                        <p>REBLIUM SPECIAL EVENT - JOIN US NOV. 15TH AT 11AM PST</p>
+                    </div>
+                </div>
+                <div class="bottom-image" id="runners-world">
+                    <img src="src/discover/runner (1).png" alt="Runner's World">
+                    <div class="bottom-image-text">
+                        <h3>RUNNER'S WORLD</h3>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="avatar-header" id="lookbookSection">
+          <h2>Templates</h2>
+          <!--<button class="new-avatar" id="create-new" onclick="toggleUIVisibility()">+ Create New</button>  -->
+        </div>
+        <div class="avatar-container" href="artist_mode.html">
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_F_Alex.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar685.json')" >
+              <span class="avatar-name">Alex</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_F_Xiao.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar688.json')" >
+              <span class="avatar-name">Xiao</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_F_Billie.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar699.json') ">
+              <span class="avatar-name">Nour</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_F_Nour.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar687.json') ">
+              <span class="avatar-name">Achaya</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_M_Xiao.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar694.json') ">
+              <span class="avatar-name">Lu</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_M_Alex.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar689.json') ">
+              <span class="avatar-name">John</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_M_Nour.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar692.json') ">
+              <span class="avatar-name">Richard</span>
+            </div>
+
+            <div class="preset-avatar">
+              <img src="avatar_presets/img/Icon_Template_M_Billie.png" onclick="loadAndSendAvatarData('avatar_presets/json/avatar691.json') ">
+              <span class="avatar-name">James</span>
+            </div>
+        </div>
+
+        <div class="avatar-header" id="avatarSection">
+          <h2>My Library</h2>
+          <!--<button class="new-avatar" id="create-new" onclick="toggleUIVisibility()">+ Create New</button>  -->
+        </div>
+        <div class="avatar-container" id="avatars-container">
+
+          <!-- Avatar components will be dynamically added here -->
+        </div>
+
+
+
+      </div>
+      
+
+
+
+    
+
+
+    <div class="background"></div>
+
+
+</div>
+
+
+
+
+
+  
+
+
+<script src="javascript/store.js"></script>
+<script src="javascript/inventory.js"></script>
+
+
+
+<script defer="defer" type="text/javascript" src="//cdn.xsolla.net/site-builder/v-release-20230627-01/landings/client-script.js"></script>
+
+<script type="text/javascript" async="" src="https://cdn.xsolla.net/site-builder/static/swiper.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+
+
+
+
+  </body>
+</html>

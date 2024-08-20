@@ -1,0 +1,26 @@
+{
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
+    },
+    "workbench.colorCustomizations": {
+        "titleBar.activeForeground": "#fff",
+        "titleBar.inactiveForeground": "#ffffffCC",
+        "titleBar.activeBackground": "#065535",
+        "titleBar.inactiveBackground": "#0655359d"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "vscode.json-language-features"
+    },
+  }
+  

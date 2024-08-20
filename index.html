@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://login-sdk.xsolla.com/latest/"></script>
+  
+  <!--Google ads link-->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5042550637847830"
+  crossorigin="anonymous"></script>
+
+  <title>Reblium login</title>
+  <script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:3683678,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
+</head>
+
+<body>
+  <section class="flex flex-col md:flex-row h-screen items-center">
+
+    <div class="bg-indigo-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen relative">
+        <video src="src/avatar_background_new.mp4" alt="" class="w-full h-full object-cover" autoplay muted loop></video>
+
+        <img src="src/reblium_logo_black.png" alt="Logo" class="absolute top-0 right-0 m-4 max-h-24">
+    </div>
+    
+
+    <div class="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
+
+        <div class="w-full h-100">
+
+            <!-- Logo (Shown on mobile and hidden on larger screens) -->
+            <div class="block lg:hidden">
+              <img src="src/reblium_logo_black.png" alt="Logo" class="mx-auto max-h-24 w-auto">
+            </div>
+
+         
+            <!-- Login Section -->
+            <div id="login-section">
+                <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
+    
+                <form class="mt-6" id="login-form">
+                    <div>
+                        <label for="id_username" class="block text-gray-700">Email Address</label>
+                        <input type="email" name="username" id="id_username" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required autofocus autocomplete="email">
+                    </div>
+            
+                    <div class="mt-4">
+                        <label for="id_password_1" class="block text-gray-700">Password</label>
+                        <input type="password" name="password" id="id_password_1" placeholder="Enter Password" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required autocomplete="current-password">
+                     </div>
+            
+                    <div id="login-error-message" class="text-sm text-red-500 mt-2 hidden"></div>
+
+                    <div class="text-right mt-2">
+                        <a href="#" onclick="showForgotPassword()" class="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
+                    </div>
+            
+                    <button type="submit" id="login-button" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">
+                        Log In
+                    </button>
+                </form>
+        
+                <div class="mt-4 text-center text-xs text-gray-600">
+                    By logging in, you agree to our
+                    <a href="https://www.reblium.com/privacy-policy" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                    ,
+                    <a href="https://www.termsfeed.com/live/ce41436e-bc47-4730-988d-d061c3de1774" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>
+                    and
+                    <a href="https://www.reblium.com/termsandconditions" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">End-User License Agreement</a>.
+                </div>
+              
+                <hr class="my-6 border-gray-300 w-full">
+        
+                <!-- <button class="quick-login-button w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300" data-provider="google">
+                    <div class="flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="w-6 h-6" viewBox="0 0 48 48"><defs><path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/></defs><clipPath id="b"><use xlink:href="#a" overflow="visible"/></clipPath><path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"/><path clip-path="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/><path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/><path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/></svg>
+                        <span class="ml-4"> Log in with Google</span>
+                    </div>
+                </button> -->
+
+                <div class="login-buttons flex space-x-4 justify-center">
+                    <button class="quick-login-button bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300" data-provider="google">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 48 48">
+                            <defs><path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z"/></defs>
+                            <clipPath id="b"><use xlink:href="#a" overflow="visible"/></clipPath>
+                            <path clip-path="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z"/>
+                            <path clip-path="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z"/>
+                            <path clip-path="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z"/>
+                            <path clip-path="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z"/>
+                        </svg>
+                    </button>
+                    
+                    <button class="quick-login-button bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300" data-provider="apple">
+                        <svg fill="#000000" class="w-6 h-6" viewBox="-52.01 0 560.035 560.035" xmlns="http://www.w3.org/2000/svg"><path d="M380.844 297.529c.787 84.752 74.349 112.955 75.164 113.314-.622 1.988-11.754 40.191-38.756 79.652-23.343 34.117-47.568 68.107-85.731 68.811-37.499.691-49.557-22.236-92.429-22.236-42.859 0-56.256 21.533-91.753 22.928-36.837 1.395-64.889-36.891-88.424-70.883-48.093-69.53-84.846-196.475-35.496-282.165 24.516-42.554 68.328-69.501 115.882-70.192 36.173-.69 70.315 24.336 92.429 24.336 22.1 0 63.59-30.096 107.208-25.676 18.26.76 69.517 7.376 102.429 55.552-2.652 1.644-61.159 35.704-60.523 106.559M310.369 89.418C329.926 65.745 343.089 32.79 339.498 0 311.308 1.133 277.22 18.785 257 42.445c-18.121 20.952-33.991 54.487-29.709 86.628 31.421 2.431 63.52-15.967 83.078-39.655"/></svg>
+                    </button>
+                
+                    <button class="quick-login-button bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300" data-provider="facebook">
+                        <svg class="w-6 h-6" viewBox="38.657999999999994 12.828 207.085 207.085" xmlns="http://www.w3.org/2000/svg"><path d="M158.232 219.912v-94.461h31.707l4.747-36.813h-36.454V65.134c0-10.658 2.96-17.922 18.245-17.922l19.494-.009V14.278c-3.373-.447-14.944-1.449-28.406-1.449-28.106 0-47.348 17.155-47.348 48.661v27.149H88.428v36.813h31.788v94.461l38.016-.001z" fill="#3c5a9a"/></svg>
+                    </button>
+
+                    <button class="quick-login-button bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300" data-provider="discord">
+                        <svg class="w-6 h-6" viewBox="0 -28.5 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" preserveAspectRatio="xMidYMid">
+                            <g>
+                                <path d="M216.856339,16.5966031 C200.285002,8.84328665 182.566144,3.2084988 164.041564,0 C161.766523,4.11318106 159.108624,9.64549908 157.276099,14.0464379 C137.583995,11.0849896 118.072967,11.0849896 98.7430163,14.0464379 C96.9108417,9.64549908 94.1925838,4.11318106 91.8971895,0 C73.3526068,3.2084988 55.6133949,8.86399117 39.0420583,16.6376612 C5.61752293,67.146514 -3.4433191,116.400813 1.08711069,164.955721 C23.2560196,181.510915 44.7403634,191.567697 65.8621325,198.148576 C71.0772151,190.971126 75.7283628,183.341335 79.7352139,175.300261 C72.104019,172.400575 64.7949724,168.822202 57.8887866,164.667963 C59.7209612,163.310589 61.5131304,161.891452 63.2445898,160.431257 C105.36741,180.133187 151.134928,180.133187 192.754523,160.431257 C194.506336,161.891452 196.298154,163.310589 198.110326,164.667963 C191.183787,168.842556 183.854737,172.420929 176.223542,175.320965 C180.230393,183.341335 184.861538,190.991831 190.096624,198.16893 C211.238746,191.588051 232.743023,181.531619 254.911949,164.955721 C260.227747,108.668201 245.831087,59.8662432 216.856339,16.5966031 Z M85.4738752,135.09489 C72.8290281,135.09489 62.4592217,123.290155 62.4592217,108.914901 C62.4592217,94.5396472 72.607595,82.7145587 85.4738752,82.7145587 C98.3405064,82.7145587 108.709962,94.5189427 108.488529,108.914901 C108.508531,123.290155 98.3405064,135.09489 85.4738752,135.09489 Z M170.525237,135.09489 C157.88039,135.09489 147.510584,123.290155 147.510584,108.914901 C147.510584,94.5396472 157.658606,82.7145587 170.525237,82.7145587 C183.391518,82.7145587 193.761324,94.5189427 193.539891,108.914901 C193.539891,123.290155 183.391518,135.09489 170.525237,135.09489 Z" fill="#5865F2" fill-rule="nonzero">
+                        </path>
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+        
+                <p class="mt-8">Need an account? <a href="#" onclick="showSignup()" class="text-blue-500 hover:text-blue-700 font-semibold">Create an account</a></p>
+            </div>
+
+            
+
+            <!-- Signup Section (Initially Hidden) -->
+            <div id="signup-section" class="hidden">
+                <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Create your account</h1>
+                <!-- Signup form elements -->
+                <form class="mt-6" id="login-form">
+                    <div id="signup-success-message" class="hidden text-green-500"></div>
+                    <div id="signup-error-message" class="hidden text-red-500"></div>
+
+                    <div>
+                        <label class="block text-gray-700">Full Name</label>
+                        <input type="text" placeholder="Enter Full Name" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                    </div>
+
+                    <div class="mt-4">
+                        <label class="block text-gray-700">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter Email Address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                      </div>
+
+                    <div class="mt-4">
+                        <label class="block text-gray-700">Password</label>
+                        <input type="password" id="signup-password" placeholder="Enter Password" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <label class="block text-gray-700">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm Password" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                    </div>
+                    
+
+                    <button type="submit" id="signup-button" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Sign Up</button>
+
+                    <div class="mt-4 text-center text-xs text-gray-600">
+                        By creating an account, you agree to our
+                        <a href="https://www.reblium.com/privacy-policy" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+                        ,
+                        <a href="https://www.termsfeed.com/live/ce41436e-bc47-4730-988d-d061c3de1774" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>
+                        and
+                        <a href="https://www.reblium.com/termsandconditions" class="text-indigo-500 hover:text-indigo-600" target="_blank" rel="noopener noreferrer">End-User License Agreement</a>.
+                    </div>
+                </form>
+                <p class="mt-8">Already have an account? <a href="#" onclick="showLogin()" class="text-blue-500 hover:text-blue-700 font-semibold">Log in</a></p>
+            </div>
+
+
+
+
+
+            
+
+
+
+            <!-- Forgot Password Section (Initially Hidden) -->
+            <div id="forgot-password-section" class="hidden">
+              <h1 class="text-xl md:text-2xl font-bold leading-tight mt-12">Reset your password</h1>
+              <p class="mt-2">Please enter your email address. You will receive a link to create a new password via email.</p>
+              
+              <!-- Success Message Placeholder -->
+              <div id="forgot-password-success-message" class="hidden text-green-500 text-sm mt-3"></div>
+              
+              <!-- Error Message Placeholder -->
+              <div id="forgot-password-error-message" class="hidden text-red-500 text-sm mt-3"></div>
+              
+              <form class="mt-6" action="#" method="POST">
+                  <div>
+                      <label class="block text-gray-700">Email Address</label>
+                      <input type="email" name="email" id="forgot-password-email" placeholder="Enter your email address" class="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none" required>
+                  </div>
+                  
+                  <button type="submit" class="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6">Send Reset Link</button>
+              </form>
+              
+              <p class="mt-8">Remembered your password? <a href="#" onclick="showLogin()" class="text-blue-500 hover:text-blue-700 font-semibold">Log in</a></p>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <script src="javascript/test_login.js"></script>
+
+
+
+
+
+
+</body>
+</html>

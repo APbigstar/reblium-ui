@@ -1,0 +1,128 @@
+/* For larger screens like desktops    max-height: calc(3 * (80px + 10px));*/
+
+@media (min-width: 2560px) {
+    .menu a {
+      font-size: px;
+    }
+  
+    .skeleton {
+      width: 256px;
+    }
+  
+    .skeleton-image {
+      height: 200px; 
+    }
+  
+    .skeleton-text {
+      width: 80%; 
+    }
+  
+    .avatar-section {
+      max-width: 2000px; 
+      margin: 0 auto; 
+      height: auto;
+
+    }
+  
+    .avatar-container {
+      grid-template-columns: repeat(4, minmax(250px, 1fr)); /* Responsive grid */
+      gap: 20px;
+
+    }
+  
+    .avatar {
+      padding: 20px;
+    }
+
+  
+    .avatar-name {
+      font-size: 18px;
+    }
+  }
+
+
+  
+  /* For ipad screens */
+  @media (max-width: 1199px) and (min-width: 768px) {  
+
+
+    .skeleton {
+      width: 150px; 
+    }
+  
+    .skeleton-image {
+      height: 100px;
+    }
+  
+    .skeleton-text {
+      width: 70%; 
+    }
+  
+    .avatar-section {
+      max-width: 800px; 
+      margin: 0 auto; 
+    }
+  
+    .avatar-container {
+      grid-template-columns: repeat(4, minmax(150px, 1fr)); /* Responsive grid */
+      gap: 15px;
+      max-height: calc(2 * (150px + 15px)); /* 2 rows of avatars with a gap */
+
+    }
+  
+    .avatar {
+      padding: 15px;
+    }
+
+  
+    .avatar-name {
+      font-size: 16px
+    }
+  }
+  
+  /* For mobile screens */
+  @media (max-width: 767px) {
+    .image-cell {
+        grid-template-columns: repeat(1, 2fr);
+    }
+
+    .menu a {
+      font-size: 18px;
+    }
+  
+    .skeleton {
+      width: 100px; 
+    }
+  
+    .skeleton-image {
+      height: 75px; 
+    }
+  
+    .skeleton-text {
+      width: 60%; 
+    }
+  
+    .avatar-section {
+      max-width: 400px;
+      margin: 0 auto;
+      max-height: 200px;
+  
+    }
+  
+    .avatar-container {
+      grid-template-columns: repeat(3, minmax(75px, 1fr)); /* Responsive grid */
+      gap: 10px;
+      max-height: calc(2 * (75px + 15px)); /* 2 rows of avatars with a gap */
+
+    }
+  
+    .avatar {
+      padding: 10px;
+    }
+  
+
+  
+    .avatar-name {
+      font-size: 14px;
+    }
+  }

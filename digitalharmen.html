@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Reblium Demo Chatbot</title>
+    <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
+    <link rel="stylesheet" href="css/avatar-chatbot.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+  </head>
+  <style>
+    @keyframes growOuter {
+        0%, 100% { transform: translateY(0); height: 0px; }
+        25%, 75% { transform: translateY(0); height: 10px; } /* Move above the center line */
+    }
+    @keyframes growMiddle {
+        0%, 100% { transform: translateY(0); height: 2px; }
+        50% { transform: translateY(0); height: 25px; }
+    }
+    
+    /* Apply different animation durations and delays */
+    .grow-outer-first {
+        animation: growOuter 0.6s infinite ease-in-out;
+        background-color: white;
+    }
+    
+    .grow-middle {
+        animation: growMiddle 0.8s infinite ease-in-out;
+        animation-delay: 0.3s; /* Introduce a delay to desynchronize */
+        background-color: white;
+    }
+    
+    .grow-outer-second {
+        animation: growOuter 0.6s infinite ease-in-out;
+        animation-delay: 0.7s; /* Introduce a delay to desynchronize */
+        background-color: white;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+.soundwave {
+    display: flex;
+    justify-content: space-between;
+    height: 25px;
+    --boxSize: 2px;
+    --gutter: 4px;
+    width: calc((var(--boxSize) + var(--gutter)) * 5);
+}
+
+.soundwave span {
+    transform: scaleY(0.4);
+  height: 100%;
+  width: var(--boxSize);
+  background: white;
+  animation-duration: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  border-radius: 8px;
+}
+
+.soundwave span:nth-child(1) { animation-name: quiet; }
+.soundwave span:nth-child(2) { animation-name: normal; }
+.soundwave span:nth-child(3) { animation-name: loud; }
+.soundwave span:nth-child(4) { animation-name: normal; }
+.soundwave span:nth-child(5) { animation-name: quiet; }
+    
+@keyframes quiet {
+  25% { transform: scaleY(0.6); }
+  50% { transform: scaleY(0.4); }
+  75% { transform: scaleY(0.8); }
+}
+
+@keyframes normal {
+  25% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+  75% { transform: scaleY(0.6); }
+}
+
+@keyframes loud {
+  25% { transform: scaleY(1); }
+  50% { transform: scaleY(0.4); }
+  75% { transform: scaleY(1.2); }
+}
+
+  </style>
+ 
+
+  <body class="bg-gray-800 flex flex-col h-screen">
+
+
+        <!-- Project Info Modal -->
+        <div id="projectInfoModal" class="fixed hidden z-30 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+            <div class="p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="text-center">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900">Project Information</h3>
+                    <div class="mt-2 px-7 py-3">
+                        <p class="text-sm text-gray-500">
+                            This project is about having Mao as a copilot, which can answer FAQ questions and respond quickly. We aim to find out how people interact with a chatbot that gives a personal touch. Please leave feedback when you end your session.
+                        </p>
+                    </div>
+                    <div class="items-center px-4 py-3">
+                        <button id="closeProjectInfo" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Usage Instructions Modal -->
+        <div id="usageModal" class="fixed inset-0 z-30 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center">
+            <div class="p-5 border w-96 shadow-lg rounded-md bg-white">
+                <div class="text-left">
+                    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">This is a beta trial of CoPilot</h3>
+                    <div class="space-y-2">
+                        <div>
+                            <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500">
+                                <span class="text-xs font-medium leading-none text-white">1</span>
+                            </span>
+                            <span class="ml-2 text-sm text-gray-500">Do not share confidential information</span>
+                        </div>
+                        <div>
+                            <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500">
+                                <span class="text-xs font-medium leading-none text-white">2</span>
+                            </span>
+                            <span class="ml-2 text-sm text-gray-500">Click to talk mic button</span>
+                        </div>
+                        <div>
+                            <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500">
+                                <span class="text-xs font-medium leading-none text-white">3</span>
+                            </span>
+                            <span class="ml-2 text-sm text-gray-500">The mic is always on</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center justify-center w-6 h-6 bg-gray-500 rounded-full text-xs font-medium leading-none text-white">4</div>
+                            <span class="flex-1 text-sm text-gray-500 pl-1">Receive a summary at the end of the conversation</span>
+                        </div>
+                        <div>
+                            <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500">
+                                <span class="text-xs font-medium leading-none text-white">5</span>
+                            </span>
+                            <span class="ml-2 text-sm text-gray-500">Don't forget to send us your feedback</span>
+                        </div>
+                        <div>
+                            <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-gray-500">
+                                <span class="text-xs font-medium leading-none text-white">6</span>
+                            </span>
+                            <span class="ml-2 text-sm text-gray-500">Chatbot may take longer to respond</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center justify-center w-6 h-6 bg-gray-500 rounded-full text-xs font-medium leading-none text-white">7</div>
+                            <span class="flex-1 text-sm text-gray-500 pl-1">You have 3 minutes of chattime during this demo</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <div class="flex items-center justify-center w-6 h-6 bg-gray-500 rounded-full text-xs font-medium leading-none text-white">8</div>
+                            <span class="flex-1 text-sm text-gray-500 pl-1">You can end the meeting earlier by pressing the 'End Call' button</span>
+                        </div>
+                        
+                    </div>
+                    <div class="mt-4">
+                        <input type="text" id="userName" placeholder="Enter your name for personalised experience" class="p-2 w-full text-sm text-gray-900 bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-green-500">
+                    </div>
+                    <div class="flex justify-center px-4 mt-3 py-2">
+                        <button id="closeUsageModal" class="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 w-full">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Send summary to email Pop-Up -->
+        <div id="ratingModal" class="z-20 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white w-full max-w-md mx-auto flex flex-col rounded-xl shadow-lg">
+                <div class="px-6 py-5 text-center">
+                    <h2 class="text-gray-800 text-xl font-semibold">Get a summary of this meeting</h2>
+                </div>
+                <div class="bg-gray-200 w-full flex flex-col items-center rounded-b-xl">
+                    <div id="loader" class="flex flex-col items-center justify-center pt-5 pb-5">
+                        <svg aria-hidden="true" role="status" class="w-16 h-16 text-blue-500 animate-spin" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="#FFFFFF"></path>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="#1C64F2"></path>
+                        </svg>
+                        <h2 class="text-sm font-semibold text-gray-600 mt-2">Creating summary...</h2>
+                    </div>
+
+                    <div id="contentContainer" class="content-container hidden">
+                        <div class="px-6 my-4 py-3 w-full space-y-4">
+                            <input type="text" id="name" placeholder="Your Name" class="p-3 w-full text-gray-500 rounded-xl">
+                            <input type="email" id="email" placeholder="Your Email" class="p-3 w-full text-gray-500 rounded-xl">
+                            <button id="submitRating" class="py-2 text-md bg-green-500 rounded-xl text-white hover:bg-green-600 w-full flex justify-center items-center">
+                                Rate now
+                            </button>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Error Message Alert -->
+        <div id="errorMsg" class="fixed top-5 right-5 z-30 w-96 mb-2 select-none rounded-lg border-l-4 border-red-500 bg-red-100 p-4 font-medium hover:bg-red-200 transition-all duration-500 ease-in-out transform translate-x-full opacity-0">
+            Error message
+        </div>
+
+
+        <!-- Success Message Alert -->
+        <div id="succesMsg" class="fixed top-20 right-5 z-30 w-96 mb-2 select-none rounded-lg border-l-4 border-green-500 bg-green-100 p-4 font-medium hover:bg-green-200 transition-all duration-500 ease-in-out transform translate-x-full opacity-0">
+            Successful message
+        </div>
+        
+
+
+
+
+
+       
+
+        <!-- Main Content Section -->
+        <div class="flex md:items-center md:justify-center md:p-3">
+
+            <!-- Video Display Area -->
+            <div class="video-container m-4 md:relative md:bg-gray-700 rounded-lg md:w-4/5 md:mb-4 md:mt-4 border overflow-hidden" style="height: calc(100vh - 7rem)">
+                
+                <div id="sizeContainer" class="z-1 object-cover">
+                    <div id="videoContainer" class="z-1 object-cover" autoplay controls>
+                      <audio id="audioRef"></audio>
+                    </div>
+                </div>
+
+                <!-- Loader for arcware is loaded-->
+                <div id="arcLoader" class="absolute  inset-0 bg-opacity-50 flex items-center justify-center">
+                    <!-- Loader Container -->
+                    <div class="relative w-24 h-24">
+                        <!-- Custom SVG or Image as loader, positioned absolutely -->
+                        <div class="absolute inset-0 bg-center bg-cover" style="background-image: url('../src/reblium_logo.png');"></div>
+                        
+                        <!-- Rotating border using Tailwind for style and custom animation -->
+                        <div class="absolute inset-0 border-2 border-white" style="animation: rotation 2s ease-out infinite;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Video Display Area -->
+            <div id="screenShare" class="flex justify-center items-center h-screen md:h-auto md:my-4 md:mx-auto bg-gray-700 rounded-lg md:border overflow-hidden hidden" style="height: calc(100vh - 7rem); width: 80%;">
+                <div class="max-w-full h-auto">
+                    <video id="shareVideo" autoplay playsinline muted></video>
+                </div>
+                
+            </div>
+
+
+            <!-- Small Screen (PiP) for self-view -->
+            <div id="cameraContainer" class="absolute bottom-24 m-4 right-4 md:right-8 w-1/3 md:w-1/6 h-1/4 max-w-xs rounded-lg md:overflow-hidden border-2 border-white" id="pipVideo">
+                <video id="cameraVideo" class="w-full h-full object-cover" type="file" accept="video/*" capture="user" autoplay muted></video>
+            </div>        
+
+
+            <!-- Chatcontainer -->
+            <div id="chat-container" class="flex border w-full lg:w-1/4 rounded-lg p-4 overflow-hidden m-4 hidden" style="height: calc(100vh - 7rem); flex-direction: column;">
+
+                <div id="chat-header" class="flex pb-2 mb-2 border-b text-white" style="flex: 0 0 auto;">
+                   <h1>Reblium</h1>
+                </div>
+                
+                <div id="chatbox" class="flex-grow overflow-auto p-2" style="flex: 1 1 auto;">
+                    <!-- Messages are being displayed here -->
+                    <div class="mb-2 ">
+                      <p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">Hi! My name is Harmen van Sprang. I’m a digital human. Or should I say a digital Harmen? I would love to hear from you what you’re looking for and how I can be of help.</p>
+                    </div>
+                </div>
+                
+                <!-- Bottom Row for Chat Input -->
+                <div id="chat-input" class="flex p-2 border-t" style="flex: 0 0 auto;">
+                    <input id="user-input" type="text" placeholder="Type a message..." class="bg-transparent text-white outline-none flex-grow" />
+                    <button id="send-button" class="bg-transparent rounded-r-lg flex items-center justify-center">
+                        <svg id="send_button" class="text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+
+        </div>
+
+   
+
+
+        <!-- Bottom Navbar -->
+        <div class="fixed bottom-0 left-0 right-0 flex p-4">
+
+            <div class="flex-1 flex items-center gap-4 ">
+                <span class="text-white ml-4" id="currentTime">3:00</span>
+                <span class="text-white hidden md:block">|</span>
+                <!-- Show on medium screens and above, hidden on small screens -->
+                <span class="text-white hidden md:block">Harmen Copilot</span>
+            </div>
+            
+
+
+                <div class="flex-1 flex justify-center gap-4">
+                     <!-- Microphone Toggle Button -->
+                    <div class="relative">
+                     <button id="call-button" class="p-2 bg-gray-700 hover:bg-gray-600 rounded-full h-10 w-10 flex items-center justify-center transition-colors duration-150">
+                        <svg class="" fill="#FFFFFF" height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
+                          <g>
+                            <g>
+                              <path d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z"/>
+                              <path d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z"/>
+                            </g>
+                          </g>
+                        </svg>                
+                      </button>
+                      <div id="tooltip" class="tooltip absolute bottom-full mb-1 p-1 bg-gray-800 text-white text-xs rounded whitespace-nowrap left-1/2 transform -translate-x-1/2">
+                        Click me to talk
+                      </div>
+                    </div>
+                      <button id="stopcall-button" class="hidden ml-2 bg-red-500 text-white p-2 rounded-full flex items-center justify-center w-10 h-10 relative overflow-hidden">
+                        <div class="soundwave">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div> <!-- Container for the soundwave animation with five bars -->
+                    </button>
+                    
+
+                
+
+                    <!-- Video -->
+                    <button id="videoButton" class="p-2 bg-gray-700 hover:bg-gray-600 rounded-full h-10 w-10 flex items-center justify-center transition-colors duration-150">
+                        <svg id="videoIcon" width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect fill=""/>
+                            <path d="M5 18H15C16.1046 18 17 17.1046 17 16V8.57143V8C17 6.89543 16.1046 6 15 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18Z" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"/>
+
+                            <path d="M17 10L21 7V17L17 14" stroke="#FFFFFF" stroke-linejoin="round"/>
+                        </svg>
+                        <svg id="videoMutedIcon" class="hidden" width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect fill=""/>
+                            <path d="M5 18H15C16.1046 18 17 17.1046 17 16V8.57143V8C17 6.89543 16.1046 6 15 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18Z" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path id="Line" d="M2.621,0,0,26.551" transform="translate(1.519 3.527) rotate(-45)" fill="none" stroke="#FFFFFF" stroke-linecap="square" stroke-miterlimit="10" stroke-width="1.5"/>
+
+                            <path d="M17 10L21 7V17L17 14" stroke="#FFFFFF" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- CC -->
+                    <button class="hidden md:inline-flex p-2 bg-gray-400 cursor-not-allowed rounded-full h-10 w-10 items-center justify-center transition-colors duration-150" disabled>
+                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="var(--ci-primary-color, #FFFFFF)" d="M472,64H40A24.028,24.028,0,0,0,16,88V424a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V88A24.028,24.028,0,0,0,472,64Zm-8,352H48V96H464Z" class="ci-primary"/>
+                            <path fill="var(--ci-primary-color, #FFFFFF)" d="M184,344a87.108,87.108,0,0,0,54.484-18.891L218.659,299.99A55.41,55.41,0,0,1,184,312a56,56,0,0,1,0-112,55.41,55.41,0,0,1,34.659,12.01l19.825-25.119A87.108,87.108,0,0,0,184,168a88,88,0,0,0,0,176Z" class="ci-primary"/>
+                            <path fill="var(--ci-primary-color, #FFFFFF)" d="M347.429,344a87.108,87.108,0,0,0,54.484-18.891L382.088,299.99A55.414,55.414,0,0,1,347.429,312a56,56,0,0,1,0-112,55.414,55.414,0,0,1,34.659,12.01l19.825-25.119A87.108,87.108,0,0,0,347.429,168a88,88,0,0,0,0,176Z" class="ci-primary"/>
+                        </svg>
+                    </button>
+
+                    <!-- Hand -->
+                    <button class="hidden md:inline-flex p-2 bg-gray-400 cursor-not-allowed rounded-full h-10 w-10 items-center justify-center transition-colors duration-150" disabled>
+                      <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M13.5001 3.75C13.9143 3.75 14.2501 4.08579 14.2501 4.5V7.5V12.75H15.7501V7.5C15.7501 7.08579 16.0858 6.75 16.5001 6.75C16.9143 6.75 17.2501 7.08579 17.2501 7.5V15C17.2501 17.8995 14.8996 20.25 12.0001 20.25V21.75C15.728 21.75 18.7501 18.7279 18.7501 15V7.5C18.7501 6.25736 17.7427 5.25 16.5001 5.25C16.2371 5.25 15.9846 5.29512 15.7501 5.37803V4.5C15.7501 3.25736 14.7427 2.25 13.5001 2.25C12.4625 2.25 11.5889 2.95235 11.3289 3.90757C11.0724 3.80589 10.7927 3.75 10.5001 3.75C9.25742 3.75 8.25006 4.75736 8.25006 6V12.5344L7.77377 11.5689L7.77221 11.5657C7.21726 10.4539 5.86607 10.0024 4.75422 10.5574C3.65214 11.1075 3.1989 12.4399 3.7315 13.546L5.03741 16.7808L5.06205 16.8354C6.16787 19.047 7.45919 20.2994 8.73651 20.9857C10.0096 21.6696 11.194 21.75 12.0001 21.75V20.25C11.3061 20.25 10.4069 20.1803 9.44641 19.6643C8.49439 19.1528 7.40758 18.1618 6.41695 16.191L5.11239 12.9597L5.08798 12.9055C4.903 12.5349 5.05349 12.0845 5.4241 11.8995C5.79428 11.7147 6.24405 11.8646 6.42944 12.2343L8.32743 16.0818L9.75004 15.75V14.25H9.75006V6C9.75006 5.58579 10.0858 5.25 10.5001 5.25C10.9143 5.25 11.2501 5.58579 11.2501 6V12.75H12.7501V6V4.5C12.7501 4.08579 13.0858 3.75 13.5001 3.75Z" fill="#FFFFFF"/>
+                        </svg>
+                    </button>
+
+                    <!-- Screenshare -->
+                    <button class="hidden md:inline-flex p-2 bg-gray-400 cursor-not-allowed rounded-full h-10 w-10 items-center justify-center transition-colors duration-150" disabled>
+                      <svg  viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                            <g id="🔍-System-Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <g id="ic_fluent_share_screen_28_regular" fill="#FFFFFF" fill-rule="nonzero">
+                                    <path d="M23.75,4.99939 C24.9926,4.99939 26,6.00675 26,7.24939 L26,20.75 C26,21.9926 24.9926,23 23.75,23 L4.25,23 C3.00736,23 2,21.9927 2,20.75 L2,7.24939 C2,6.00675 3.00736,4.99939 4.25,4.99939 L23.75,4.99939 Z M23.75,6.49939 L4.25,6.49939 C3.83579,6.49939 3.5,6.83518 3.5,7.24939 L3.5,20.75 C3.5,21.1642 3.83579,21.5 4.25,21.5 L23.75,21.5 C24.1642,21.5 24.5,21.1642 24.5,20.75 L24.5,7.24939 C24.5,6.83518 24.1642,6.49939 23.75,6.49939 Z M13.9975,8.62102995 C14.1965,8.62102995 14.3874,8.69998 14.5281,8.8407 L17.7826,12.0952 C18.0755,12.3881 18.0755,12.863 17.7826,13.1559 C17.4897,13.4488 17.0148,13.4488 16.7219,13.1559 L14.7477,11.1817 L14.7477,18.6284 C14.7477,19.0426 14.412,19.3784 13.9977,19.3784 C13.5835,19.3784 13.2477,19.0426 13.2477,18.6284 L13.2477,11.1835 L11.2784,13.1555 C10.9858,13.4486 10.5109,13.4489 10.2178,13.1562 C9.92469,12.8636 9.92436,12.3887 10.217,12.0956 L13.467,8.84107 C13.6077,8.70025 13.7985,8.62102995 13.9975,8.62102995 Z"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <!-- Settings -->
+                    <button class="hidden md:inline-flex p-2 bg-gray-400 cursor-not-allowed rounded-full h-10 w-10 items-center justify-center transition-colors duration-150" disabled>
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 12H12.01M12 6H12.01M12 18H12.01M13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12ZM13 18C13 18.5523 12.5523 19 12 19C11.4477 19 11 18.5523 11 18C11 17.4477 11.4477 17 12 17C12.5523 17 13 17.4477 13 18ZM13 6C13 6.55228 12.5523 7 12 7C11.4477 7 11 6.55228 11 6C11 5.44772 11.4477 5 12 5C12.5523 5 13 5.44772 13 6Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+
+                    <!-- Hang up -->
+                    <button id="hangUp" class="p-2 bg-red-500 hover:bg-red-600 rounded-full h-10 w-10 flex items-center justify-center transition duration-150 ease-in-out hover:shadow-lg">
+                        <svg width="24px" height="24px" viewBox="0 0 568.766 568.766" fill="#FFFFFF" xmlns="http://www.w3.org/2000/svg">
+
+                            <g>
+                                <path d="M515.192,195.54c-9.113-6.034-19.708-11.619-31.403-16.754l-37.839-13.655c-39.062-11.513-86.015-18.561-136.715-19.22
+                                    c-0.401,0-0.822,0-1.205-0.019c-0.43,0-0.803,0-1.233-0.01c-86.445-0.344-207.277,16.887-251.599,45.059
+                                    c-32.551,17.729-54.831,52.106-55.195,91.8c-0.134,17.576,4.064,34.205,11.552,48.846c2.85,7.344,9.955,12.564,18.36,12.642
+                                    l149.998,1.3c7.812,0.067,14.63-4.456,17.93-10.987l0.038-0.019c8.176-14.793,12.9-31.805,13.053-49.964
+                                    c0.105-12.192-1.884-23.945-5.613-34.894c18.322-1.654,82.208-1.473,101.831-1.415c19.584,0.277,38.633,1.434,56.916,3.414
+                                    c-3.901,10.873-6.062,22.577-6.158,34.779c-0.162,18.159,4.274,35.257,12.154,50.193l0.096,0.01
+                                    c3.184,6.588,9.811,11.226,17.69,11.293l149.997,1.291c8.396,0.066,15.577-5.049,18.542-12.316
+                                    c7.765-14.516,12.24-31.06,12.374-48.654C569.105,248.564,547.438,213.814,515.192,195.54z"/>
+                            
+                            </g>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Right Column: Empty for now -->
+                <div class="flex-1 flex justify-center gap-4"> <!-- Ensure this is a flex container -->
+
+                    <!-- Info Button -->
+                    <button id="infoBtn" class="p-2 rounded-full h-10 w-10 flex items-center justify-center transition-colors duration-150">
+                        <svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 17.75C12.4142 17.75 12.75 17.4142 12.75 17V11C12.75 10.5858 12.4142 10.25 12 10.25C11.5858 10.25 11.25 10.5858 11.25 11V17C11.25 17.4142 11.5858 17.75 12 17.75Z" fill="#FFFFFF"/>
+                            <path d="M12 7C12.5523 7 13 7.44772 13 8C13 8.55228 12.5523 9 12 9C11.4477 9 11 8.55228 11 8C11 7.44772 11.4477 7 12 7Z" fill="#FFFFFF"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12ZM12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75Z" fill="#FFFFFF"/>
+                        </svg>
+                    </button>
+
+                    <button id="toggleChatButton" class="hidden md:flex p-2 rounded-full h-10 w-10 items-center justify-center transition-colors duration-150">
+                        <svg fill="#FFFFFF" width="800px" height="800px" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg"><path d="M 16.5860 52.2461 C 17.7579 52.2461 18.5548 51.6367 19.9610 50.3711 L 28.0704 43.1758 L 43.0938 43.1758 C 50.0783 43.1758 53.8280 39.3086 53.8280 32.4414 L 53.8280 14.4883 C 53.8280 7.6211 50.0783 3.7539 43.0938 3.7539 L 12.9064 3.7539 C 5.9454 3.7539 2.1720 7.5976 2.1720 14.4883 L 2.1720 32.4414 C 2.1720 39.3320 5.9454 43.1758 12.9064 43.1758 L 14.0313 43.1758 L 14.0313 49.2695 C 14.0313 51.0742 14.9688 52.2461 16.5860 52.2461 Z M 17.5469 47.9570 L 17.5469 41.1602 C 17.5469 39.8945 17.0782 39.4023 15.7891 39.4023 L 12.9298 39.4023 C 8.1720 39.4023 5.9454 36.9883 5.9454 32.4180 L 5.9454 14.4883 C 5.9454 9.9180 8.1720 7.5273 12.9298 7.5273 L 43.0938 7.5273 C 47.8280 7.5273 50.0548 9.9180 50.0548 14.4883 L 50.0548 32.4180 C 50.0548 36.9883 47.8280 39.4023 43.0938 39.4023 L 27.9064 39.4023 C 26.6173 39.4023 25.9376 39.5898 25.0469 40.5039 Z M 16.0704 17.5117 L 39.9298 17.5117 C 40.6798 17.5117 41.2891 16.9258 41.2891 16.1524 C 41.2891 15.4024 40.6798 14.8164 39.9298 14.8164 L 16.0704 14.8164 C 15.3204 14.8164 14.7344 15.4024 14.7344 16.1524 C 14.7344 16.9258 15.3204 17.5117 16.0704 17.5117 Z M 16.0704 25.1289 L 39.9298 25.1289 C 40.6798 25.1289 41.2891 24.5430 41.2891 23.7695 C 41.2891 23.0430 40.6798 22.4102 39.9298 22.4102 L 16.0704 22.4102 C 15.3204 22.4102 14.7344 23.0430 14.7344 23.7695 C 14.7344 24.5430 15.3204 25.1289 16.0704 25.1289 Z M 16.0704 32.7695 L 31.5860 32.7695 C 32.3360 32.7695 32.9454 32.1836 32.9454 31.4336 C 32.9454 30.6602 32.3360 30.0508 31.5860 30.0508 L 16.0704 30.0508 C 15.3204 30.0508 14.7344 30.6602 14.7344 31.4336 C 14.7344 32.1836 15.3204 32.7695 16.0704 32.7695 Z"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+
+  </body>
+
+
+  <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.7/dist/bundle.min.js"></script>
+  <script type="text/javascript" src="javascript/vad.js"></script>
+  <script type="text/javascript" src="javascript/copilot.js"></script>
+  <script>
+    /////////////////////////  Load avatar //////////////////////////////
+    document.addEventListener('DOMContentLoaded', function () {
+
+    let timer = 180; 
+    let countdownInterval; 
+    const currentTime = document.getElementById('currentTime');
+
+    // Function to start the countdown
+    function startCountdown() {
+        function updateCountdown() {
+            const minutes = Math.floor(timer / 60);
+            let seconds = timer % 60;
+            
+            // Ensuring double digits for seconds
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            // Display the current time
+            currentTime.textContent = `${minutes}:${seconds}`;
+            timer--;
+            
+            // When the countdown finishes
+            if (timer < 0) {
+                clearInterval(countdownInterval); // Stop the countdown
+                showFeedbackModal();
+            }
+        }
+
+        timer = 180; // Reset timer to 3 minutes
+        clearInterval(countdownInterval); // Clear any existing intervals
+        countdownInterval = setInterval(updateCountdown, 1000); // Start the countdown
+    }
+
+    // Function that checks if the main video is loaded
+    let videoLoaded = false;
+    const checkInterval = setInterval(detectVideoLoadedAndExecuteAvatarReset, 500);  // Check every 500ms
+
+    function detectVideoLoadedAndExecuteAvatarReset() {
+        const videoElement = document.getElementById('videoContainer').querySelector('video');
+        
+        if (videoElement && videoElement.readyState >= 3 && !videoLoaded) {
+            console.log('Video is loaded and ready to play.');
+            videoLoaded = true;
+            clearInterval(checkInterval);  // Clear the interval to stop further checks
+            handleResetAvatar();  // Additional functionality on video load
+            startCountdown(); // Start countdown when video is loaded
+        }
+    }
+
+    async function handleResetAvatar() {
+        try {
+            const response = await fetch('avatar_presets/json/Harmen.DHS');
+            const jsonData = await response.json();
+            const userName = document.getElementById('userName').value; // Get the user's name from the input
+
+            handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+            document.getElementById('arcLoader').classList.add('hidden');
+            executeCameraMovements();
+
+            setTimeout(() => {
+                handleSendCommands({ voiceid: 'en-GB-Neural2-B' });
+                handleSendCommands({ usermessege: 'say this: Hi' + userName + 'My name is Harmen van Sprang. Im a digital human. Or should I say a digital Harmen? I would love to hear from you what youre looking for and how I can be of help.' });
+                console.log(Object.keys(newWebRTC)); // This will list all properties and methods of the newWebRTC object
+
+                if (userName) {
+                    handleSendCommands({ username: "my name is " + userName }); 
+                }            
+            }, 3000);
+
+        } catch (error) {
+            console.error('Failed to load JSON:', error);
+        }
+    }
+
+    });
+
+      // Move the camera backwards when the avatar is loaded
+      function executeCameraMovements() {
+      for (let i = 0; i < 8; i++) {
+          handleSendCommands({ camdown: '' });
+      }
+      for (let i = 0; i < 180; i++) {
+          handleSendCommands({ cambackward: '' });
+      }
+    }
+
+
+
+
+
+
+
+
+    /////////////////////////  Transcript the information from chatbox  //////////////////////////////
+    let userName = "User"; // Global declaration for userName, defaulting to "User"
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const userNameInput = document.getElementById('userName');
+        if (userNameInput) {
+            userNameInput.addEventListener('change', function() {
+                userName = this.value.trim() || "User"; // Update userName, fallback to "User" if empty
+            });
+        }
+
+
+        const hangUpButton = document.getElementById('hangUp');
+        hangUpButton.addEventListener('click', async function() {
+            console.log("Hang up button clicked."); // Debug: Confirm button click is detected
+            const transcript = getTranscriptFromChatbox();
+
+            if (!transcript) {
+                console.error("No transcript available to send");
+                showMessage('errorMsg', "No transcript available. Unable to process.");
+                return;
+            }
+
+            // Send the transcript
+            try {
+                console.log("Sending transcript..."); // Debug: Log sending attempt
+                const summary = await sendTranscript(transcript);
+                console.log('Summary received:', summary);
+                // showMessage('succesMsg', 'Transcript processed and summary sent.');  // Provide feedback that the process was successful
+                // hide loader
+                document.getElementById('loader').classList.add('hidden'); 
+                
+                // show content
+                document.getElementById('contentContainer').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error processing transcript:', error);
+                showMessage('errorMsg', `Failed to process the transcript: ${error.message}`);  // Provide specific feedback on failure
+            }
+        });
+    });
+
+    function getTranscriptFromChatbox() {
+        const chatbox = document.getElementById('chatbox');
+        if (!chatbox) {
+            console.error("Chatbox not found");
+            return "";
+        }
+
+        const messages = chatbox.querySelectorAll('div.mb-2');
+        console.log(`Found ${messages.length} messages`); // Debug: Log the number of message elements found
+
+        const transcript = Array.from(messages).map(div => {
+            const sender = div.classList.contains('bot') ? 'Harmen' : userName;
+            const paragraph = div.querySelector('p');
+
+            if (!paragraph || div.id === 'interim') {
+                console.log(`Skipping message: ${div.innerHTML}`); // Debug: Log skipped messages
+                return ""; // Skip interim results or divs without paragraphs
+            }
+
+            const text = paragraph.innerText.trim();
+            if (!text) {
+                console.log(`Skipping empty message`); // Debug: Log empty messages
+                return "";
+            }
+
+            return `${sender}: ${text}`;
+        }).filter(line => line)
+        .join('\n'); // Join all messages with new lines
+
+        console.log(`Transcript:\n${transcript}`); // Debug: Log the final transcript
+        return transcript;
+    }
+
+    async function sendTranscript(transcript) {
+        try {
+            const response = await fetch('/.netlify/functions/summarizeHarmen', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ transcript })
+            });
+            if (!response.ok) {
+                const errorDetails = await response.json();
+                console.error('Failed to send transcript:', errorDetails);
+                throw new Error('Failed to send transcript');
+            }
+            const data = await response.json();
+            return data.summary;
+        } catch (error) {
+            console.error('Error sending transcript:', error);
+            throw error;
+        }
+    }
+
+
+
+        /////////////////////////  Feedback modal  //////////////////////////////
+        document.addEventListener('DOMContentLoaded', () => {
+        const submitBtn = document.getElementById('submitRating');
+        const modal = document.getElementById('ratingModal'); 
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const cloneCheckbox = document.getElementById('cloneCheckbox');
+    
+        function validateForm() {
+            let isValid = true; // Start with the assumption the form is valid
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+        
+            // Check if the name is empty
+            if (!name) {
+                showMessage('errorMsg', 'Please enter your name.');
+                isValid = false;
+            }
+        
+            // Check if the email is empty or not valid
+            if (!email) {
+                showMessage('errorMsg', 'Email address is required.');
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                showMessage('errorMsg', 'Please enter a valid email address.');
+                isValid = false;
+            }
+        
+            return isValid; // Return the overall validity of the form
+        }
+        
+
+        submitBtn.addEventListener('click', async function(event) {
+            event.preventDefault(); // Prevent default form submission behavior
+
+                    if (!validateForm()) {
+            // If validation fails, stop the function
+            return;
+        }
+
+        
+            submitBtn.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`; // Show loading text and spinner
+            submitBtn.disabled = true; // Disable button to prevent multiple submissions
+        
+            const transcript = getTranscriptFromChatbox(); // Assume you have this function to fetch the current transcript
+            if (!transcript) {
+                console.error("No transcript available to summarize.");
+                showMessage('errorMsg', "No transcript available. Unable to process.");
+                submitBtn.innerHTML = 'Send now'; // Reset button text
+                submitBtn.disabled = false; // Re-enable button
+                return;
+            }
+        
+            const feedbackData = {
+                name: nameInput.value,
+                email: emailInput.value,
+            };
+        
+            try {       
+                const summary = await sendTranscript(transcript);
+                if (!summary) {
+                    console.error("Failed to fetch summary");
+                    showMessage('errorMsg', 'Failed to fetch the summary from the server.');
+                    submitBtn.innerHTML = 'Send now'; // Reset button text
+                    submitBtn.disabled = false; // Re-enable button
+                    return;
+                }
+        
+                // Now, send the summary to the user's email using summarizeClient API
+                const emailResponse = await fetch('/.netlify/functions/summarizeClient', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        summary, // Send the fetched summary
+                        userEmail: emailInput.value // And the user's email
+                    })
+                });
+        
+                if (!emailResponse.ok) {
+                    const errorDetails = await emailResponse.json();
+                    throw new Error(`Failed to send email: ${errorDetails.error}`);
+                }
+        
+                const responseData = await emailResponse.json();
+                console.log('Email sent:', responseData.message);
+                showMessage('succesMsg', 'Email sent successfully to your Email.');
+                submitBtn.innerHTML = 'Successful'; // Update button text on success
+                submitBtn.classList.replace('bg-green-500', 'bg-green-700'); // Optionally change button color on success
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('errorMsg', 'Failed to process feedback or transcript: ' + error.message);
+                submitBtn.innerHTML = 'Rate now'; // Reset button text on failure
+                submitBtn.disabled = false; // Re-enable button
+            }
+        });
+        
+    });
+    
+
+    function showMessage(messageId, text) {
+        const messageDiv = document.getElementById(messageId);
+        messageDiv.textContent = text;
+        messageDiv.classList.remove('translate-x-full', 'opacity-0'); // Show and make visible
+    
+        // Wait before starting to fade out
+        setTimeout(() => {
+            messageDiv.classList.add('translate-x-full', 'opacity-0'); // Move out and fade
+        }, 2500); // Begin fade out before hiding
+    
+        // Complete hide
+        setTimeout(() => {
+            messageDiv.classList.add('hidden');
+        }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hangUpButton = document.getElementById('hangUp');
+    
+        hangUpButton.addEventListener('click', function() {
+            showFeedbackModal();
+        });
+    });  
+
+    // Function to show modal
+    function showFeedbackModal() {
+        const modal = document.getElementById('ratingModal');
+        const sizeContainer = document.getElementById('sizeContainer');
+
+        modal.classList.remove('hidden');
+        if (sizeContainer && sizeContainer.parentNode) {
+            sizeContainer.parentNode.removeChild(sizeContainer);
+        }
+        
+    }
+
+
+    /////////////////////////  mic and camera notivication //////////////////////////////
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        // Select the button and tooltip elements
+        const callButton = document.getElementById('call-button');
+        const tooltip = document.getElementById('tooltip');
+
+        // Add a click event listener to the call button
+        callButton.addEventListener('click', function() {
+            // Hide the tooltip
+            tooltip.style.display = 'none';
+        });
+    });
+
+
+
+
+function getLocalStream() {
+  navigator.mediaDevices
+    .getUserMedia({ video: true, audio: true })
+    .then((stream) => {
+      window.localStream = stream;
+      window.localAudio.srcObject = stream;
+      window.localAudio.autoplay = true;
+    })
+    .catch((err) => {
+      console.error(`you got an error: ${err}`);
+    });
+}
+
+getLocalStream();
+
+
+
+
+
+
+/////////////////////////////// function to take response chatbot and display in chatbox //////////////////////
+// Array to hold messages
+// let messageQueue = [];
+
+// // Backup the original console.log
+// const originalConsoleLog = console.log;
+
+// // Override console.log to capture specific messages
+// console.log = function (message) {
+//   originalConsoleLog.apply(console, arguments);
+
+//   if (typeof message === 'string' && message.startsWith("AI message:")) {
+//     let cleanMessage = message.slice("AI message:".length).trim();
+//     messageQueue.push(cleanMessage);
+//   }
+// };
+
+// // Function to display messages
+// function displayMessages() {
+//   let chatbox = document.getElementById('chatbox');
+
+//   while (messageQueue.length > 0) {
+//     let message = messageQueue.shift();
+//     chatbox.innerHTML += `
+//       <div class="mb-2">
+//         <p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">
+//           ${message}
+//         </p>
+//       </div>`;
+//   }
+// }
+
+// // Check the queue every second
+// setInterval(displayMessages, 1000);
+
+// // Example usage
+// console.log("AI message: How can I assist you today?");
+// console.log("Another log entry");
+
+
+
+
+    
+  </script>
+  
+
+
+</html>

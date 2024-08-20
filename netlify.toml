@@ -1,0 +1,11 @@
+[build]
+    functions="functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://photo2avatar.reblium.com/:splat"
+  status = 200
+  force = true
+
+
+

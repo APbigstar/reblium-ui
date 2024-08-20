@@ -1,0 +1,43 @@
+{
+  "name": "reblium-avatar-app",
+  "version": "1.0.0",
+  "description": "A web application for managing avatars using XSolla API and a MySQL database.",
+  "author": "Daan Smid",
+  "license": "MIT",
+  "dependencies": {
+    "@arcware/webrtc-plugin": "^0.3.14",
+    "@sendgrid/mail": "^8.1.3",
+    "axios": "^1.7.2",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "multer": "^1.4.5-lts.1",
+    "node-fetch": "^3.3.2",
+    "nodemailer": "^6.9.14",
+    "openai": "^4.52.0"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.0",
+    "netlify-cli": "^17.29.0",
+    "netlify-lambda": "^0.4.0",
+    "serverless-http": "^3.2.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "netlify dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Daan9898/reblium-UI.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Daan9898/reblium-UI/issues"
+  },
+  "homepage": "https://github.com/Daan9898/reblium-UI#readme"
+}

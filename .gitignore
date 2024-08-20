@@ -1,0 +1,16 @@
+# Local Netlify folder
+.netlify
+
+# Ignore environment variables
+.env
+
+# Node.js
+node_modules
+npm-debug.log
+
+# Logs
+logs
+*.log
+
+# Specific JavaScript file
+javascript/arc_module.js
