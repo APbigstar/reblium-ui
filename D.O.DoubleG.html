@@ -1,274 +1,348 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Reblium Demo Chatbot</title>
-    <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
-    <link rel="stylesheet" href="css/avatar-chatbot.css">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <script src="script.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="utf-8">
+  <title>Reblium Demo Chatbot</title>
+  <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
+  <link rel="stylesheet" href="css/avatar-chatbot.css">
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts Link For Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script src="script.js" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  </head>
+  <script src="https://www.youtube.com/iframe_api"></script>
 
-  <style>
-#start-rec-btn {
-  color: #00cdff; /* Maintain the icon color */
-  transition: background-color 0.3s; /* Smooth transition for background color change */
-}
+</head>
 
-@keyframes pulse {
-  0%, 100% {
-    background-color: #fd5050; /* Original color */
+<style>
+  #start-rec-btn {
+    color: #00cdff;
+    /* Maintain the icon color */
+    transition: background-color 0.3s;
+    /* Smooth transition for background color change */
   }
-  50% {
-    background-color: #ff8080; /* Lighter shade for pulse effect */
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      background-color: #fd5050;
+      /* Original color */
+    }
+
+    50% {
+      background-color: #ff8080;
+      /* Lighter shade for pulse effect */
+    }
   }
-}
 
-.pulse-bg-animation {
-  animation: pulse 2s infinite;
-}
+  .pulse-bg-animation {
+    animation: pulse 2s infinite;
+  }
 
-#chatbox {
-  transition: height 0.3s ease, opacity 0.3s ease;
-  overflow: hidden; /* Prevents content from showing outside during transition */
-}
+  #chatbox {
+    transition: height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    /* Prevents content from showing outside during transition */
+  }
 
-/* Height for the container when chatbox is hidden */
-.chat-collapsed {
-  height: 96px; /* Adjust based on actual header and input height */
-}
+  /* Height for the container when chatbox is hidden */
+  .chat-collapsed {
+    height: 96px;
+    /* Adjust based on actual header and input height */
+  }
 
-.soundwave {
-    width: 100%; /* Adjust the width to fill the button */
+  .soundwave {
+    width: 100%;
+    /* Adjust the width to fill the button */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%; /* Use the full height of the button for alignment */
-}
+    height: 100%;
+    /* Use the full height of the button for alignment */
+  }
 
-.soundwave span {
+  .soundwave span {
     display: block;
-    width: 2px; /* Width of each bar */
-    height: 5px; /* Initial height of each bar */
-    background-color: white; /* Color of the bars */
-    animation: soundwave 0.8s ease-in-out infinite; /* Apply the animation */
-}
+    width: 2px;
+    /* Width of each bar */
+    height: 5px;
+    /* Initial height of each bar */
+    background-color: white;
+    /* Color of the bars */
+    animation: soundwave 0.8s ease-in-out infinite;
+    /* Apply the animation */
+  }
 
-.soundwave span:nth-child(1) { animation-delay: 0s; }
-.soundwave span:nth-child(2) { animation-delay: 0.1s; }
-.soundwave span:nth-child(3) { animation-delay: 0.2s; }
-.soundwave span:nth-child(4) { animation-delay: 0.3s; }
-.soundwave span:nth-child(5) { animation-delay: 0.4s; }
+  .soundwave span:nth-child(1) {
+    animation-delay: 0s;
+  }
 
-@keyframes soundwave {
-    0%, 100% {
-        height: 10%; /* Minimum height of the bars */
+  .soundwave span:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .soundwave span:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .soundwave span:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  .soundwave span:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes soundwave {
+
+    0%,
+    100% {
+      height: 10%;
+      /* Minimum height of the bars */
     }
+
     50% {
-        height: 100%; /* Maximum height of the bars */
+      height: 100%;
+      /* Maximum height of the bars */
     }
-}
+  }
+</style>
+
+<body class="bg-slate-800">
+  <div id="sizeContainer" class="z-1">
+    <div id="videoContainer" class="z-1">
+      <audio id="audioRef"></audio>
 
 
-  </style>
+      <img src="src/reblium_logo.png" alt="Logo"
+        class="z-2 fixed top-0 right-0 m-4 w-12 h-12 sm:top-0 sm:left-0 sm:w-24 sm:h-24">
 
-  <body class="bg-slate-800">
-    <div id="sizeContainer" class="z-1">
-      <div id="videoContainer" class="z-1">
-        <audio id="audioRef"></audio>
+      <div id="webcam-outline"
+        class=" z-2 hidden md:block absolute top-0 right-0 m-10 w-48 h-48 rounded-lg overflow-hidden">
+        <video id="webcam" class="w-full h-full rounded-lg object-cover" autoplay></video>
+      </div>
 
-
-        <img src="src/reblium_logo.png" alt="Logo" class="z-2 fixed top-0 right-0 m-4 w-12 h-12 sm:top-0 sm:left-0 sm:w-24 sm:h-24" >
-
-        <div id="webcam-outline" class=" z-2 hidden md:block absolute top-0 right-0 m-10 w-48 h-48 rounded-lg overflow-hidden">
-          <video id="webcam" class="w-full h-full rounded-lg object-cover" autoplay></video>
-        </div>
-        
-       <!-- Main modal  -->
-       <div id="default-modal" data-modal-show="true" aria-hidden="true" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
+      <!-- Main modal  -->
+      <div id="default-modal" data-modal-show="true" aria-hidden="true"
+        class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center">
         <div class="relative w-full max-w-2xl px-4 h-full md:h-auto">
-            <!-- Modal content --> 
-            <div class="bg-white rounded-lg shadow relative dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
+          <!-- Modal content -->
+          <div class="bg-white rounded-lg shadow relative dark:bg-gray-700">
+            <!-- Modal header -->
+            <div class="flex items-start justify-between p-5 border-b rounded-t dark:border-gray-600">
 
-                </div>
-                <!-- Modal body  -->
-                <div class="prose max-w-screen-md p-6 overflow-y-auto" style="max-height: 70vh; background-color: #fff; border: 1px solid #e2e8f0; border-radius: 0.375rem; ">
-                  <h2 class="text-2xl font-bold mb-4">User Agreements</h2>
-                  <p class="mb-4">This User Agreements describes how we collect, use, and disclose information that we obtain through our website and services.</p>
-                  <h3 class="text-lg font-semibold mb-2">Information We Collect</h3>
-                  <p>We may collect the following types of information:</p>
-                  <ul class="list-disc ml-6 mb-4">
-                    <li>Personal Information: We may collect your name, email address, and other personal information when you provide it to us.</li>
-                    <li>Usage Information: We may collect information about your usage of our website and services, such as the pages you visit and your interactions with our content.</li>
-                  </ul>
-                  <h3 class="text-lg font-semibold mb-2">How We Use Your Information</h3>
-                  <p>We may use your information for various purposes, including:</p>
-                  <ul class="list-disc ml-6 mb-4">
-                    <li>Providing our services to you</li>
-                    <li>Sending you updates and information about our products and services</li>
-                    <li>Improving our website and services</li>
-                  </ul>
-                  <h3 class="text-lg font-semibold mb-2">Disclosure of Your Information</h3>
-                  <p>We may disclose your information to third parties in certain circumstances, including:</p>
-                  <ul class="list-disc ml-6 mb-4">
-                    <li>With your consent</li>
-                    <li>When required by law</li>
-                    <li>With service providers and partners who assist us in delivering our services</li>
-                  </ul>
-                  <h3 class="text-lg font-semibold mb-2">Security</h3>
-                  <p class="mb-4">We take reasonable measures to protect your information, but no method of transmission over the internet is 100% secure. We cannot guarantee the security of your information.</p>
-                  <h3 class="text-lg font-semibold mb-2">Changes to this User Agreements</h3>
-                  <p>We may update this User Agreements from time to time. Any changes will be posted on our website. By continuing to use our services, you agree to the updated User Agreements.</p>
-                  <p class="mt-4">
-                    <a href="https://www.reblium.com/user-agreements" target="_blank" class="text-blue-500 hover:underline">Read our full User Agreements</a>.
-                  </p>
-                </div>
-                <!-- Modal footer  -->
-                <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
-                    <button data-modal-toggle="default-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Accept</button>
-                </div>
             </div>
-        </div>
-      </div> 
-
-      <!-- Sound Enable Pop-Up -->
-      <div id="sound-enable-popup" class="z-20 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-        <div class="bg-white p-4 rounded-lg text-center">
-            <p class="mb-4 text-sm text-gray-700">Please enable sound for a better experience.</p>
-            <button onclick="handleMute()" class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none font-semibold rounded-lg text-sm px-4 py-2">
-                Enable Sound
-            </button>
+            <!-- Modal body  -->
+            <div class="prose max-w-screen-md p-6 overflow-y-auto"
+              style="max-height: 70vh; background-color: #fff; border: 1px solid #e2e8f0; border-radius: 0.375rem; ">
+              <h2 class="text-2xl font-bold mb-4">User Agreements</h2>
+              <p class="mb-4">This User Agreements describes how we collect, use, and disclose information that we
+                obtain through our website and services.</p>
+              <h3 class="text-lg font-semibold mb-2">Information We Collect</h3>
+              <p>We may collect the following types of information:</p>
+              <ul class="list-disc ml-6 mb-4">
+                <li>Personal Information: We may collect your name, email address, and other personal information when
+                  you provide it to us.</li>
+                <li>Usage Information: We may collect information about your usage of our website and services, such as
+                  the pages you visit and your interactions with our content.</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-2">How We Use Your Information</h3>
+              <p>We may use your information for various purposes, including:</p>
+              <ul class="list-disc ml-6 mb-4">
+                <li>Providing our services to you</li>
+                <li>Sending you updates and information about our products and services</li>
+                <li>Improving our website and services</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-2">Disclosure of Your Information</h3>
+              <p>We may disclose your information to third parties in certain circumstances, including:</p>
+              <ul class="list-disc ml-6 mb-4">
+                <li>With your consent</li>
+                <li>When required by law</li>
+                <li>With service providers and partners who assist us in delivering our services</li>
+              </ul>
+              <h3 class="text-lg font-semibold mb-2">Security</h3>
+              <p class="mb-4">We take reasonable measures to protect your information, but no method of transmission
+                over the internet is 100% secure. We cannot guarantee the security of your information.</p>
+              <h3 class="text-lg font-semibold mb-2">Changes to this User Agreements</h3>
+              <p>We may update this User Agreements from time to time. Any changes will be posted on our website. By
+                continuing to use our services, you agree to the updated User Agreements.</p>
+              <p class="mt-4">
+                <a href="https://www.reblium.com/user-agreements" target="_blank"
+                  class="text-blue-500 hover:underline">Read our full User Agreements</a>.
+              </p>
+            </div>
+            <!-- Modal footer  -->
+            <div class="flex space-x-2 items-center p-6 border-t border-gray-200 rounded-b dark:border-gray-600">
+              <button data-modal-toggle="default-modal" type="button"
+                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Accept</button>
+            </div>
+          </div>
         </div>
       </div>
-           
-           
-           
-      
-            <!-- Rating Pop-Up -->
-            <div id="ratingModal" class="z-20 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-              <div class="bg-white min-w-1xl flex flex-col rounded-xl shadow-lg">
-                  <div class="px-12 py-5">
-                      <h2 class="text-gray-800 text-3xl font-semibold">Your opinion matters to us!</h2>
-                  </div>
-                  <div class="bg-gray-200 w-full flex flex-col items-center">
-                        <div class="flex flex-col items-center py-6 space-y-3">
-                          <span class="text-lg text-gray-800">How do you like it so far?</span>
-                          <div class="flex space-x-3">
-                              <!-- Star SVG icons with Tailwind CSS -->
-                              <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors" data-rating="1">&#9733;</div>
-                              <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors" data-rating="2">&#9733;</div>
-                              <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors" data-rating="3">&#9733;</div>
-                              <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors" data-rating="4">&#9733;</div>
-                              <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors" data-rating="5">&#9733;</div>
-                          </div>
-                      </div>    
-                      <div class="w-3/4 flex flex-col">
-                          <textarea id="feedbackText" rows="3" class="p-4 text-gray-500 rounded-xl resize-none" placeholder="Leave us a comment if you like"></textarea>
-                          <button id="submitRating" class="py-3 my-8 text-lg bg-green-500 rounded-xl text-white hover:bg-green-600">Rate now</button>
-                      </div>
-                  </div>
-                  <div class="h-20 flex items-center justify-center">
-                      <button id="closeModal" class="text-gray-600 text-sm">Maybe later</button>
-                  </div>
-              </div>
-            </div>
 
-             <!-- ad pop-up -->
-             <div id="popup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-20 hidden">
-              <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-md">
+      <!-- Sound Enable Pop-Up -->
+      <div id="sound-enable-popup"
+        class="z-20 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white p-4 rounded-lg text-center">
+          <p class="mb-4 text-sm text-gray-700">Please enable sound for a better experience.</p>
+          <button onclick="handleMute()"
+            class="text-white bg-blue-500 hover:bg-blue-700 focus:outline-none font-semibold rounded-lg text-sm px-4 py-2">
+            Enable Sound
+          </button>
+        </div>
+      </div>
 
-                  <div id="adVideo">
-                    <iframe id="adFrame" width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    <p class="mt-2">To proceed, please watch an ad and get an additional X minutes of playtime.</p>
-                  </div>
-              </div> 
-            </div>
 
-           <div class="fixed text-xs sm:text-base bottom-64 right-0 text-white w-28 sm:inset-0 sm:flex sm:items-center sm:p-10 sm:justify-center sm:w-64">
-              <div class="space-y-4">
-                <!-- For persona mao want a section where you can send a prompt for how the chatbot need to respond-->
-                <button id="personaButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out" >Persona</button>
-                <button id="voiceButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">
-                  Voice <i id="voiceIcon" class="fas fa-mars"></i>
-                </button>
-                <button id="makeupButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Make up</button>
-                <button id="hairButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Hairstyle</button>
-                <button id="outfitButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Outfit</button>
-                <button id="lightButton" class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Lighting</button>
 
-              </div>
-            </div>
 
-            <!-- Modal for persona -->
-            <div id="personaModal" class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center" aria-labelledby="modalTitle" aria-modal="true">
-              <div class="relative top-1/4 mx-auto p-5 border w-full sm:w-4/5 md:w-2/3 lg:w-1/2 xl:w-2/5 shadow-lg rounded-md bg-white">
-                  <div class="mt-3 text-center">
-                      <!-- Close button -->
-                      <button id="closeModal" class="absolute top-0 right-0 mt-2 mr-2">
-                          <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                      </button>
-                      <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Create Your Persona</h3>
-                      <p class="text-sm text-gray-600 px-4 py-2">Select a persona template below or create your own.</p>
-                      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
-                          <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300" onclick="loadPersonaTemplate('You are a friendly Helper, a compassionate and supportive companion.')">
-                              Friendly Helper
-                              <span class="block text-xs text-gray-600">Template</span>
-                          </button>
-                          <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300" onclick="loadPersonaTemplate('You are a professional Assistant, efficient and reliable in all tasks.')">
-                              Professional Assistant
-                              <span class="block text-xs text-gray-600">Template</span>
-                          </button>
-                          <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300" onclick="loadPersonaTemplate('You are a creative Thinker, innovative and full of original ideas.')">
-                              Creative Thinker
-                              <span class="block text-xs text-gray-600">Template</span>
-                          </button>
-                      </div>
-                      <div class="mt-4 px-7 py-3">
-                          <label for="personaName" class="block text-sm font-medium text-gray-700 mb-1">
-                              Customize Your Persona
-                              <span class="text-xs block text-gray-500">Describe unique traits, e.g., "You are a 30-year-old doctor."</span>
-                          </label>
-                          <input type="text" id="personaName" class="mt-1 p-2 block w-full sm:text-sm border-gray-300 rounded-md" placeholder="Enter persona details...">
-                      </div>
-                      <div class="items-center px-4 py-3">
-                          <button id="sendPersona" class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
-                              Send Custom Persona
-                          </button>
-                      </div>
-                      <div id="sentMessages" class="px-7 py-3 rounded-md text-gray-800">
-                          <!-- Container for sent messages -->
-                          <!-- Sent messages will appear here -->
-                      </div>
-                  </div>
-              </div>
+      <!-- Rating Pop-Up -->
+      <div id="ratingModal" class="z-20 fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white min-w-1xl flex flex-col rounded-xl shadow-lg">
+          <div class="px-12 py-5">
+            <h2 class="text-gray-800 text-3xl font-semibold">Your opinion matters to us!</h2>
           </div>
-        
-          
-            
+          <div class="bg-gray-200 w-full flex flex-col items-center">
+            <div class="flex flex-col items-center py-6 space-y-3">
+              <span class="text-lg text-gray-800">How do you like it so far?</span>
+              <div class="flex space-x-3">
+                <!-- Star SVG icons with Tailwind CSS -->
+                <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors"
+                  data-rating="1">&#9733;</div>
+                <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors"
+                  data-rating="2">&#9733;</div>
+                <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors"
+                  data-rating="3">&#9733;</div>
+                <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors"
+                  data-rating="4">&#9733;</div>
+                <div class="star cursor-pointer text-gray-400 text-4xl hover:text-orange-500 transition-colors"
+                  data-rating="5">&#9733;</div>
+              </div>
+            </div>
+            <div class="w-3/4 flex flex-col">
+              <textarea id="feedbackText" rows="3" class="p-4 text-gray-500 rounded-xl resize-none"
+                placeholder="Leave us a comment if you like"></textarea>
+              <button id="submitRating"
+                class="py-3 my-8 text-lg bg-green-500 rounded-xl text-white hover:bg-green-600">Rate now</button>
+            </div>
+          </div>
+          <div class="h-20 flex items-center justify-center">
+            <button id="closeModal" class="text-gray-600 text-sm">Maybe later</button>
+          </div>
+        </div>
+      </div>
 
-            <!-- Chatbox Container -->
-            <div id="chat-container" class=" z-2 fixed bottom-1 max=h-24 sm:bottom-6 pl-2 sm:right-4 -lg w-full sm:w-96">
-              <!-- Chat Header -->
-              <div id="chat-header" class="text-white rounded-t-lg flex justify-between items-center">
-                <button id="muteButton" onclick="handleMute()" title="Toggle Mute" class="relative text-gray-700 p-2 w-12 h-12 flex items-center justify-center mr-2">
-                  <i class="fas fa-volume-mute text-red-500"></i> <!-- Assuming Font Awesome icons -->
-                </button>
-                <div id="voice-animation" class="hidden h-10 w-10 rounded-full bg-blue-500"></div>
-              <!--
+      <!-- ad pop-up -->
+      <div id="popup" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-20 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-11/12 max-w-md">
+
+          <div id="adVideo">
+            <iframe id="adFrame" width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1"
+              frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <p class="mt-2">To proceed, please watch an ad and get an additional X minutes of playtime.</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="fixed text-xs sm:text-base bottom-64 right-0 text-white w-28 sm:inset-0 sm:flex sm:items-center sm:p-10 sm:justify-center sm:w-64">
+        <div class="space-y-4">
+          <!-- For persona mao want a section where you can send a prompt for how the chatbot need to respond-->
+          <button id="personaButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Persona</button>
+          <button id="voiceButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">
+            Voice <i id="voiceIcon" class="fas fa-mars"></i>
+          </button>
+          <button id="makeupButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Make
+            up</button>
+          <button id="hairButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Hairstyle</button>
+          <button id="outfitButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Outfit</button>
+          <button id="lightButton"
+            class="w-full px-4 uppercase border-2 rounded-full border-white text-white bg-transparent hover:bg-white hover:text-indigo-900 transition duration-300 ease-in-out">Lighting</button>
+
+        </div>
+      </div>
+
+      <!-- Modal for persona -->
+      <div id="personaModal"
+        class="hidden overflow-x-hidden overflow-y-auto fixed h-modal md:h-full top-4 left-0 right-0 md:inset-0 z-50 justify-center items-center"
+        aria-labelledby="modalTitle" aria-modal="true">
+        <div
+          class="relative top-1/4 mx-auto p-5 border w-full sm:w-4/5 md:w-2/3 lg:w-1/2 xl:w-2/5 shadow-lg rounded-md bg-white">
+          <div class="mt-3 text-center">
+            <!-- Close button -->
+            <button id="closeModal" class="absolute top-0 right-0 mt-2 mr-2">
+              <svg class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modalTitle">Create Your Persona</h3>
+            <p class="text-sm text-gray-600 px-4 py-2">Select a persona template below or create your own.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+              <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300"
+                onclick="loadPersonaTemplate('You are a friendly Helper, a compassionate and supportive companion.')">
+                Friendly Helper
+                <span class="block text-xs text-gray-600">Template</span>
+              </button>
+              <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300"
+                onclick="loadPersonaTemplate('You are a professional Assistant, efficient and reliable in all tasks.')">
+                Professional Assistant
+                <span class="block text-xs text-gray-600">Template</span>
+              </button>
+              <button class="py-2 rounded border border-black text-black hover:bg-gray-100 transition duration-300"
+                onclick="loadPersonaTemplate('You are a creative Thinker, innovative and full of original ideas.')">
+                Creative Thinker
+                <span class="block text-xs text-gray-600">Template</span>
+              </button>
+            </div>
+            <div class="mt-4 px-7 py-3">
+              <label for="personaName" class="block text-sm font-medium text-gray-700 mb-1">
+                Customize Your Persona
+                <span class="text-xs block text-gray-500">Describe unique traits, e.g., "You are a 30-year-old
+                  doctor."</span>
+              </label>
+              <input type="text" id="personaName" class="mt-1 p-2 block w-full sm:text-sm border-gray-300 rounded-md"
+                placeholder="Enter persona details...">
+            </div>
+            <div class="items-center px-4 py-3">
+              <button id="sendPersona"
+                class="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:text-sm">
+                Send Custom Persona
+              </button>
+            </div>
+            <div id="sentMessages" class="px-7 py-3 rounded-md text-gray-800">
+              <!-- Container for sent messages -->
+              <!-- Sent messages will appear here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <!-- Chatbox Container -->
+      <div id="chat-container" class=" z-2 fixed bottom-1 max=h-24 sm:bottom-6 pl-2 sm:right-4 -lg w-full sm:w-96">
+        <!-- Chat Header -->
+        <div id="chat-header" class="text-white rounded-t-lg flex justify-between items-center">
+          <button id="muteButton" onclick="handleMute()" title="Toggle Mute"
+            class="relative text-gray-700 p-2 w-12 h-12 flex items-center justify-center mr-2">
+            <i class="fas fa-volume-mute text-red-500"></i> <!-- Assuming Font Awesome icons -->
+          </button>
+          <div id="voice-animation" class="hidden h-10 w-10 rounded-full bg-blue-500"></div>
+          <!--
                 <label for="languageSelect" class="mr-2">Language:</label>
                 <select id="languageSelect" class="bg-gray-700 text-white border border-gray-500 rounded p-2 focus:ring-2 focus:ring-blue-500">
                   <option value="en-US">English</option>
@@ -277,161 +351,170 @@
                   <option value="de-DE">German</option>
                   <option value="fr-FR">French</option>
                   <!-- Add more languages as needed -->
-                </select>
+          </select>
 
-                <!-- Persona buttons in a row -->
-                <button id="close-chat" class="text-black ml-auto mr-4">
-                  <span class="text-xl font-bold" id="toggle-icon">+</span> <!-- Toggle Icon -->
-                </button>  
-              </div>
-              <!-- Chat Messages Box -->
-              <div id="chatbox" class="max-h-36 sm:max-h-full p-4 overflow-y-auto hidden" style="height: calc(100vh - 50vh);">
-                <div class="mb-2 ">
-                  <p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">Hi there 👋 <br>How can I help you today?</p>
-                </div>
-              </div>
-              <!-- Chat Input -->
-              <div id="chat-input" class="w-full flex">
-                <div class="flex-grow bg-white/30 border border-white rounded-l-lg p-2 shadow-2xl flex items-center">
-                  <input id="user-input" type="text" placeholder="Type a message..." class="bg-transparent text-white outline-none flex-grow" />
-                  <button id="send-button" class="bg-transparent rounded-r-lg flex items-center justify-center">
-                      <svg id="send_button" class="text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                      </svg>
-                  </button>
-                </div>
-                <button id="call-button" class="ml-2  bg-green-500 text-white p-2 rounded-lg flex items-center justify-center w-10 h-10 relative overflow-hidden">
-                  <svg class="" fill="#FFFFFF" height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
-                    <g>
-                      <g>
-                        <path d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z"/>
-                        <path d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z"/>
-                      </g>
-                    </g>
-                  </svg>                
-                </button>
-                <button id="stopcall-button" class="hidden ml-2 bg-red-500 text-white p-2 rounded-lg flex items-center justify-center w-10 h-10 relative overflow-hidden">
-                  <div class="soundwave">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                  </div> <!-- Container for the soundwave animation with five bars -->
-              </button>
-              
-              
-              </div>
-            </div>
+          <!-- Persona buttons in a row -->
+          <button id="close-chat" class="text-black ml-auto mr-4">
+            <span class="text-xl font-bold" id="toggle-icon">+</span> <!-- Toggle Icon -->
+          </button>
+        </div>
+        <!-- Chat Messages Box -->
+        <div id="chatbox" class="max-h-36 sm:max-h-full p-4 overflow-y-auto hidden" style="height: calc(100vh - 50vh);">
+          <div class="mb-2 ">
+            <p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">Hi
+              there 👋 <br>How can I help you today?</p>
+          </div>
+        </div>
+        <!-- Chat Input -->
+        <div id="chat-input" class="w-full flex">
+          <div class="flex-grow bg-white/30 border border-white rounded-l-lg p-2 shadow-2xl flex items-center">
+            <input id="user-input" type="text" placeholder="Type a message..."
+              class="bg-transparent text-white outline-none flex-grow" />
+            <button id="send-button" class="bg-transparent rounded-r-lg flex items-center justify-center">
+              <svg id="send_button" class="text-white" xmlns="http://www.w3.org/2000/svg" fill="none"
+                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+              </svg>
+            </button>
+          </div>
+          <button id="call-button"
+            class="ml-2  bg-green-500 text-white p-2 rounded-lg flex items-center justify-center w-10 h-10 relative overflow-hidden">
+            <svg class="" fill="#FFFFFF" height="800px" width="800px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
+              <g>
+                <g>
+                  <path
+                    d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z" />
+                  <path
+                    d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z" />
+                </g>
+              </g>
+            </svg>
+          </button>
+          <button id="stopcall-button"
+            class="hidden ml-2 bg-red-500 text-white p-2 rounded-lg flex items-center justify-center w-10 h-10 relative overflow-hidden">
+            <div class="soundwave">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div> <!-- Container for the soundwave animation with five bars -->
+          </button>
 
 
-
-
-      
+        </div>
       </div>
+
+
+
+
+
     </div>
-      
+  </div>
 
 
 
-  </body>
+
+</body>
 
 
-  <script src="javascript/arc_module.js" type="module"></script>
+<script src="javascript/arc_module.js" type="module"></script>
 
-  <script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.7/dist/bundle.min.js"></script>
+<script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web/dist/ort.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.7/dist/bundle.min.js"></script>
 
-  <script src="javascript/dev-avatar-chatbot.js"></script>
+<script src="javascript/dev-avatar-chatbot.js"></script>
 
-  <script>
-// Function that detects when the pixelstreaming video is loaded
+<script>
+  // Function that detects when the pixelstreaming video is loaded
   let videoLoaded = false;
 
   // Function to check if the video is loaded and execute the avatar reset function
   function detectVideoLoadedAndExecuteAvatarReset() {
-      const videoElement = document.getElementById('videoContainer').querySelector('video');
+    const videoElement = document.getElementById('videoContainer').querySelector('video');
 
-      if (videoElement && videoElement.readyState >= 3 && !videoLoaded) {
-          console.log('Video is loaded and ready to play.');
-          videoLoaded = true;
-          clearInterval(checkInterval);  // Clear the interval to stop further checks
-          handleResetAvatar();  // Reset the avatar after video is loaded
-      }
-  } 
+    if (videoElement && videoElement.readyState >= 3 && !videoLoaded) {
+      console.log('Video is loaded and ready to play.');
+      videoLoaded = true;
+      clearInterval(checkInterval);  // Clear the interval to stop further checks
+      handleResetAvatar();  // Reset the avatar after video is loaded
+    }
+  }
 
   // Function to reset the avatar using fetched JSON data
   async function handleResetAvatar() {
-      try {
-          const response = await fetch('avatar_presets/json/Sweetdog.DHS');
-          const jsonData = await response.json();
-          handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
-          setTimeout(() => {
-            handleSendCommands({ voiceid: 'en-GB-Neural2-B' });
-        }, 2000); //
+    try {
+      const response = await fetch('avatar_presets/json/Sweetdog.DHS');
+      const jsonData = await response.json();
+      handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+      setTimeout(() => {
+        handleSendCommands({ voiceid: 'en-GB-Neural2-B' });
+      }, 2000); //
 
-      } catch (error) {
-          console.error('Failed to load JSON:', error);
-      }
+    } catch (error) {
+      console.error('Failed to load JSON:', error);
+    }
   }
 
   // Define an interval to periodically check for video loading
   const checkInterval = setInterval(detectVideoLoadedAndExecuteAvatarReset, 1000); // Check every second
 
 
-  document.addEventListener('DOMContentLoaded', function() {
-  const voiceMappings = {
-    "en-US": {
+  document.addEventListener('DOMContentLoaded', function () {
+    const voiceMappings = {
+      "en-US": {
         male: "en-GB-Neural2-B",
         female: "en-GB-News-G"
-    }
-  };
-
-  const voiceButton = document.getElementById('voiceButton');
-  const voiceIcon = document.getElementById('voiceIcon');
-  let currentGender = 'male';  // Initial gender set to male
-
-  function updateVoiceIcon() {
-    currentGender = currentGender === 'male' ? 'female' : 'male';
-    voiceIcon.className = currentGender === 'male' ? 'fas fa-mars' : 'fas fa-venus';
-    updateVoiceBasedOnGender();
-  }
-
-  function updateVoiceBasedOnGender() {
-    const genderVoice = voiceMappings['en-US'][currentGender];
-    console.log(`Selected voice: ${genderVoice} for ${currentGender} gender`);
-    handleSendCommands({ voiceid: genderVoice });
-  }
-
-  // Check if video is loaded and then execute command
-  function checkVideoAndSendVoice() {
-    const videoElement = document.getElementById('videoContainer').querySelector('video');
-
-    const checkInterval = setInterval(function() {
-      if (videoElement && videoElement.readyState >= 3) {
-        console.log('Video is loaded and ready to play.');
-        clearInterval(checkInterval);  // Stop checking once the video is ready
-
-        // Send male voice command as the initial setting
-        currentGender = 'male';  // Ensure gender is set to male
-        updateVoiceBasedOnGender();
       }
-    }, 1000);  // Check every second
-  }
+    };
 
-  // Initialize video check and voice setting on page load
-  checkVideoAndSendVoice();
+    const voiceButton = document.getElementById('voiceButton');
+    const voiceIcon = document.getElementById('voiceIcon');
+    let currentGender = 'male';  // Initial gender set to male
 
-  // Toggle gender on button click
-  voiceButton.addEventListener('click', updateVoiceIcon);
-});
+    function updateVoiceIcon() {
+      currentGender = currentGender === 'male' ? 'female' : 'male';
+      voiceIcon.className = currentGender === 'male' ? 'fas fa-mars' : 'fas fa-venus';
+      updateVoiceBasedOnGender();
+    }
+
+    function updateVoiceBasedOnGender() {
+      const genderVoice = voiceMappings['en-US'][currentGender];
+      console.log(`Selected voice: ${genderVoice} for ${currentGender} gender`);
+      handleSendCommands({ voiceid: genderVoice });
+    }
+
+    // Check if video is loaded and then execute command
+    function checkVideoAndSendVoice() {
+      const videoElement = document.getElementById('videoContainer').querySelector('video');
+
+      const checkInterval = setInterval(function () {
+        if (videoElement && videoElement.readyState >= 3) {
+          console.log('Video is loaded and ready to play.');
+          clearInterval(checkInterval);  // Stop checking once the video is ready
+
+          // Send male voice command as the initial setting
+          currentGender = 'male';  // Ensure gender is set to male
+          updateVoiceBasedOnGender();
+        }
+      }, 1000);  // Check every second
+    }
+
+    // Initialize video check and voice setting on page load
+    checkVideoAndSendVoice();
+
+    // Toggle gender on button click
+    voiceButton.addEventListener('click', updateVoiceIcon);
+  });
 
 
 
 
-  window.onload = function() {
-    document.getElementById('submitBtn').addEventListener('click', function() {
+  window.onload = function () {
+    document.getElementById('submitBtn').addEventListener('click', function () {
       const password = document.getElementById('password').value;
       const correctPassword = 'yourPassword'; // Set your password here
 
@@ -441,9 +524,9 @@
         document.getElementById('errorMsg').classList.remove('hidden');
         document.getElementById('errorMsg').classList.remove('text-red-500');
         document.getElementById('errorMsg').classList.add('text-green-500');
-        
+
         // Set a short delay before hiding the pop-up and clearing the message
-        setTimeout(function() {
+        setTimeout(function () {
           document.getElementById('popup').classList.add('hidden');
           document.getElementById('errorMsg').classList.add('hidden');
         }, 500);  // 500 milliseconds = 0.5 second
@@ -457,13 +540,13 @@
       }
     });
 
-    passwordInput.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter') {
-      verifyPassword();
-    }
-  });
-};
+    passwordInput.addEventListener('keypress', function (event) {
+      if (event.key === 'Enter') {
+        verifyPassword();
+      }
+    });
+  };
 
-  </script>
+</script>
 
 </html>

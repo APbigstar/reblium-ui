@@ -1,410 +1,396 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
-    <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat&display=swap">
+  <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
 
 
-    
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+  <script type="text/javascript" src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-    
-    <link rel="stylesheet" type="text/css" href="../css/pages_style.css">
-    <link rel="stylesheet" type="text/css" href="../css/responsive.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+    integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="../css/pages_style.css">
+  <link rel="stylesheet" type="text/css" href="../css/responsive.css">
 
 
-    <title>Reblium Avatar System</title>
-<!-- Hotjar Tracking Code for https://reblium.netlify.app/ -->
-<script>
-  (function(h,o,t,j,a,r){
-      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-      h._hjSettings={hjid:3683678,hjsv:6};
-      a=o.getElementsByTagName('head')[0];
-      r=o.createElement('script');r.async=1;
-      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+  <title>Reblium Avatar System</title>
+  <!-- Hotjar Tracking Code for https://reblium.netlify.app/ -->
+  <script>
+    (function (h, o, t, j, a, r) {
+      h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+      h._hjSettings = { hjid: 3683678, hjsv: 6 };
+      a = o.getElementsByTagName('head')[0];
+      r = o.createElement('script'); r.async = 1;
+      r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
       a.appendChild(r);
-  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-</script>
-  </head>
-  <body>
-    
-    <script>
+    })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+  </script>
+</head>
+
+<body>
+
+  <script>
     let latestLoadAvatarCommand = null;
 
-let newWebRTC;
-function handleSendCommands(command) {
-  newWebRTC.emitUIInteraction(command);
+    let newWebRTC;
+    function handleSendCommands(command) {
+      newWebRTC.emitUIInteraction(command);
 
-  // Check if the command includes a loadavatar command and store it
-  if (command.loadavatar) {
-    latestLoadAvatarCommand = command.loadavatar;
-  }
+      // Check if the command includes a loadavatar command and store it
+      if (command.loadavatar) {
+        latestLoadAvatarCommand = command.loadavatar;
+      }
 
-  // Log the loadavatar command sent (replace with actual implementation)
-  console.log('Sending loadavatar command:', command.loadavatar);
-}
+      // Log the loadavatar command sent (replace with actual implementation)
+      console.log('Sending loadavatar command:', command.loadavatar);
+    }
 
-// Function to update the slider value and call handleSendCommands
-function updateSliderValue() {
-  const slider = document.getElementById('mySlider');
-  const sliderValue = parseFloat(slider.value);
+    // Function to update the slider value and call handleSendCommands
+    function updateSliderValue() {
+      const slider = document.getElementById('mySlider');
+      const sliderValue = parseFloat(slider.value);
 
-// Call the handleSendCommands function with the command object
-  handleSendCommands(command);
-}
+      // Call the handleSendCommands function with the command object
+      handleSendCommands(command);
+    }
 
-function handleButtonClick() {
-  // Call the second function to reload the page
-  location.reload();
-}
+    function handleButtonClick() {
+      // Call the second function to reload the page
+      location.reload();
+    }
 
-// Initialize the autoCamera variable
-let autoCamera = 'Yes';
+    // Initialize the autoCamera variable
+    let autoCamera = 'Yes';
 
-// Function to toggle Auto Camera
-function toggleAutoCamera() {
-    if (autoCamera === 'Yes') {
+    // Function to toggle Auto Camera
+    function toggleAutoCamera() {
+      if (autoCamera === 'Yes') {
         autoCamera = 'No';
-    } else {
+      } else {
         autoCamera = 'Yes';
+      }
+
+      console.log(`Auto Camera is set to: ${autoCamera}`);
+      // Call your handleSendCommands function with the updated value
+      handleSendCommands({ autocamera: autoCamera });
     }
 
-    console.log(`Auto Camera is set to: ${autoCamera}`);
-    // Call your handleSendCommands function with the updated value
-    handleSendCommands({ autocamera: autoCamera });
-}
 
+    // Async function to load and send avatar data
+    async function loadAndSendAvatarData(jsonFilePath) {
+      await waitForVideoLoad(); // Wait for video to load
 
-// Async function to load and send avatar data
-async function loadAndSendAvatarData(jsonFilePath) {
-  await waitForVideoLoad(); // Wait for video to load
+      // Use the fetch API to load the JSON file
+      try {
+        const response = await fetch(jsonFilePath);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const jsonData = await response.json(); // Parse the JSON response
 
-  // Use the fetch API to load the JSON file
-  try {
-    const response = await fetch(jsonFilePath);
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+        // Now you have the JSON data
+        console.log(jsonData);
+
+        // Call your handleSendCommands function with the JSON data
+        handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+        handleSendCommands({ autocamera: autoCamera });
+        handleSendCommands({ cameraswitch: 'Head' });
+      } catch (error) {
+        console.error('Error loading JSON:', error);
+      }
     }
-    const jsonData = await response.json(); // Parse the JSON response
-
-    // Now you have the JSON data
-    console.log(jsonData);
-
-    // Call your handleSendCommands function with the JSON data
-    handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
-    handleSendCommands({ autocamera: autoCamera }); 
-    handleSendCommands({ cameraswitch: 'Head' });
-  } catch (error) {
-    console.error('Error loading JSON:', error);
-  }
-}
 
 
 
-// Function to handle the reset button click
-function handleResetButtonClick() {
-  if (latestLoadAvatarCommand) {
+    // Function to handle the reset button click
+    function handleResetButtonClick() {
+      if (latestLoadAvatarCommand) {
 
-    // Send the latest loadavatar command
-    handleSendCommands({ resetavatar: latestLoadAvatarCommand });
-    console.log('Reset button clicked with the latest loadavatar command:', latestLoadAvatarCommand);
-  } else {
-    console.log('No loadavatar command available to reset.');
-  }
-}
+        // Send the latest loadavatar command
+        handleSendCommands({ resetavatar: latestLoadAvatarCommand });
+        console.log('Reset button clicked with the latest loadavatar command:', latestLoadAvatarCommand);
+      } else {
+        console.log('No loadavatar command available to reset.');
+      }
+    }
 
-// Event listener for the "reset" button
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('reset').addEventListener('click', handleResetButtonClick);
-});
+    // Event listener for the "reset" button
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('reset').addEventListener('click', handleResetButtonClick);
+    });
 
     function getAllSliderValuesAndNames() {
-  const sliders = document.querySelectorAll('.slider');
-  const sliderData = {};
+      const sliders = document.querySelectorAll('.slider');
+      const sliderData = {};
 
-  sliders.forEach((slider) => {
-    // Get the slider name from the oninput attribute
-    const onInputAttribute = slider.getAttribute('oninput');
-    const sliderNameMatch = /slidertype\s*:\s*'([^']+)'/i.exec(onInputAttribute);
+      sliders.forEach((slider) => {
+        // Get the slider name from the oninput attribute
+        const onInputAttribute = slider.getAttribute('oninput');
+        const sliderNameMatch = /slidertype\s*:\s*'([^']+)'/i.exec(onInputAttribute);
 
-    if (sliderNameMatch && sliderNameMatch[1]) {
-      const sliderName = sliderNameMatch[1];
-      const sliderValue = parseFloat(slider.value);
-      sliderData[sliderName] = sliderValue;
-    }
-  });
-
-  // Log the slider names and values
-  console.log('Slider Values:', sliderData);
-
-  // You can return or further process the sliderData object as needed
-  return sliderData;
-}
-
-// save all the slider values for the avatar id
-function saveAvatarWithSliderValues() {
-  const avatarId = parseFloat(document.getElementById('avatarId').textContent);
-  const sliders = getAllSliderValuesAndNames(); // Implement the function to get slider values
-  
-
-  if (!isNaN(avatarId) && avatarId > 0) {
-    // If avatarId is present and valid, send the avatar ID and slider values to the API
-    const updateSliderValuesUrl = `/.netlify/functions/updateSliderValues`;
-
-    const requestData = {
-      avatarId,
-      sliderValues: sliders,
-    };
-
-    fetch(updateSliderValuesUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestData),
-    })
-      .then((response) => {
-        if (response.ok) {
-          // You can perform additional actions here if needed
-          console.log('Slider values updated successfully');
-        } else {
-          // Handle the error as needed
-          console.error('Error updating slider values:', response.statusText);
+        if (sliderNameMatch && sliderNameMatch[1]) {
+          const sliderName = sliderNameMatch[1];
+          const sliderValue = parseFloat(slider.value);
+          sliderData[sliderName] = sliderValue;
         }
-      })
-      .catch((error) => {
-        // Handle the error as needed
-        console.error('Network or server error:', error);
       });
-  } else {
-    // Handle the case where there is no valid avatar ID
-    console.log('No valid avatar ID found.');
-  }
-}
+
+      // Log the slider names and values
+      console.log('Slider Values:', sliderData);
+
+      // You can return or further process the sliderData object as needed
+      return sliderData;
+    }
+
+    // save all the slider values for the avatar id
+    function saveAvatarWithSliderValues() {
+      const avatarId = parseFloat(document.getElementById('avatarId').textContent);
+      const sliders = getAllSliderValuesAndNames(); // Implement the function to get slider values
 
 
-// Function to update a specific slider value
-function avatarSliderValue(sliderName, avatarSliderValue) {
-  // Get the HTML elements for the slider
-  const sliderValueElement = document.getElementById(`sliderValue_${sliderName}`);
-  const sliderInputElement = document.getElementById(`sliderInput_${sliderName}`);
-  
-  // Update the value displayed in the <span>
-  sliderValueElement.textContent = avatarSliderValue;
-  
-  // Update the value of the <input> element
-  sliderInputElement.value = avatarSliderValue;
-  
-  // Send the command to update the slider value in your application (if needed)
-  handleSendCommands({ slidertype: `${sliderName}${parseFloat(avatarSliderValue)}` });
+      if (!isNaN(avatarId) && avatarId > 0) {
+        // If avatarId is present and valid, send the avatar ID and slider values to the API
+        const updateSliderValuesUrl = `/.netlify/functions/updateSliderValues`;
 
-  console.log(`Slider Name: ${sliderName}, Slider Value: ${avatarSliderValue}`);
+        const requestData = {
+          avatarId,
+          sliderValues: sliders,
+        };
 
-}
+        fetch(updateSliderValuesUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestData),
+        })
+          .then((response) => {
+            if (response.ok) {
+              // You can perform additional actions here if needed
+              console.log('Slider values updated successfully');
+            } else {
+              // Handle the error as needed
+              console.error('Error updating slider values:', response.statusText);
+            }
+          })
+          .catch((error) => {
+            // Handle the error as needed
+            console.error('Network or server error:', error);
+          });
+      } else {
+        // Handle the case where there is no valid avatar ID
+        console.log('No valid avatar ID found.');
+      }
+    }
 
 
-// Function to update all sliders with avatar data
-function updateAllSlidersWithAvatarData(avatarSliderData) {
-  Object.keys(avatarSliderData).forEach(sliderNameWithAsterisk => {
-    const sliderName = sliderNameWithAsterisk.split('*')[0]; // Remove the asterisk
-    const value = avatarSliderData[sliderNameWithAsterisk];
-    avatarSliderValue(sliderName, value); // Correctly call the avatarSliderValue function
-  });
-}
+    // Function to update a specific slider value
+    function avatarSliderValue(sliderName, avatarSliderValue) {
+      // Get the HTML elements for the slider
+      const sliderValueElement = document.getElementById(`sliderValue_${sliderName}`);
+      const sliderInputElement = document.getElementById(`sliderInput_${sliderName}`);
+
+      // Update the value displayed in the <span>
+      sliderValueElement.textContent = avatarSliderValue;
+
+      // Update the value of the <input> element
+      sliderInputElement.value = avatarSliderValue;
+
+      // Send the command to update the slider value in your application (if needed)
+      handleSendCommands({ slidertype: `${sliderName}${parseFloat(avatarSliderValue)}` });
+
+      console.log(`Slider Name: ${sliderName}, Slider Value: ${avatarSliderValue}`);
+
+    }
+
+
+    // Function to update all sliders with avatar data
+    function updateAllSlidersWithAvatarData(avatarSliderData) {
+      Object.keys(avatarSliderData).forEach(sliderNameWithAsterisk => {
+        const sliderName = sliderNameWithAsterisk.split('*')[0]; // Remove the asterisk
+        const value = avatarSliderData[sliderNameWithAsterisk];
+        avatarSliderValue(sliderName, value); // Correctly call the avatarSliderValue function
+      });
+    }
 
 
 
-// Call the function to update all sliders with the avatar's data
-updateAllSlidersWithAvatarData(sliderData);
-    </script>
+    // Call the function to update all sliders with the avatar's data
+    updateAllSlidersWithAvatarData(sliderData);
+  </script>
 
-<style>
+  <style>
     @media only screen and (device-width: 768px) {
-    /* For general iPad layouts */
-    /*ADD STYLING FOR THE PHOTO2AVATAR MODE HERE */
-}
-</style>
+      /* For general iPad layouts */
+      /*ADD STYLING FOR THE PHOTO2AVATAR MODE HERE */
+    }
+  </style>
 
 
 
-    <div id="sizeContainer">
-      <div id="videoContainer">
+  <div id="sizeContainer">
+    <div id="videoContainer">
 
-        <div class="loader-overlay">
-          <div class="loader"></div>
+      <div class="loader-overlay">
+        <div class="loader"></div>
+      </div>
+
+      <div class="navbar">
+        <div class="avatar-info">
+          <a style="display: none;">avatar-id: <span id="avatarId"></span></a>
+          <span id="avatarIdSpan"></span>
+
+          <a style="display: none;">Persona Name: <span id="avatarName"></span></a>
+          <img id="userImage">
+          <a><span id="userEmail" class="center-text"></span></a>
         </div>
+        <!-- Move the icon-container inside the avatar-info div -->
+        <div class="icon-container">
+          <img src="/src/reblium_logo.png" alt="Icon">
+        </div>
+      </div>
 
-        <div class="navbar">
-          <div class="avatar-info">
-            <a style="display: none;">avatar-id: <span id="avatarId"></span></a>
-            <span id="avatarIdSpan"></span>
+      <div class="beta-text">
+        Beta Version 0.0.1
+      </div>
 
-            <a style="display: none;">Persona Name: <span id="avatarName"></span></a>
-            <img id="userImage">
-            <a><span id="userEmail" class="center-text"></span></a>
+
+
+      <div id="exitConfirmation" class="modal-exit" style="display: none;">
+        <div class="modal-content-exit">
+          <h3>Are you sure you want to exit?</h3>
+          <div class="modal-buttons-exit">
+            <button class="save-exit" onclick="handleButtonClick()">Yes</button>
+            <!--<button class="cancel-exit" onclick="location.reload();">Exit</button>-->
+            <button class="exit" onclick="cancelExit();">No</button>
           </div>
-          <!-- Move the icon-container inside the avatar-info div -->
-          <div class="icon-container">
-            <img src="/src/reblium_logo.png" alt="Icon">
-          </div>
         </div>
-        
-        <div class="beta-text">
-          Beta Version 0.0.1
-        </div>
+      </div>
+
+
+      <!-- Pop-up -->
+      <div id="popup" class="popup" style="display: none;">
+        <form id="avatarForm">
+          <span class="close-button">&times;</span>
+          <h3>New Persona</h3>
+          <img class="avatar-icon" src="src/Default_Avatar_Icon.png"></img>
+          <input type="text" placeholder="Avatar name" id="username">
+          <button type="button" id="confirmButton">Confirm</button>
+        </form>
+      </div>
+
+
+      <div class="bottomMenu" id="bottomMenu">
+        <button class="menu-button" onclick="showExitConfirmation();">Exit</button>
+        <button class="menu-button" id="openPopup"
+          onclick="handleSendCommands({ saveavatar: parseFloat(document.getElementById('avatarId').textContent) }) + saveAvatarWithSliderValues()"><i
+            class="fas fa-save save-ico"></i>Save</button>
+      </div>
 
 
 
-        <div id="exitConfirmation" class="modal-exit" style="display: none;">
-          <div class="modal-content-exit">
-            <h3>Are you sure you want to exit?</h3>
-            <div class="modal-buttons-exit">
-              <button class="save-exit" onclick="handleButtonClick()">Yes</button>
-              <!--<button class="cancel-exit" onclick="location.reload();">Exit</button>-->
-              <button class="exit" onclick="cancelExit();">No</button>
-            </div>
-          </div>
-        </div>
-        
+      <div id="sideMenu" class="collapsed">
+        <div id="menuBar" onclick="toggleSideMenu()">
+          <div id="triangle" class="triangle"></div>
 
-        <!-- Pop-up -->
-        <div id="popup" class="popup" style="display: none;">
-          <form id="avatarForm">
-            <span class="close-button">&times;</span>
-            <h3>New Persona</h3>
-            <img class="avatar-icon" src="src/Default_Avatar_Icon.png"></img>
-            <input type="text" placeholder="Avatar name" id="username">
-            <button type="button" id="confirmButton">Confirm</button>
-          </form>
-        </div>
+          <div id="menuContent">
 
+            <div class="gen-mode-container">
+              <div class="gen-mode-heading">
 
-        <div class="bottomMenu" id="bottomMenu" >
-          <button class="menu-button" onclick="showExitConfirmation();">Exit</button>
-          <button class="menu-button" id="openPopup" onclick="handleSendCommands({ saveavatar: parseFloat(document.getElementById('avatarId').textContent) }) + saveAvatarWithSliderValues()"><i class="fas fa-save save-ico"></i>Save</button>
-        </div>
-
-
-    
-        <div id="sideMenu" class="collapsed" >
-            <div id="menuBar" onclick="toggleSideMenu()">
-                <div id="triangle" class="triangle"></div>
-            
-                <div id="menuContent">
-
-                    <div class="gen-mode-container">
-                        <div class="gen-mode-heading">
-
-                          <h2>Photo Mode</h2>
-                        </div>
-                        <div class="gen-mode-exp">
-                          <p class="gen-exp">
-                            Generate avatar a single selfie or your webcam, select your
-                            preferred traits and our AI will help you find the best
-                            combination
-                          </p>
-                        </div>
-                        <div class="gen-mode-settings">
-                          <form id="randomizeForm">
-                            <div class="gen-pref">
-                              <h3>Gender</h3>
-                              <div class="gen-card">
-                                <div class="checkbox_item citem_1 male-female">
-                                  <div class="check_container">
-                                    <div class="check-el">
-                                      <div class="checkbox-label">Male</div>
-                                      <label class="checkbox_wrap">
-                                        <input
-                                          type="checkbox"
-                                          name="Male"
-                                          class="checkbox_inp"
-                                          checked
-                                        />
-                                        <span class="checkbox_mark"></span>
-                                      </label>
-                                      <div class="checkbox-label">Female</div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
-                        </div>
-                        <div class="part-wrt" style="display: none">
-                          <p>Choose the gender will help us improving our AI alghorhym</p>
-                        </div>
-                        <div class="gen-mode-settings">
-                          <div class="gen-pref">
-                            <h3>Method</h3>
-                            <div class="gen-card">
-                              <div class="checkbox_item citem_1 male-female">
-                                <div class="check_container">
-                                  <div class="check-el">
-                                    <div class="checkbox-label">Photo</div>
-                                    <label class="checkbox_wrap">
-                                      <input
-                                        type="checkbox"
-                                        name="Male"
-                                        class="checkbox_inp"
-                                        id="ph-cam"
-                                      />
-                                      <span class="checkbox_mark"></span>
-                                    </label>
-                                    <div class="checkbox-label">Webcam</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+                <h2>Photo Mode</h2>
+              </div>
+              <div class="gen-mode-exp">
+                <p class="gen-exp">
+                  Generate avatar a single selfie or your webcam, select your
+                  preferred traits and our AI will help you find the best
+                  combination
+                </p>
+              </div>
+              <div class="gen-mode-settings">
+                <form id="randomizeForm">
+                  <div class="gen-pref">
+                    <h3>Gender</h3>
+                    <div class="gen-card">
+                      <div class="checkbox_item citem_1 male-female">
+                        <div class="check_container">
+                          <div class="check-el">
+                            <div class="checkbox-label">Male</div>
+                            <label class="checkbox_wrap">
+                              <input type="checkbox" name="Male" class="checkbox_inp" checked />
+                              <span class="checkbox_mark"></span>
+                            </label>
+                            <div class="checkbox-label">Female</div>
                           </div>
                         </div>
-                        <div class="part-wrt">
-                          <p>
-                            Generate avatar a single selfie or your webcam, select your
-                            preferred traits and our AI will help you find the best
-                            combination possible by giving your suggestions that help you
-                            find the right avatar.
-                          </p>
-                        </div>
-                        <div class="up-area">
-                          <video id="video" autoplay></video>
-                          <button
-                            id="click-photo"
-                            class="transparent-button-active selected"
-                            onclick="takepic()"
-                          >
-                            Click Photo
-                          </button>
-                          <canvas id="canvas"></canvas>
-                        </div>
-                        <div class="photo-upload-area">
-                          <img src="./src/up.png" id="up-img" />
-                          <input
-                            type="file"
-                            name="photo"
-                            id="fileinput"
-                            onchange="previewFile()"
-                          />
-                        </div>
-                        <div class="btng">
-                          <button class="transparent-button-active" onclick="callImg()">
-                            Go!
-                          </button>
-                        </div>
+                      </div>
                     </div>
-
-
-                            </div>
-                        </li>
-                    </ul>
-                </div>  
+                  </div>
+                </form>
+              </div>
+              <div class="part-wrt" style="display: none">
+                <p>Choose the gender will help us improving our AI alghorhym</p>
+              </div>
+              <div class="gen-mode-settings">
+                <div class="gen-pref">
+                  <h3>Method</h3>
+                  <div class="gen-card">
+                    <div class="checkbox_item citem_1 male-female">
+                      <div class="check_container">
+                        <div class="check-el">
+                          <div class="checkbox-label">Photo</div>
+                          <label class="checkbox_wrap">
+                            <input type="checkbox" name="Male" class="checkbox_inp" id="ph-cam" />
+                            <span class="checkbox_mark"></span>
+                          </label>
+                          <div class="checkbox-label">Webcam</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="part-wrt">
+                <p>
+                  Generate avatar a single selfie or your webcam, select your
+                  preferred traits and our AI will help you find the best
+                  combination possible by giving your suggestions that help you
+                  find the right avatar.
+                </p>
+              </div>
+              <div class="up-area">
+                <video id="video" autoplay></video>
+                <button id="click-photo" class="transparent-button-active selected" onclick="takepic()">
+                  Click Photo
+                </button>
+                <canvas id="canvas"></canvas>
+              </div>
+              <div class="photo-upload-area">
+                <img src="./src/up.png" id="up-img" />
+                <input type="file" name="photo" id="fileinput" onchange="previewFile()" />
+              </div>
+              <div class="btng">
+                <button class="transparent-button-active" onclick="callImg()">
+                  Go!
+                </button>
+              </div>
             </div>
+
+
+          </div>
+          </li>
+          </ul>
         </div>
+      </div>
+    </div>
 
 
 
@@ -413,7 +399,7 @@ updateAllSlidersWithAvatarData(sliderData);
 
 
     <script src="javascript/frondend.js"></script>
-    
+
     <script src="javascript/arc_functions.js"></script>
 
     <script src="javascript/arc_module.js" type="module"></script>
@@ -421,17 +407,24 @@ updateAllSlidersWithAvatarData(sliderData);
     <script src="javascript/dashboard.js"></script>
 
 
-    <script defer="defer" type="text/javascript" src="//cdn.xsolla.net/site-builder/v-release-20230627-01/landings/client-script.js"></script>
+    <script defer="defer" type="text/javascript"
+      src="//cdn.xsolla.net/site-builder/v-release-20230627-01/landings/client-script.js"></script>
 
     <script type="text/javascript" async="" src="https://cdn.xsolla.net/site-builder/static/swiper.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+      integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+      crossorigin="anonymous"></script>
 
 
     <script>
-   function callImg() {
+      function callImg() {
         var file = document.querySelector("input[type=file]");
         handleImageUpload(file);
       }
@@ -533,5 +526,6 @@ updateAllSlidersWithAvatarData(sliderData);
     <script>
       OmRangeSlider.init({ inputValueStyle: OmRangeSliderInputValueStyles.ASP_ARRAY });
     </script>
-  </body>
+</body>
+
 </html>

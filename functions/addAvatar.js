@@ -2,7 +2,6 @@ const express = require("express");
 const serverless = require("serverless-http");
 const mysql = require('mysql2/promise');
 
-
 const app = express();
 const router = express.Router();
 app.use(express.json()); // Add this line to parse the request body as JSON

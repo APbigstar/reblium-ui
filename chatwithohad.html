@@ -1,215 +1,258 @@
 <!DOCTYPE html>
 <!-- Coding By CodingNepal - www.codingnepalweb.com -->
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Reblium Demo Chatbot</title>
-    <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google Fonts Link For Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"/>
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+  <meta charset="utf-8">
+  <title>Reblium Demo Chatbot</title>
+  <link rel="icon" type="image/x-icon" href="src/reblium_logo.png">
 
-  </head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts Link For Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
-
-  <style>
-/* Import Google font - Montserrat */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
-}
+</head>
 
 
-#sizeContainer,
-#videoContainer {
-  width: 100vw  !important;
-  height: 100vh !important;
-  
-}
+<style>
+  /* Import Google font - Montserrat */
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 
-#start-rec-btn {
-  color: #00cdff; /* Maintain the icon color */
-  transition: background-color 0.3s; /* Smooth transition for background color change */
-}
-
-@keyframes pulse {
-  0%, 100% {
-    background-color: #fd5050; /* Original color */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
   }
-  50% {
-    background-color: #ff8080; /* Lighter shade for pulse effect */
+
+
+  #sizeContainer,
+  #videoContainer {
+    width: 100vw !important;
+    height: 100vh !important;
+
   }
-}
 
-.pulse-bg-animation {
-  animation: pulse 2s infinite;
-}
+  #start-rec-btn {
+    color: #00cdff;
+    /* Maintain the icon color */
+    transition: background-color 0.3s;
+    /* Smooth transition for background color change */
+  }
 
-#chatbox {
-  transition: height 0.3s ease, opacity 0.3s ease;
-  overflow: hidden; /* Prevents content from showing outside during transition */
-}
+  @keyframes pulse {
 
-/* Height for the container when chatbox is hidden */
-.chat-collapsed {
-  height: 96px; /* Adjust based on actual header and input height */
-}
+    0%,
+    100% {
+      background-color: #fd5050;
+      /* Original color */
+    }
 
-.soundwave {
-    width: 100%; /* Adjust the width to fill the button */
+    50% {
+      background-color: #ff8080;
+      /* Lighter shade for pulse effect */
+    }
+  }
+
+  .pulse-bg-animation {
+    animation: pulse 2s infinite;
+  }
+
+  #chatbox {
+    transition: height 0.3s ease, opacity 0.3s ease;
+    overflow: hidden;
+    /* Prevents content from showing outside during transition */
+  }
+
+  /* Height for the container when chatbox is hidden */
+  .chat-collapsed {
+    height: 96px;
+    /* Adjust based on actual header and input height */
+  }
+
+  .soundwave {
+    width: 100%;
+    /* Adjust the width to fill the button */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%; /* Use the full height of the button for alignment */
-}
+    height: 100%;
+    /* Use the full height of the button for alignment */
+  }
 
-.soundwave span {
+  .soundwave span {
     display: block;
-    width: 2px; /* Width of each bar */
-    height: 5px; /* Initial height of each bar */
-    background-color: white; /* Color of the bars */
-    animation: soundwave 0.8s ease-in-out infinite; /* Apply the animation */
-}
+    width: 2px;
+    /* Width of each bar */
+    height: 5px;
+    /* Initial height of each bar */
+    background-color: white;
+    /* Color of the bars */
+    animation: soundwave 0.8s ease-in-out infinite;
+    /* Apply the animation */
+  }
 
-.soundwave span:nth-child(1) { animation-delay: 0s; }
-.soundwave span:nth-child(2) { animation-delay: 0.1s; }
-.soundwave span:nth-child(3) { animation-delay: 0.2s; }
-.soundwave span:nth-child(4) { animation-delay: 0.3s; }
-.soundwave span:nth-child(5) { animation-delay: 0.4s; }
+  .soundwave span:nth-child(1) {
+    animation-delay: 0s;
+  }
 
-@keyframes soundwave {
-    0%, 100% {
-        height: 10%; /* Minimum height of the bars */
+  .soundwave span:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .soundwave span:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .soundwave span:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  .soundwave span:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes soundwave {
+
+    0%,
+    100% {
+      height: 10%;
+      /* Minimum height of the bars */
     }
+
     50% {
-        height: 100%; /* Maximum height of the bars */
+      height: 100%;
+      /* Maximum height of the bars */
     }
-}
+  }
 
 
 
 
-.flag-button.selected {
-        border: 2px solid  #1c78b1;
-    }
-
-
+  .flag-button.selected {
+    border: 2px solid #1c78b1;
+  }
 </style>
 
 
-  <body class="bg-slate-800">
-    <div id="sizeContainer" class="z-1 w-full h-full">
-      <div id="videoContainer" class="z-1">
-        <audio id="audioRef"></audio>
+<body class="bg-slate-800">
+  <div id="sizeContainer" class="z-1 w-full h-full">
+    <div id="videoContainer" class="z-1">
+      <audio id="audioRef"></audio>
 
-        <div class="z-2 fixed top-0 right-0 m-4 w-12 h-12 sm:top-0 sm:left-0 sm:w-36 sm:h-36">
-          <img src="src/logo_white.png" alt="Logo">
-          <br>
-          <img src="src/reblium_logo.png" alt="Logo">
-        </div>
+      <div class="z-2 fixed top-0 right-0 m-4 w-12 h-12 sm:top-0 sm:left-0 sm:w-36 sm:h-36">
+        <img src="src/logo_white.png" alt="Logo">
+        <br>
+        <img src="src/reblium_logo.png" alt="Logo">
+      </div>
 
-        <div class=" fixed bottom-10 right-8 m-4 text-white">
-          <p class="text-2xl">powered by Reblium</p>
-        </div>
+      <div class=" fixed bottom-10 right-8 m-4 text-white">
+        <p class="text-2xl">powered by Reblium</p>
+      </div>
 
-        <div class="fixed top-10 right-8 m-4 flex space-x-4">
-          <button id="englishButton" class="flag-button p-2 selected mr-4 px-4">
-              <span class="fi fi-gb text-white text-3xl "></span>
-          </button>
-          <button id="dutchButton" class="flag-button p-2  px-4">
-              <span class="fi fi-nl text-white text-3xl"></span>
-          </button>
-        </div>
-      
-      
+      <div class="fixed top-10 right-8 m-4 flex space-x-4">
+        <button id="englishButton" class="flag-button p-2 selected mr-4 px-4">
+          <span class="fi fi-gb text-white text-3xl "></span>
+        </button>
+        <button id="dutchButton" class="flag-button p-2  px-4">
+          <span class="fi fi-nl text-white text-3xl"></span>
+        </button>
+      </div>
 
-        
-        <div id="startScreen" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center text-center z-50 cursor-pointer">
-          <div>
-              <p class="text-white text-2xl font-bold mb-4 ">Press Anywhere to Start</p>
-              <svg class="text-white w-12 h-12 mx-auto animate-bounce" fill="#FFFFFF" height="800px" width="800px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
-                viewBox="0 0 257.832 257.832" xml:space="preserve">
-                <g>
-                  <path d="M62.288,89.305c1.367,0,2.741-0.465,3.867-1.415c2.532-2.138,2.853-5.924,0.715-8.455
+
+
+
+      <div id="startScreen"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center text-center z-50 cursor-pointer">
+        <div>
+          <p class="text-white text-2xl font-bold mb-4 ">Press Anywhere to Start</p>
+          <svg class="text-white w-12 h-12 mx-auto animate-bounce" fill="#FFFFFF" height="800px" width="800px"
+            version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 257.832 257.832" xml:space="preserve">
+            <g>
+              <path
+                d="M62.288,89.305c1.367,0,2.741-0.465,3.867-1.415c2.532-2.138,2.853-5.924,0.715-8.455
                     C60.642,72.058,57.213,62.67,57.213,53c0-22.608,18.393-41,41-41s41,18.392,41,41c0,6.308-1.392,12.354-4.137,17.974
                     c-1.455,2.978-0.221,6.57,2.757,8.024c2.977,1.459,6.57,0.22,8.024-2.757c3.554-7.274,5.355-15.093,5.355-23.241
-                    c0-29.225-23.775-53-53-53s-53,23.775-53,53c0,12.5,4.435,24.637,12.487,34.175C58.887,88.581,60.582,89.305,62.288,89.305z"/>
-                  <path d="M211.134,141.765c-3.866-22.86-20.326-25.967-27.416-26.223c-2.007-0.073-3.836-1.129-4.912-2.824
+                    c0-29.225-23.775-53-53-53s-53,23.775-53,53c0,12.5,4.435,24.637,12.487,34.175C58.887,88.581,60.582,89.305,62.288,89.305z" />
+              <path d="M211.134,141.765c-3.866-22.86-20.326-25.967-27.416-26.223c-2.007-0.073-3.836-1.129-4.912-2.824
                     c-5.367-8.456-12.645-10.681-18.813-10.681c-2.824-0.001-5.414,0.465-7.485,1.013c-0.608,0.16-1.227,0.239-1.839,0.239
                     c-2.178,0-4.277-0.994-5.588-2.811c-5.28-7.315-12.171-9.293-18.078-9.293c-1.58,0-3.09,0.142-4.479,0.36
                     c-0.371,0.059-0.739,0.087-1.1,0.087c-3.78,0-6.969-3.07-6.974-6.987l-0.05-42.287c-0.014-10.927-8.209-16.387-16.404-16.387
                     c-8.211,0-16.422,5.479-16.408,16.427c0.022,18.357,0.089,73.493,0.108,90.106c0.004,2.808-1.675,5.345-4.265,6.428
                     c-32.541,13.602,7.643,74.619,14.84,85.076c0.702,1.02,1.118,2.203,1.211,3.438l1.759,23.661c0.274,3.65,3.316,6.724,6.977,6.724
                     c0.003,0,0.006,0,0.009,0l78.623-0.349c3.509-0.005,6.471-2.732,6.928-6.211l3.202-24.453c0.136-1.031,0.51-2.053,1.074-2.927
-                    C213.066,191.413,214.717,162.954,211.134,141.765z"/>
-                </g>
-              </svg>
-            </div>
+                    C213.066,191.413,214.717,162.954,211.134,141.765z" />
+            </g>
+          </svg>
         </div>
-      
-      
-           
-           
-
-      
-
-        <div id="buttonsContainer" class="fixed inset-x-0 bottom-10 flex justify-center gap-4">
-          <!-- Initial Start Buttons -->
-          <button id="packageDropOff" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors" onclick="handleSendCommands({ Background2d: 'Back1' });">
-              Package Drop-Off
-          </button>
-          <button id="walkInInquiry" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">
-              Walk-In Inquiry
-          </button>
-          <button id="hasAppointment" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">
-              I Have an Appointment
-          </button>
-
-
-    
-        </div>
-        
-        
-        
-        <!-- Dynamic Content Container -->
-        <div id="dynamicContent" class="fixed right-0 top-1/4 w-1/5 h-1/2 flex flex-col items-center justify-center">
-          <!-- Content updates based on button interaction -->
-        </div>
-
-         <!-- Dynamic Content Container -->
-         <div id="dynamicContentLeft" class="fixed left-0 top-1/4 w-1/5 h-1/2 flex flex-col items-center justify-center">
-          <!-- Content updates based on button interaction -->
-        </div>
-        
-
-
-
-      
       </div>
+
+
+
+
+
+
+
+      <div id="buttonsContainer" class="fixed inset-x-0 bottom-10 flex justify-center gap-4">
+        <!-- Initial Start Buttons -->
+        <button id="packageDropOff"
+          class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors"
+          onclick="handleSendCommands({ Background2d: 'Back1' });">
+          Package Drop-Off
+        </button>
+        <button id="walkInInquiry"
+          class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">
+          Walk-In Inquiry
+        </button>
+        <button id="hasAppointment"
+          class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">
+          I Have an Appointment
+        </button>
+
+
+
+      </div>
+
+
+
+      <!-- Dynamic Content Container -->
+      <div id="dynamicContent" class="fixed right-0 top-1/4 w-1/5 h-1/2 flex flex-col items-center justify-center">
+        <!-- Content updates based on button interaction -->
+      </div>
+
+      <!-- Dynamic Content Container -->
+      <div id="dynamicContentLeft" class="fixed left-0 top-1/4 w-1/5 h-1/2 flex flex-col items-center justify-center">
+        <!-- Content updates based on button interaction -->
+      </div>
+
+
+
+
+
     </div>
-      
-
-
-
-  </body>
+  </div>
 
 
 
 
-  <script src="javascript/dev-avatar-chatbot.js"></script>
-
-  <script>
+</body>
 
 
-document.addEventListener('DOMContentLoaded', () => {
+
+
+<script src="javascript/dev-avatar-chatbot.js"></script>
+
+<script>
+
+
+  document.addEventListener('DOMContentLoaded', () => {
     const buttonsContainer = document.getElementById('buttonsContainer');
     const packageDropOff = document.getElementById('packageDropOff');
     const walkInInquiry = document.getElementById('walkInInquiry');
@@ -219,47 +262,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     document.getElementById('packageDropOff').addEventListener('click', () => {
-        dynamicContent.innerHTML = '<<img src="src/bel_icon.png" alt="ring">'; // Display arrow
-        handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
+      dynamicContent.innerHTML = '<<img src="src/bel_icon.png" alt="ring">'; // Display arrow
+      handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
     });
 
     function attachInitialEventListeners() {
-        document.getElementById('packageDropOff').addEventListener('click', showArrowForPackageDropOff);
-        document.getElementById('walkInInquiry').addEventListener('click', showWalkInInquiryOptions);
-        document.getElementById('hasAppointment').addEventListener('click', showAppointmentOptions);
+      document.getElementById('packageDropOff').addEventListener('click', showArrowForPackageDropOff);
+      document.getElementById('walkInInquiry').addEventListener('click', showWalkInInquiryOptions);
+      document.getElementById('hasAppointment').addEventListener('click', showAppointmentOptions);
     }
 
     function showArrowForPackageDropOff() {
-        dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'; // Display arrow
-        handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
+      dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'; // Display arrow
+      handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
 
     }
 
     function showWalkInInquiryOptions() {
       const buttonWidth = 'w-full'; // Ensure buttons fill the container width
 
-        buttonsContainer.innerHTML = `
+      buttonsContainer.innerHTML = `
          <button id="bookTour" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Book a Tour</button>
          <button id="dayPass" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Want a Day Pass</button>
          <button id="questions" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Questions</button>
          <button id="other" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Other</button>
          <button id="backFromInquiry" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Back</button>
         `;
-        document.getElementById('bookTour').addEventListener('click', () => {
-          dynamicContentLeft.innerHTML = '<img src="src/QRcode White.png" alt="QR Code for Booking a Tour">';
-          handleSendCommands({ texttospeech: 'Scan the QR code' });
-        });
+      document.getElementById('bookTour').addEventListener('click', () => {
+        dynamicContentLeft.innerHTML = '<img src="src/QRcode White.png" alt="QR Code for Booking a Tour">';
+        handleSendCommands({ texttospeech: 'Scan the QR code' });
+      });
 
-        document.getElementById('dayPass').addEventListener('click', () => {
-          dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
-          handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
-        });
+      document.getElementById('dayPass').addEventListener('click', () => {
+        dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
+        handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
+      });
 
 
 
-        document.getElementById('questions').addEventListener('click', () => {
-            const dynamicContent = document.getElementById('dynamicContent');
-            dynamicContent.innerHTML = `
+      document.getElementById('questions').addEventListener('click', () => {
+        const dynamicContent = document.getElementById('dynamicContent');
+        dynamicContent.innerHTML = `
               <div class="faq-container text-xl p-4 text-white m-2 w-full">
                   <button id="question0" class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full mb-4">Until what time are you open?</button>
                   <button id="question1" class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full mb-4">Can I purchase a day pass or half a day, and how does it work?</button>
@@ -270,91 +313,91 @@ document.addEventListener('DOMContentLoaded', () => {
 
             `;
 
-            // Define the answers for quick access and changes
-            const answers = [
-              "Open from 8 am until 6 pm during the week, members have 24/7 access.",
-              "It’s only possible to purchase a day pass.",
-              "€24.20 with V.A.T.",
-              "Scan this QR code to book a tour.",
-              "They are available for use, and it’s €10 per hour."
-            ];
+        // Define the answers for quick access and changes
+        const answers = [
+          "Open from 8 am until 6 pm during the week, members have 24/7 access.",
+          "It’s only possible to purchase a day pass.",
+          "€24.20 with V.A.T.",
+          "Scan this QR code to book a tour.",
+          "They are available for use, and it’s €10 per hour."
+        ];
 
-            document.getElementById('question3').addEventListener('click', () => {
-              dynamicContentLeft.innerHTML = '<img src="src/QRcode White.png" alt="QR Code for Booking a Tour">';
-              handleSendCommands({ texttospeech: 'Scan the QR code' });
-            });
-
-
-            // Function to handle the text to speech command
-            function sendTextToSpeech(index) {
-                handleSendCommands({ texttospeech: answers[index] });
-            }
-
-            // Attaching click event listeners to each FAQ button
-            document.getElementById('question0').addEventListener('click', () => sendTextToSpeech(0));
-            document.getElementById('question1').addEventListener('click', () => sendTextToSpeech(1));
-            document.getElementById('question2').addEventListener('click', () => sendTextToSpeech(2));
-            document.getElementById('question3').addEventListener('click', () => sendTextToSpeech(3));
-            document.getElementById('question4').addEventListener('click', () => sendTextToSpeech(4));
+        document.getElementById('question3').addEventListener('click', () => {
+          dynamicContentLeft.innerHTML = '<img src="src/QRcode White.png" alt="QR Code for Booking a Tour">';
+          handleSendCommands({ texttospeech: 'Scan the QR code' });
         });
-        document.getElementById('other').addEventListener('click', () => {
-          dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
-          handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
-        });
-        document.getElementById('backFromInquiry').addEventListener('click', resetToInitialButtons);
+
+
+        // Function to handle the text to speech command
+        function sendTextToSpeech(index) {
+          handleSendCommands({ texttospeech: answers[index] });
+        }
+
+        // Attaching click event listeners to each FAQ button
+        document.getElementById('question0').addEventListener('click', () => sendTextToSpeech(0));
+        document.getElementById('question1').addEventListener('click', () => sendTextToSpeech(1));
+        document.getElementById('question2').addEventListener('click', () => sendTextToSpeech(2));
+        document.getElementById('question3').addEventListener('click', () => sendTextToSpeech(3));
+        document.getElementById('question4').addEventListener('click', () => sendTextToSpeech(4));
+      });
+      document.getElementById('other').addEventListener('click', () => {
+        dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
+        handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
+      });
+      document.getElementById('backFromInquiry').addEventListener('click', resetToInitialButtons);
 
 
     }
 
     function showAppointmentOptions() {
-        buttonsContainer.innerHTML = `
+      buttonsContainer.innerHTML = `
          <button id="withMike" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">With Mijke</button>
          <button id="withTenant" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">With Member</button>
          <button id="backFromAppointment" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Back</button>
         `;
-        document.getElementById('withMike').addEventListener('click', () => dynamicContent.innerHTML = '<p class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full mb-4">Contact Mijke at (06) 12 34 56 78</p>');
-        document.getElementById('withTenant').addEventListener('click', () => {
-          dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
-          handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
-        });
-        document.getElementById('backFromAppointment').addEventListener('click', resetToInitialButtons);
+      document.getElementById('withMike').addEventListener('click', () => dynamicContent.innerHTML = '<p class="bg-blue-300 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded w-full mb-4">Contact Mijke at (06) 12 34 56 78</p>');
+      document.getElementById('withTenant').addEventListener('click', () => {
+        dynamicContent.innerHTML = '<img src="src/bel_icon.png" alt="ring">'
+        handleSendCommands({ texttospeech: 'Please ring the doorbell, and kindly wait, someone is coming to open the door ' });
+      });
+      document.getElementById('backFromAppointment').addEventListener('click', resetToInitialButtons);
     }
 
     function resetToInitialButtons() {
-        buttonsContainer.innerHTML = `
+      buttonsContainer.innerHTML = `
             <button id="packageDropOff" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Package Drop-Off</button>
             <button id="walkInInquiry" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">Walk-In Inquiry</button>
             <button id="hasAppointment" class="bg-[#1c78b1] text-white text-2xl font-bold py-6 px-12 rounded-lg shadow-lg hover:bg-blue-300 transition-colors">I Have an Appointment</button>        `;
-        dynamicContent.innerHTML = '';
-        dynamicContentLeft.innerHTML = '';
+      dynamicContent.innerHTML = '';
+      dynamicContentLeft.innerHTML = '';
 
 
-        attachInitialEventListeners(); // Reattach event listeners to the newly created buttons
+      attachInitialEventListeners(); // Reattach event listeners to the newly created buttons
     }
 
     attachInitialEventListeners(); // Initial attach of event listeners
 
 
 
-});
+  });
 
 
-document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener('DOMContentLoaded', () => {
     const englishButton = document.getElementById('englishButton');
     const dutchButton = document.getElementById('dutchButton');
 
     // Function to select English
     function selectEnglish() {
-        englishButton.classList.add('selected');
-        dutchButton.classList.remove('selected');
-        // You can add additional logic here, like changing the language
+      englishButton.classList.add('selected');
+      dutchButton.classList.remove('selected');
+      // You can add additional logic here, like changing the language
     }
 
     // Function to select Dutch
     function selectDutch() {
-        dutchButton.classList.add('selected');
-        englishButton.classList.remove('selected');
-        // You can add additional logic here, like changing the language
+      dutchButton.classList.add('selected');
+      englishButton.classList.remove('selected');
+      // You can add additional logic here, like changing the language
     }
 
     // Set English as the default selected on page load
@@ -363,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listeners for the toggle buttons
     englishButton.addEventListener('click', selectEnglish);
     dutchButton.addEventListener('click', selectDutch);
-});
+  });
 
 
 
@@ -380,27 +423,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// Function that detects when the pixelstreaming video is loaded
-let videoLoaded = false;
+  // Function that detects when the pixelstreaming video is loaded
+  let videoLoaded = false;
 
-// Function to check if the video is loaded and execute the avatar reset function
-function detectVideoLoadedAndExecuteAvatarReset() {
+  // Function to check if the video is loaded and execute the avatar reset function
+  function detectVideoLoadedAndExecuteAvatarReset() {
     const videoElement = document.getElementById('videoContainer').querySelector('video');
 
     if (videoElement && videoElement.readyState >= 3 && !videoLoaded) {
-        console.log('Video is loaded and ready to play.');
-        videoLoaded = true;
-        clearInterval(checkInterval);  // Clear the interval to stop further checks
-        handleResetAvatar();  // Reset the avatar after video is loaded
+      console.log('Video is loaded and ready to play.');
+      videoLoaded = true;
+      clearInterval(checkInterval);  // Clear the interval to stop further checks
+      handleResetAvatar();  // Reset the avatar after video is loaded
     }
-} 
+  }
 
-// Function to check if the device is mobile
-function isMobileDevice() {
+  // Function to check if the device is mobile
+  function isMobileDevice() {
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     // alert("Is mobile device: " + isMobile);
     return isMobile;
-}
+  }
 
 
 
@@ -408,86 +451,86 @@ function isMobileDevice() {
 
 
 
-// Function to reset the avatar using randomly selected JSON data
-async function handleResetAvatar() {
+  // Function to reset the avatar using randomly selected JSON data
+  async function handleResetAvatar() {
     const avatars = [
-        'Achaya.DHS',
-        'Alex.DHS',
-        'James.DHS',
-        'John.DHS',
-        'Lu.DHS',
-        'Mao.DHS',
-        'Nour.DHS',
-        'Ohad.DHS',
-        'Richard.DHS',
-        'Sweetdog.DHS',
-        'Xiao.DHS'
+      'Achaya.DHS',
+      'Alex.DHS',
+      'James.DHS',
+      'John.DHS',
+      'Lu.DHS',
+      'Mao.DHS',
+      'Nour.DHS',
+      'Ohad.DHS',
+      'Richard.DHS',
+      'Sweetdog.DHS',
+      'Xiao.DHS'
     ];
 
     // Randomly select an avatar from the list
     const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
 
     try {
-        const response = await fetch(`avatar_presets/json/${randomAvatar}`);
-        const jsonData = await response.json();
-        handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+      const response = await fetch(`avatar_presets/json/${randomAvatar}`);
+      const jsonData = await response.json();
+      handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
 
-        setTimeout(() => {
-          handleSendCommands({ texttospeech: ' Im your virtual receptionist. How can I assist you today? ' });
-          handleSendCommands({ cameraswitch: 'head' });
+      setTimeout(() => {
+        handleSendCommands({ texttospeech: ' Im your virtual receptionist. How can I assist you today? ' });
+        handleSendCommands({ cameraswitch: 'head' });
 
-        }, 2500);
+      }, 2500);
 
     } catch (error) {
-        console.error('Failed to load JSON:', error);
+      console.error('Failed to load JSON:', error);
     }
-}
+  }
 
 
-// Function to execute multiple camera movements
-function executeCameraMovements() {
+  // Function to execute multiple camera movements
+  function executeCameraMovements() {
 
     for (let i = 0; i < 0; i++) {
-        handleSendCommands({ camright: '' });
+      handleSendCommands({ camright: '' });
     }
     for (let i = 0; i < 0; i++) {
-        handleSendCommands({ camdown: '' });
+      handleSendCommands({ camdown: '' });
     }
     for (let i = 0; i < -2000; i++) {
-        handleSendCommands({ camforward: '' });
+      handleSendCommands({ camforward: '' });
     }
-}
+  }
 
-// Define an interval to periodically check for video loading
-const checkInterval = setInterval(detectVideoLoadedAndExecuteAvatarReset, 1000); 
-
-
+  // Define an interval to periodically check for video loading
+  const checkInterval = setInterval(detectVideoLoadedAndExecuteAvatarReset, 1000);
 
 
 
-window.onload = function() {
+
+
+  window.onload = function () {
     const startScreen = document.getElementById('startScreen');
     const audioRef = document.getElementById('audioRef');
     let inactivityTimeout;
 
     // Function to handle the start of the application
     function startApplication() {
-        import('./javascript/arc_module.js').then(() => {
-            console.log('Arc module loaded successfully!');
-            startScreen.style.display = 'none'; // Hide the start screen after loading the module
-            audioRef.play();
-            resetInactivityTimeout(); // Start tracking inactivity
-        }).catch(error => {
-            console.error('Error loading arc module:', error);
-        });
+      import('./javascript/arc_module.js').then(() => {
+        console.log('Arc module loaded successfully!');
+        startScreen.style.display = 'none'; // Hide the start screen after loading the module
+        audioRef.play();
+        resetInactivityTimeout(); // Start tracking inactivity
+      }).catch(error => {
+        console.error('Error loading arc module:', error);
+      });
     }
 
     // Function to reset the inactivity timeout
     function resetInactivityTimeout() {
-        clearTimeout(inactivityTimeout);
-        inactivityTimeout = setTimeout(() => {
-            location.reload(); // Reload the page after 3 minutes of inactivity
-        }, 3 * 60 * 1000); // 3 minutes in milliseconds
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = setTimeout(() => {
+        location.reload(); // Reload the page after 3 minutes of inactivity
+      }, 3 * 60 * 1000); // 3 minutes in milliseconds
     }
 
     // Event listener for clicking anywhere on the start screen
@@ -501,7 +544,7 @@ window.onload = function() {
 
     // Start the inactivity timer when the application loads
     resetInactivityTimeout();
-};
+  };
 
 
 
@@ -509,6 +552,6 @@ window.onload = function() {
 
 
 
-  </script>
+</script>
 
 </html>

@@ -100,7 +100,7 @@ function togglechatbot() {
 
 function toggleSection(sectionId) {
   // Array of all possible sections
-  const sections = ['avatar-Discover', 'avatar-Templates', 'avatar-Avatars', 'avatar-Pricing'];
+  const sections = ['avatar-Discover', 'avatar-Templates', 'avatar-Avatars', 'avatar-Pricing', 'credits'];
 
   // Loop through all sections and hide them
   sections.forEach((section) => {

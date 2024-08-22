@@ -108,6 +108,8 @@ document.getElementById('login-button').addEventListener('click', async (event) 
         if (resp.status === 200) {
             // Authentication request successful
             // You can handle the success response here, e.g., redirect the user to the dashboard
+            localStorage.setItem('userToken', data.token); 
+            localStorage.setItem('email', username);
             window.location.href = data.login_url;
         } else {
             // Authentication request failed, handle the error (e.g., show an error message)

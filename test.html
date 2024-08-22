@@ -1,93 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <title>Test chatbot design </title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <title>Test chatbot design </title>
 </head>
 <style>
-    body {
-    font-family: 'Poppins', sans-serif; /* Sets Poppins as the default font */
-}
-.chat-container{
-    display:-webkit-flex;
-    display:-moz-flex;
-    display:-ms-flex;
-    display:flex;
-    -webkit-flex-flow:column;
-    -moz-flex-flow:column;
-    -ms-flex-flow:column;
-    flex-flow:column;
-    -webkit-justify-content:space-around;
-    -moz-justify-content:space-around;
-    -ms-justify-content:space-around;
-    justify-content:space-around;
-    -webkit-align-items:center;
-    -moz-align-items:center;
-    -ms-align-items:center;
-    align-items:center;
+  body {
+    font-family: 'Poppins', sans-serif;
+    /* Sets Poppins as the default font */
+  }
+
+  .chat-container {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: flex;
+    -webkit-flex-flow: column;
+    -moz-flex-flow: column;
+    -ms-flex-flow: column;
+    flex-flow: column;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -ms-justify-content: space-around;
+    justify-content: space-around;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    align-items: center;
     position: fixed;
     width: 350px;
     bottom: 1rem;
     right: 0.5rem;
-}
+  }
 
-.chat-header{
+  .chat-header {
     color: white;
     display: flex;
-    justify-content: space-between; /* Adjusted from space-around to space-between */
+    justify-content: space-between;
+    /* Adjusted from space-around to space-between */
     align-items: center;
-    border-radius: 0.5rem 0.5rem 0 0; /* rounded-t-lg */
+    border-radius: 0.5rem 0.5rem 0 0;
+    /* rounded-t-lg */
     width: 100%;
-}
+  }
 
 
-.muteButton, .close-chat {
+  .muteButton,
+  .close-chat {
     display: flex;
     align-items: center;
     justify-content: center;
     height: 2rem;
     width: 2rem;
     cursor: pointer;
-}
+  }
 
 
-.chat-content{
+  .chat-content {
     height: calc(100vh - 50vh);
     width: 100%;
     overflow-y: auto;
 
-}
+  }
 
-.message-container {
+  .message-container {
     padding: 0 1rem;
-}
+  }
 
-.message-text {
+  .message-text {
     background-color: rgba(0, 0, 0, 0.2);
     color: white;
-    border: 1px solid; /* Tailwind class 'border' assumes a default color, usually border-gray-200, you might want to set a specific border color */
-    border-radius: 0.5rem; /* 'rounded-lg' in Tailwind */
-    padding: 0.5rem 1rem; /* 'py-2 px-4' in Tailwind */
-    display: inline-block; /* 'inline-block' in Tailwind */
-}
+    border: 1px solid;
+    /* Tailwind class 'border' assumes a default color, usually border-gray-200, you might want to set a specific border color */
+    border-radius: 0.5rem;
+    /* 'rounded-lg' in Tailwind */
+    padding: 0.5rem 1rem;
+    /* 'py-2 px-4' in Tailwind */
+    display: inline-block;
+    /* 'inline-block' in Tailwind */
+  }
 
-.chat-input {
+  .chat-input {
     width: 100%;
     display: flex;
-}
+  }
 
-.chat-input-container {
+  .chat-input-container {
     flex-grow: 1;
     display: flex;
     align-items: center;
     padding: 0.5rem;
-}
+  }
 
-.input-wrapper {
+  .input-wrapper {
     flex-grow: 1;
     display: flex;
     align-items: center;
@@ -96,25 +106,25 @@
     border-radius: 0.375rem 0 0 0.375rem;
     background-color: rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+  }
 
-.user-input-field {
+  .user-input-field {
     flex-grow: 1;
     background-color: transparent;
     color: white;
     border: none;
     outline: none;
-}
+  }
 
-.send-button {
+  .send-button {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
     border-radius: 0 0.375rem 0.375rem 0;
-}
+  }
 
-.call-button {
+  .call-button {
     margin-left: 0.5rem;
     padding: 0.5rem;
     width: 1.5rem;
@@ -126,9 +136,9 @@
     border-radius: 0.375rem;
     overflow: hidden;
     transition: background-color 0.3s;
-}
+  }
 
-.stopcall-button {
+  .stopcall-button {
     display: none;
     margin-left: 0.5rem;
     padding: 0.5rem;
@@ -141,52 +151,77 @@
     border-radius: 0.375rem;
     overflow: hidden;
     transition: background-color 0.3s;
-}
+  }
 
-.call-button:hover {
+  .call-button:hover {
     background-color: #3c9246;
-}
+  }
 
-.soundwave {
-    width: 100%; /* Adjust the width to fill the button */
+  .soundwave {
+    width: 100%;
+    /* Adjust the width to fill the button */
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%; /* Use the full height of the button for alignment */
-}
+    height: 100%;
+    /* Use the full height of the button for alignment */
+  }
 
-.soundwave span {
+  .soundwave span {
     display: block;
-    width: 2px; /* Width of each bar */
-    height: 5px; /* Initial height of each bar */
-    background-color: white; /* Color of the bars */
-    animation: soundwave 0.8s ease-in-out infinite; /* Apply the animation */
-}
+    width: 2px;
+    /* Width of each bar */
+    height: 5px;
+    /* Initial height of each bar */
+    background-color: white;
+    /* Color of the bars */
+    animation: soundwave 0.8s ease-in-out infinite;
+    /* Apply the animation */
+  }
 
-.soundwave span:nth-child(1) { animation-delay: 0s; }
-.soundwave span:nth-child(2) { animation-delay: 0.1s; }
-.soundwave span:nth-child(3) { animation-delay: 0.2s; }
-.soundwave span:nth-child(4) { animation-delay: 0.3s; }
-.soundwave span:nth-child(5) { animation-delay: 0.4s; }
+  .soundwave span:nth-child(1) {
+    animation-delay: 0s;
+  }
 
-@keyframes soundwave {
-    0%, 100% {
-        height: 10%; /* Minimum height of the bars */
+  .soundwave span:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .soundwave span:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  .soundwave span:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+
+  .soundwave span:nth-child(5) {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes soundwave {
+
+    0%,
+    100% {
+      height: 10%;
+      /* Minimum height of the bars */
     }
+
     50% {
-        height: 100%; /* Maximum height of the bars */
+      height: 100%;
+      /* Maximum height of the bars */
     }
-}
-
+  }
 </style>
 
 <body style="background-color: #705c64;">
 
   <div id="buttonsContainer" class="avatar-menu">
-    <button class="transparent-button-active" onclick="toggleMenu('random') + handleSendCommands({ cameraswitch: 'Head' })">Generator</button>
+    <button class="transparent-button-active"
+      onclick="toggleMenu('random') + handleSendCommands({ cameraswitch: 'Head' })">Generator</button>
 
-      <button id="voiceButton" >
-        Voice <i id="voiceIcon" class="fas fa-venus"></i>
+    <button id="voiceButton">
+      Voice <i id="voiceIcon" class="fas fa-venus"></i>
     </button>
     <button id="personaButton" class="transparent-button-active">Persona</button>
     <button id="makeupButton" class="transparent-button-active">Make up</button>
@@ -195,718 +230,725 @@
     <button id="lightButton" class="transparent-button-active">Lighting</button>
 
 
-     <!-- <button class="transparent-button-active" onclick="toggleMenu('photo') + handleSendCommands({ cameraswitch: 'Head' })">Photo2avatar</button>-->
+    <!-- <button class="transparent-button-active" onclick="toggleMenu('photo') + handleSendCommands({ cameraswitch: 'Head' })">Photo2avatar</button>-->
 
   </div>
   <div id="stopcall-button" class="stopcall-button">
     <div class="soundwave">
-        <span ></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
     </div> <!-- Container for the soundwave animation with five bars -->
   </div>
-    
+
   <div id="chat-container" class="chat-container">
-      <div id="chat-header" class="chat-header">
-          <div id="muteButton" class="muteButton" onclick="handleMute()" title="Toggle Mute">
-              <i class="fas fa-volume-mute" style="color: #EF4444;"></i> <!-- Assuming Font Awesome icons -->
-          </div>
-          <div>
-              <div id="close-chat" class="close-chat">
-                  <span id="toggle-icon" style="color: black;">+</span> <!-- Assuming Font Awesome icons -->
-              </div>  
-          </div>
+    <div id="chat-header" class="chat-header">
+      <div id="muteButton" class="muteButton" onclick="handleMute()" title="Toggle Mute">
+        <i class="fas fa-volume-mute" style="color: #EF4444;"></i> <!-- Assuming Font Awesome icons -->
       </div>
-      <div id="chatbox" class="chat-content" tyle="height: calc(100vh - 50vh);">
-          <div class="message-container">
-              <p class="message-text">Hi there 👋 <br>How can I help you today?</p>
-          </div>        
+      <div>
+        <div id="close-chat" class="close-chat">
+          <span id="toggle-icon" style="color: black;">+</span> <!-- Assuming Font Awesome icons -->
+        </div>
       </div>
-      <div id="chat-input" class="chat-input">
-          <div class="chat-input-container">
-              <div class="input-wrapper">
-                  <input id="user-input" onfocus="clearThis(this)" type="text" placeholder="Type a message..." class="user-input-field" />
-                  <div id="send-button" class="send-button">
-                      <svg id="send_button" style="color: white;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                      </svg>
-                  </div>
-              </div>
-              <div id="call-button" class="call-button">
-                  <svg class="" fill="#FFFFFF" height="25px" width="25px" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
-                      <g>
-                        <g>
-                          <path d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z"/>
-                          <path d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z"/>
-                        </g>
-                      </g>
-                    </svg>
-              </div>
+    </div>
+    <div id="chatbox" class="chat-content" tyle="height: calc(100vh - 50vh);">
+      <div class="message-container">
+        <p class="message-text">Hi there 👋 <br>How can I help you today?</p>
+      </div>
+    </div>
+    <div id="chat-input" class="chat-input">
+      <div class="chat-input-container">
+        <div class="input-wrapper">
+          <input id="user-input" onfocus="clearThis(this)" type="text" placeholder="Type a message..."
+            class="user-input-field" />
+          <div id="send-button" class="send-button">
+            <svg id="send_button" style="color: white;" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+            </svg>
           </div>
-          
+        </div>
+        <div id="call-button" class="call-button">
+          <svg class="" fill="#FFFFFF" height="25px" width="25px" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
+            <g>
+              <g>
+                <path
+                  d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z" />
+                <path
+                  d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z" />
+              </g>
+            </g>
+          </svg>
+        </div>
       </div>
+
+    </div>
   </div>
 
-<script>
-let newWebRTC;
-  function handleSendCommands(command) {
-    newWebRTC.emitUIInteraction(command);
-  }    
+  <script>
+    let newWebRTC;
+    function handleSendCommands(command) {
+      newWebRTC.emitUIInteraction(command);
+    }
 
-const chatbox = document.getElementById("chatbox");
-const chatContainer = document.getElementById("chat-container");
-const userInput = document.getElementById("user-input");
-const sendButton = document.getElementById("send-button");
-const openChatButton = document.getElementById("open-chat");
-const closeChatButton = document.getElementById("close-chat");
-const toggleIcon = document.getElementById("toggle-icon");
+    const chatbox = document.getElementById("chatbox");
+    const chatContainer = document.getElementById("chat-container");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const openChatButton = document.getElementById("open-chat");
+    const closeChatButton = document.getElementById("close-chat");
+    const toggleIcon = document.getElementById("toggle-icon");
 
-// Function to toggle the chatbox visibility
-function toggleChatbox() {
-  if (chatbox.style.display === 'none') {
-    // Show the chatbox if it's currently hidden
-    chatbox.style.display = 'block';  // Set display to block to show it
-    chatContainer.classList.remove("chat-collapsed");
-    toggleIcon.textContent = '—';  // Set the toggle icon to indicate collapsing
-  } else {
-    // Hide the chatbox if it's currently shown
-    chatbox.style.display = 'none';  // Set display to none to hide it
-    chatContainer.classList.add("chat-collapsed");
-    toggleIcon.textContent = '+';  // Set the toggle icon to indicate expanding
-  }
-}
+    // Function to toggle the chatbox visibility
+    function toggleChatbox() {
+      if (chatbox.style.display === 'none') {
+        // Show the chatbox if it's currently hidden
+        chatbox.style.display = 'block';  // Set display to block to show it
+        chatContainer.classList.remove("chat-collapsed");
+        toggleIcon.textContent = '—';  // Set the toggle icon to indicate collapsing
+      } else {
+        // Hide the chatbox if it's currently shown
+        chatbox.style.display = 'none';  // Set display to none to hide it
+        chatContainer.classList.add("chat-collapsed");
+        toggleIcon.textContent = '+';  // Set the toggle icon to indicate expanding
+      }
+    }
 
-chatbox.style.display = 'none'; 
+    chatbox.style.display = 'none';
 
-closeChatButton.addEventListener("click", toggleChatbox);
+    closeChatButton.addEventListener("click", toggleChatbox);
 
 
 
-// Add an event listener to the send button
-sendButton.addEventListener("click", function () {
-  const userMessage = userInput.value;
-  if (userMessage.trim() !== "") {
-      addUserMessage(userMessage);
-      userInput.value = "";
-  }
-});
-
-userInput.addEventListener("keyup", function (event) {
-  if (event.key === "Enter") {
+    // Add an event listener to the send button
+    sendButton.addEventListener("click", function () {
       const userMessage = userInput.value;
-      addUserMessage(userMessage);
-      userInput.value = "";
-  }
-});
+      if (userMessage.trim() !== "") {
+        addUserMessage(userMessage);
+        userInput.value = "";
+      }
+    });
 
-function addUserMessage(message) {
-  const messageElement = document.createElement("div");
-  messageElement.style.marginBottom = "-20px";
-  messageElement.style.textAlign = "right";
+    userInput.addEventListener("keyup", function (event) {
+      if (event.key === "Enter") {
+        const userMessage = userInput.value;
+        addUserMessage(userMessage);
+        userInput.value = "";
+      }
+    });
 
-  const pElement = document.createElement("p");
-  pElement.style.background = "rgba(0, 0, 0, 0.2)";
-  pElement.style.color = "white";
-  pElement.style.borderRadius = "12px"; 
-  pElement.style.padding = "8px 16px";
-  pElement.style.display = "inline-block";
-  pElement.style.border = "white solid 1px";
-  pElement.innerText = message;
+    function addUserMessage(message) {
+      const messageElement = document.createElement("div");
+      messageElement.style.marginBottom = "-20px";
+      messageElement.style.textAlign = "right";
 
-  messageElement.appendChild(pElement);
-  chatbox.appendChild(messageElement);
-  chatbox.scrollTop = chatbox.scrollHeight;
+      const pElement = document.createElement("p");
+      pElement.style.background = "rgba(0, 0, 0, 0.2)";
+      pElement.style.color = "white";
+      pElement.style.borderRadius = "12px";
+      pElement.style.padding = "8px 16px";
+      pElement.style.display = "inline-block";
+      pElement.style.border = "white solid 1px";
+      pElement.innerText = message;
 
-  handleSendCommands({ usermessege: message });
-}
+      messageElement.appendChild(pElement);
+      chatbox.appendChild(messageElement);
+      chatbox.scrollTop = chatbox.scrollHeight;
 
-function addBotMessage(message) {
-  const messageElement = document.createElement("div");
-  messageElement.style.marginBottom = "-20px";
+      handleSendCommands({ usermessege: message });
+    }
 
-  const pElement = document.createElement("p");
-  pElement.style.background = "rgba(0, 0, 0, 0.2)";
-  pElement.style.color = "white";
-  pElement.style.borderRadius = "12px";
-  pElement.style.padding = "8px 16px";
-  pElement.style.display = "inline-block";
-  pElement.innerText = message;
+    function addBotMessage(message) {
+      const messageElement = document.createElement("div");
+      messageElement.style.marginBottom = "-20px";
 
-  messageElement.appendChild(pElement);
-  chatbox.appendChild(messageElement);
-  chatbox.scrollTop = chatbox.scrollHeight;
-}
+      const pElement = document.createElement("p");
+      pElement.style.background = "rgba(0, 0, 0, 0.2)";
+      pElement.style.color = "white";
+      pElement.style.borderRadius = "12px";
+      pElement.style.padding = "8px 16px";
+      pElement.style.display = "inline-block";
+      pElement.innerText = message;
 
-
-// Automatically open the chatbox on page load
-toggleChatbox();
-
-
-
+      messageElement.appendChild(pElement);
+      chatbox.appendChild(messageElement);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
 
 
-document.addEventListener('DOMContentLoaded', function () {
-  const modal = document.getElementById('popupModal');
-  const audioPlayer = document.getElementById('audioPlayer');
-  modal.style.display = 'flex'; // Show modal on page load
+    // Automatically open the chatbox on page load
+    toggleChatbox();
 
-  document.getElementById('closeButton').addEventListener('click', function () {
-      modal.style.display = 'none'; // Hide modal
-      audioPlayer.muted = false; // Unmute the audio
-  });
-});
 
-   // Mute button
-   let hasEnabledSound = false; // Flag to track if the user has enabled sound
 
-   document.addEventListener('DOMContentLoaded', function() {
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const modal = document.getElementById('popupModal');
+      const audioPlayer = document.getElementById('audioPlayer');
+      modal.style.display = 'flex'; // Show modal on page load
+
+      document.getElementById('closeButton').addEventListener('click', function () {
+        modal.style.display = 'none'; // Hide modal
+        audioPlayer.muted = false; // Unmute the audio
+      });
+    });
+
+    // Mute button
+    let hasEnabledSound = false; // Flag to track if the user has enabled sound
+
+    document.addEventListener('DOMContentLoaded', function () {
       const audioRef = document.getElementById('audioRef');
       audioRef.muted = true; // Ensure audio is muted initially
-      
+
       const soundEnablePopup = document.getElementById('sound-enable-popup');
       if (!hasEnabledSound) {
-          soundEnablePopup.classList.remove('hidden'); // Show the pop-up on page load
+        soundEnablePopup.classList.remove('hidden'); // Show the pop-up on page load
       }
 
       // Add event listener for enabling sound
-      document.getElementById('enable-sound-button').addEventListener('click', function() {
-          handleMute(); 
-          hasEnabledSound = true;
-          soundEnablePopup.classList.add('hidden');
+      document.getElementById('enable-sound-button').addEventListener('click', function () {
+        handleMute();
+        hasEnabledSound = true;
+        soundEnablePopup.classList.add('hidden');
       });
-   });
-
-   function handleMute() {
-   const audioRef = document.getElementById('audioRef'); // Reference to your audio/video element
-   const icon = document.getElementById('muteButton').firstElementChild;
-   const soundEnablePopup = document.getElementById('sound-enable-popup'); // Get the pop-up element
-
-   if (audioRef.paused || audioRef.muted) {
-      audioRef.play(); // Attempt to play the audio
-      audioRef.muted = false; // Ensure the audio is unmuted
-      icon.className = 'fas fa-volume-up'; // Change icon to sound enabled
-      icon.classList.remove('text-red-500', 'line-through'); // Adjust styles as needed
-      soundEnablePopup.classList.add('hidden'); // Hide the pop-up when sound is enabled
-   } else {
-      audioRef.pause(); // Pause the audio
-      audioRef.muted = true; // Mute the audio
-      icon.className = 'fas fa-volume-mute'; // Change icon to sound muted
-      icon.classList.add('text-red-500', 'line-through'); // Adjust styles as needed
-      // Optionally show the pop-up again if you want to remind the user to unmute
-      // soundEnablePopup.classList.remove('hidden'); 
-   }
-}
-
-
-  // Upload avatar
-  document.addEventListener('DOMContentLoaded', function() {
-    // Target the custom upload button and the hidden file input
-    const fileInput = document.getElementById('file-upload');
-    const customUploadBtn = document.getElementById('custom-upload-btn');
-
-    // Add click event listener to the custom button
-    customUploadBtn.addEventListener('click', function() {
-       fileInput.click(); // Programmatically click the hidden file input
     });
 
-    // Upload avatar function remains the same
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-     
-      if (file) {
-        const reader = new FileReader();
-       
-        reader.onload = async (e) => {
-          try {
-            const jsonData = JSON.parse(e.target.result);
-            console.log('File content:', jsonData);
-           
-            // Assuming handleSendCommands can handle this JSON data
-            handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
-          } catch (error) {
-            console.error('Error processing file:', error);
-          }
-        };
-       
-        reader.onerror = (error) => console.error('Error reading file:', error);
-        reader.readAsText(file); // or use reader.readAsArrayBuffer(file) if your file is binary
+    function handleMute() {
+      const audioRef = document.getElementById('audioRef'); // Reference to your audio/video element
+      const icon = document.getElementById('muteButton').firstElementChild;
+      const soundEnablePopup = document.getElementById('sound-enable-popup'); // Get the pop-up element
+
+      if (audioRef.paused || audioRef.muted) {
+        audioRef.play(); // Attempt to play the audio
+        audioRef.muted = false; // Ensure the audio is unmuted
+        icon.className = 'fas fa-volume-up'; // Change icon to sound enabled
+        icon.classList.remove('text-red-500', 'line-through'); // Adjust styles as needed
+        soundEnablePopup.classList.add('hidden'); // Hide the pop-up when sound is enabled
+      } else {
+        audioRef.pause(); // Pause the audio
+        audioRef.muted = true; // Mute the audio
+        icon.className = 'fas fa-volume-mute'; // Change icon to sound muted
+        icon.classList.add('text-red-500', 'line-through'); // Adjust styles as needed
+        // Optionally show the pop-up again if you want to remind the user to unmute
+        // soundEnablePopup.classList.remove('hidden'); 
       }
-   }
-
-   // Attach the file upload handler to the input's change event
-   fileInput.addEventListener('change', handleFileUpload);
-});
-
-// load the avatar form an DHS file 
-async function loadAndSendAvatarData(jsonFilePath) {
-  try {
-    const response = await fetch(jsonFilePath);
-    const jsonData = await response.json();
-    handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
-  } catch (error) {
-    console.error('Error loading JSON:', error);
-  }
-}
-
-
-
-
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  const voiceMappings = {
-    "en-US": {
-        male: "en-GB-Neural2-B",
-        female: "en-GB-News-G"
     }
-  };
 
-  const voiceButton = document.getElementById('voiceButton');
-  const voiceIcon = document.getElementById('voiceIcon');
-  let currentGender = 'female';  // Initial gender set to male
 
-  function updateVoiceIcon() {
-    currentGender = currentGender === 'male' ? 'female' : 'male';
-    voiceIcon.className = currentGender === 'male' ? 'fas fa-mars' : 'fas fa-venus';
-    updateVoiceBasedOnGender();
-  }
+    // Upload avatar
+    document.addEventListener('DOMContentLoaded', function () {
+      // Target the custom upload button and the hidden file input
+      const fileInput = document.getElementById('file-upload');
+      const customUploadBtn = document.getElementById('custom-upload-btn');
 
-  function updateVoiceBasedOnGender() {
-    const genderVoice = voiceMappings['en-US'][currentGender];
-    console.log(`Selected voice: ${genderVoice} for ${currentGender} gender`);
-    handleSendCommands({ voiceid: genderVoice });
-  }
+      // Add click event listener to the custom button
+      customUploadBtn.addEventListener('click', function () {
+        fileInput.click(); // Programmatically click the hidden file input
+      });
 
-  // Check if video is loaded and then execute command
-  function checkVideoAndSendVoice() {
-    const videoElement = document.getElementById('videoContainer').querySelector('video');
+      // Upload avatar function remains the same
+      function handleFileUpload(event) {
+        const file = event.target.files[0];
 
-    const checkInterval = setInterval(function() {
-      if (videoElement && videoElement.readyState >= 3) {
-        console.log('Video is loaded and ready to play.');
-        clearInterval(checkInterval);  // Stop checking once the video is ready
+        if (file) {
+          const reader = new FileReader();
 
-        // Send male voice command as the initial setting
-        currentGender = 'female';  // Ensure gender is set to male
+          reader.onload = async (e) => {
+            try {
+              const jsonData = JSON.parse(e.target.result);
+              console.log('File content:', jsonData);
+
+              // Assuming handleSendCommands can handle this JSON data
+              handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+            } catch (error) {
+              console.error('Error processing file:', error);
+            }
+          };
+
+          reader.onerror = (error) => console.error('Error reading file:', error);
+          reader.readAsText(file); // or use reader.readAsArrayBuffer(file) if your file is binary
+        }
+      }
+
+      // Attach the file upload handler to the input's change event
+      fileInput.addEventListener('change', handleFileUpload);
+    });
+
+    // load the avatar form an DHS file 
+    async function loadAndSendAvatarData(jsonFilePath) {
+      try {
+        const response = await fetch(jsonFilePath);
+        const jsonData = await response.json();
+        handleSendCommands({ resetavatar: JSON.stringify(jsonData) });
+      } catch (error) {
+        console.error('Error loading JSON:', error);
+      }
+    }
+
+
+
+
+
+
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const voiceMappings = {
+        "en-US": {
+          male: "en-GB-Neural2-B",
+          female: "en-GB-News-G"
+        }
+      };
+
+      const voiceButton = document.getElementById('voiceButton');
+      const voiceIcon = document.getElementById('voiceIcon');
+      let currentGender = 'female';  // Initial gender set to male
+
+      function updateVoiceIcon() {
+        currentGender = currentGender === 'male' ? 'female' : 'male';
+        voiceIcon.className = currentGender === 'male' ? 'fas fa-mars' : 'fas fa-venus';
         updateVoiceBasedOnGender();
       }
-    }, 1000);  // Check every second
-  }
 
-  // Initialize video check and voice setting on page load
-  checkVideoAndSendVoice();
+      function updateVoiceBasedOnGender() {
+        const genderVoice = voiceMappings['en-US'][currentGender];
+        console.log(`Selected voice: ${genderVoice} for ${currentGender} gender`);
+        handleSendCommands({ voiceid: genderVoice });
+      }
 
-  // Toggle gender on button click
-  voiceButton.addEventListener('click', updateVoiceIcon);
-});
+      // Check if video is loaded and then execute command
+      function checkVideoAndSendVoice() {
+        const videoElement = document.getElementById('videoContainer').querySelector('video');
 
+        const checkInterval = setInterval(function () {
+          if (videoElement && videoElement.readyState >= 3) {
+            console.log('Video is loaded and ready to play.');
+            clearInterval(checkInterval);  // Stop checking once the video is ready
 
+            // Send male voice command as the initial setting
+            currentGender = 'female';  // Ensure gender is set to male
+            updateVoiceBasedOnGender();
+          }
+        }, 1000);  // Check every second
+      }
 
+      // Initialize video check and voice setting on page load
+      checkVideoAndSendVoice();
 
-
-
- 
-
-
-  
- // Speech to text    
- document.addEventListener("DOMContentLoaded", function() {
-  const chatbox = document.getElementById("chatbox");
-  const callButton = document.getElementById('call-button');
-  const stopCallButton = document.getElementById('stopcall-button');
-  //const languageSelect = document.getElementById('languageSelect');
-
-  // Check for speech recognition support
-  if (!("webkitSpeechRecognition" in window)) {
-      alert("Your browser does not support speech recognition. Please try this feature in Google Chrome.");
-      return;
-  }
-
-  stopCallButton.classList.add('hidden');
-
-  const recognition = new webkitSpeechRecognition();
-  recognition.continuous = false; // Set to true for continuous listening
-  recognition.lang = "en-EN"; // Set your desired language
-
-  recognition.interimResults = false; // Whether to show interim results
-  recognition.maxAlternatives = 1; // Maximum number of alternatives to provide
-
-  // Update language on selection change
-  // languageSelect.addEventListener('change', function() {
-  //     recognition.lang = this.value;
-  //     console.log('Speech recognition language set to: ' + recognition.lang);
-  // });
-
-  // Toggle call and stop buttons function
-  function toggleButtons() {
-      callButton.classList.toggle('hidden');
-      stopCallButton.classList.toggle('hidden');
-  }
-
-  // Event handler to start speech recognition
-  callButton.addEventListener('click', () => {
-      recognition.start();
-      console.log("Speech recognition started.");
-      toggleButtons(); // Show stop button
-  });
-
-  // Event handler to stop speech recognition
-  stopCallButton.addEventListener('click', () => {
-      recognition.stop();
-      console.log("Speech recognition stopped.");
-      toggleButtons(); // Show call button
-  });
+      // Toggle gender on button click
+      voiceButton.addEventListener('click', updateVoiceIcon);
+    });
 
 
-   // Handle recognized speech results
-   recognition.onresult = function(event) {
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-        const result = event.results[i];
-        if (result.isFinal) {
+
+
+
+
+
+
+
+
+    // Speech to text    
+    document.addEventListener("DOMContentLoaded", function () {
+      const chatbox = document.getElementById("chatbox");
+      const callButton = document.getElementById('call-button');
+      const stopCallButton = document.getElementById('stopcall-button');
+      //const languageSelect = document.getElementById('languageSelect');
+
+      // Check for speech recognition support
+      if (!("webkitSpeechRecognition" in window)) {
+        alert("Your browser does not support speech recognition. Please try this feature in Google Chrome.");
+        return;
+      }
+
+      stopCallButton.classList.add('hidden');
+
+      const recognition = new webkitSpeechRecognition();
+      recognition.continuous = false; // Set to true for continuous listening
+      recognition.lang = "en-EN"; // Set your desired language
+
+      recognition.interimResults = false; // Whether to show interim results
+      recognition.maxAlternatives = 1; // Maximum number of alternatives to provide
+
+      // Update language on selection change
+      // languageSelect.addEventListener('change', function() {
+      //     recognition.lang = this.value;
+      //     console.log('Speech recognition language set to: ' + recognition.lang);
+      // });
+
+      // Toggle call and stop buttons function
+      function toggleButtons() {
+        callButton.classList.toggle('hidden');
+        stopCallButton.classList.toggle('hidden');
+      }
+
+      // Event handler to start speech recognition
+      callButton.addEventListener('click', () => {
+        recognition.start();
+        console.log("Speech recognition started.");
+        toggleButtons(); // Show stop button
+      });
+
+      // Event handler to stop speech recognition
+      stopCallButton.addEventListener('click', () => {
+        recognition.stop();
+        console.log("Speech recognition stopped.");
+        toggleButtons(); // Show call button
+      });
+
+
+      // Handle recognized speech results
+      recognition.onresult = function (event) {
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const result = event.results[i];
+          if (result.isFinal) {
             let speechToText = result[0].transcript.trim();
             if (speechToText) {
-                speechToText = speechToText.charAt(0).toUpperCase() + speechToText.slice(1);
-                console.log(`Recognized text: ${speechToText}`);
-            
-                const messageElement = document.createElement("div");
-                messageElement.classList.add("mb-2", "text-right");
-                messageElement.innerHTML = `<p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">${speechToText}</p>`;
-                chatbox.appendChild(messageElement);
-                handleSendCommands({ usermessege: speechToText }); 
+              speechToText = speechToText.charAt(0).toUpperCase() + speechToText.slice(1);
+              console.log(`Recognized text: ${speechToText}`);
 
-                chatbox.scrollTop = chatbox.scrollHeight;
+              const messageElement = document.createElement("div");
+              messageElement.classList.add("mb-2", "text-right");
+              messageElement.innerHTML = `<p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">${speechToText}</p>`;
+              chatbox.appendChild(messageElement);
+              handleSendCommands({ usermessege: speechToText });
+
+              chatbox.scrollTop = chatbox.scrollHeight;
             } else {
-                console.log("No text recognized or text was only whitespace.");
+              console.log("No text recognized or text was only whitespace.");
             }
+          }
         }
-    }
-};
+      };
 
-// Capture the original console.log function
-const originalConsoleLog = console.log;
+      // Capture the original console.log function
+      const originalConsoleLog = console.log;
 
-console.log = function() {
-    originalConsoleLog.apply(console, arguments);  // Maintain original log functionality
-    if (arguments.length > 0) {
-        let arg = arguments[0];
-        if (typeof arg === 'object' && arg.response && arg.response.FromAmir) {
+      console.log = function () {
+        originalConsoleLog.apply(console, arguments);  // Maintain original log functionality
+        if (arguments.length > 0) {
+          let arg = arguments[0];
+          if (typeof arg === 'object' && arg.response && arg.response.FromAmir) {
             displayMessage(arg.response.FromAmir);
+          }
         }
-    }
-};
+      };
 
-function displayMessage(message) {
-    const chatbox = document.getElementById("chatbox");
-    if (!chatbox) {
-        console.error('Chatbox not found');
-        return;
-    }
-    const messageElement = document.createElement("div");
-    messageElement.className = "mb-2";
-    messageElement.innerHTML = `<p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">${message}</p>`;
-    chatbox.appendChild(messageElement);
-    chatbox.scrollTop = chatbox.scrollHeight;
-}
-
-
-// // Ensure this code is connected to your DOMContentLoaded or similar initialization function
-// document.addEventListener("DOMContentLoaded", function() {
-//     console.log({ response: { FromAmir: "I am Reblium Avatar." } });  // Example to trigger the functionality
-//     console.log({ response: { FromAmir: "Just hanging out." } });    // Another example message
-// });
+      function displayMessage(message) {
+        const chatbox = document.getElementById("chatbox");
+        if (!chatbox) {
+          console.error('Chatbox not found');
+          return;
+        }
+        const messageElement = document.createElement("div");
+        messageElement.className = "mb-2";
+        messageElement.innerHTML = `<p style="background: rgba(0, 0, 0, 0.2);" class="text-white border rounded-lg py-2 px-4 inline-block">${message}</p>`;
+        chatbox.appendChild(messageElement);
+        chatbox.scrollTop = chatbox.scrollHeight;
+      }
 
 
+      // // Ensure this code is connected to your DOMContentLoaded or similar initialization function
+      // document.addEventListener("DOMContentLoaded", function() {
+      //     console.log({ response: { FromAmir: "I am Reblium Avatar." } });  // Example to trigger the functionality
+      //     console.log({ response: { FromAmir: "Just hanging out." } });    // Another example message
+      // });
 
-  // Handle errors
-  recognition.onerror = function(event) {
-      console.error("Speech recognition error", event.error);
-  };
 
-  // Handle recognition end
-  recognition.onend = function() {
-      recognition.stop();
 
-      console.log("Speech recognition ended.");
-      toggleButtons(); // Show call button
+      // Handle errors
+      recognition.onerror = function (event) {
+        console.error("Speech recognition error", event.error);
+      };
 
-  };
-});
+      // Handle recognition end
+      recognition.onend = function () {
+        recognition.stop();
 
+        console.log("Speech recognition ended.");
+        toggleButtons(); // Show call button
+
+      };
+    });
 
 
 
 
-// Assets configuration for different categories
-const assets = {
-  hairstyles: {
-      items: [
+
+    // Assets configuration for different categories
+    const assets = {
+      hairstyles: {
+        items: [
           'DG', 'Stephanie', 'Afro', 'Angel_braids', 'Angel_ponytail', 'Ben_Armstrong', 'Billieeilish', 'Bi_Wen_Jin', 'Brad_Pitt_Hair',
           'Buzzcut', 'Crypto', 'Cuban', 'Curly', 'Curly_Ponytail', 'David_Schwarztz', 'Dom', 'Elon_Musk', 'Gary_Vee', 'Brad_Garlinghouse',
           'Jeremy', 'Jeremy_Hogan', 'John_Deo', 'Jordan_Belfort', 'Katy_Perry', 'Livi', 'Madonna_Hair', 'Marilyn_Monroe', 'Martin_Hiesboeck',
           'Mason', 'Max', 'Monical', 'Natalia', 'Peaky_Blinders_Hair', 'Pixie_cut', 'Roger', 'Sadaf', 'Sisi', 'Snoop_Dogg', 'Suzanne', 'Tijmen',
           'Wavy', 'William', 'Wolfcut', 'Zuckerberg'
-      ],
-      commandKey: 'assetname'
-  },
-  outfits: {
-      items: [
+        ],
+        commandKey: 'assetname'
+      },
+      outfits: {
+        items: [
           'Businessman02', 'CasualBoy', '0_CasualFemale01', 'CasualFemale02', 'CasualFemale03', 'CasualFemale04',
           'CasualGirl', 'CasualMale01', 'Dress_01', 'Female_Outfit_08', 'Male_Outfit_06', 'Thobe',
           'Male_Outfit_08', 'SportsMale', 'Female_Outfit_07', 'Alice_Outfit'
-      ],
-      commandKey: 'assetname'
-  },
-  lightings: {
-      items: [
+        ],
+        commandKey: 'assetname'
+      },
+      lightings: {
+        items: [
           'Studio_Softbox', 'Studio_makeUp', 'Studio_reblium', 'Studio_2_Tone', 'Old', 'Studio_Dramatic', 'Studio_CyberRed'
-      ],
-      commandKey: 'assetname'
-  },
-  makeups: {
-      items: [
+        ],
+        commandKey: 'assetname'
+      },
+      makeups: {
+        items: [
           'Lipstick_01', 'lipstick_02', 'lipstick_Big', 'lipstick_BigBlur', 'lipstick_Gradient',
           'lipstick_HalfGradient', 'lipstick_Outline', 'Lipstick_Stylised_01', 'Lipstick_Stylised_02',
           'lipstick_Symmetrical', 'lipstick_UpperLip', '00_Lipstick'
-      ],
-      commandKey: 'assetname'
-  }
-};
+        ],
+        commandKey: 'assetname'
+      }
+    };
 
-// Function to toggle assets
-function toggleAsset(category) {
-  const { items, commandKey } = assets[category];
-  let currentIndex = parseInt(localStorage.getItem(category + 'Index'), 10) || 0;
-  handleSendCommands({ [commandKey]: items[currentIndex] });
-  localStorage.setItem(category + 'Index', (currentIndex + 1) % items.length);
-}
+    // Function to toggle assets
+    function toggleAsset(category) {
+      const { items, commandKey } = assets[category];
+      let currentIndex = parseInt(localStorage.getItem(category + 'Index'), 10) || 0;
+      handleSendCommands({ [commandKey]: items[currentIndex] });
+      localStorage.setItem(category + 'Index', (currentIndex + 1) % items.length);
+    }
 
-// Setup button event listeners
-function setupButtonListeners() {
-  document.getElementById('lightButton').addEventListener('click', () => toggleAsset('lightings'));
-  document.getElementById('hairButton').addEventListener('click', () => toggleAsset('hairstyles'));
-  document.getElementById('outfitButton').addEventListener('click', () => toggleAsset('outfits'));
-  document.getElementById('makeupButton').addEventListener('click', () => toggleAsset('makeups'));
-}
+    // Setup button event listeners
+    function setupButtonListeners() {
+      document.getElementById('lightButton').addEventListener('click', () => toggleAsset('lightings'));
+      document.getElementById('hairButton').addEventListener('click', () => toggleAsset('hairstyles'));
+      document.getElementById('outfitButton').addEventListener('click', () => toggleAsset('outfits'));
+      document.getElementById('makeupButton').addEventListener('click', () => toggleAsset('makeups'));
+    }
 
-document.addEventListener('DOMContentLoaded', setupButtonListeners);
+    document.addEventListener('DOMContentLoaded', setupButtonListeners);
 
-// Wait for the DOM to fully load before attaching event listeners
-document.addEventListener('DOMContentLoaded', function() {
-  setupEventListeners();
-});
+    // Wait for the DOM to fully load before attaching event listeners
+    document.addEventListener('DOMContentLoaded', function () {
+      setupEventListeners();
+    });
 
-  // Listener for closing the persona modal
-  document.getElementById('closeModal').addEventListener('click', () => {
-    document.getElementById('personaModal').classList.add('hidden');
-});
+    // Listener for closing the persona modal
+    document.getElementById('closeModal').addEventListener('click', () => {
+      document.getElementById('personaModal').classList.add('hidden');
+    });
 
-// Setup all event listeners for interaction
-function setupEventListeners() {
-  // Listener for opening the persona modal
-  document.getElementById('personaButton').addEventListener('click', () => {
-      document.getElementById('personaModal').classList.remove('hidden');
-  });
+    // Setup all event listeners for interaction
+    function setupEventListeners() {
+      // Listener for opening the persona modal
+      document.getElementById('personaButton').addEventListener('click', () => {
+        document.getElementById('personaModal').classList.remove('hidden');
+      });
 
 
 
-  // Listener for sending persona data on button click
-  document.getElementById('sendPersona').addEventListener('click', (event) => {
-      event.preventDefault(); // Prevent form submission if used within a form
-      sendPersonaData();
-  });
+      // Listener for sending persona data on button click
+      document.getElementById('sendPersona').addEventListener('click', (event) => {
+        event.preventDefault(); // Prevent form submission if used within a form
+        sendPersonaData();
+      });
 
-  // Listener for pressing Enter to send data in input field
-  document.getElementById('personaName').addEventListener('keypress', (event) => {
-      if (event.key === 'Enter') {
+      // Listener for pressing Enter to send data in input field
+      document.getElementById('personaName').addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
           event.preventDefault(); // Prevent form submission
           sendPersonaData();
+        }
+      });
+
+      // Attach listeners to persona template buttons to load descriptions into input
+      const personaButtons = document.querySelectorAll('.persona-template');
+      personaButtons.forEach(button => button.addEventListener('click', () => {
+        loadPersonaTemplate(button.getAttribute('data-description'));
+      }));
+    }
+
+    // Load the persona template description into the input field
+    function loadPersonaTemplate(description) {
+      document.getElementById('personaName').value = description;
+    }
+
+    // Display sent message in a dedicated container with functionality to edit by populating main input field
+    function displaySentMessage(message) {
+      const messagesContainer = document.getElementById('sentMessages');
+      const messageDiv = document.createElement('div');
+      messageDiv.textContent = message;
+      messageDiv.classList.add('mt-2', 'p-2', 'border', 'border-black', 'rounded', 'cursor-pointer');
+
+      // Prepend the new message to the container, so it appears above older messages
+      if (messagesContainer.firstChild) {
+        messagesContainer.insertBefore(messageDiv, messagesContainer.firstChild);
+      } else {
+        messagesContainer.appendChild(messageDiv);
       }
-  });
 
-  // Attach listeners to persona template buttons to load descriptions into input
-  const personaButtons = document.querySelectorAll('.persona-template');
-  personaButtons.forEach(button => button.addEventListener('click', () => {
-      loadPersonaTemplate(button.getAttribute('data-description'));
-  }));
-}
+      // Clicking the message populates the main input field for editing
+      messageDiv.addEventListener('click', () => {
+        const personaInput = document.getElementById('personaName');
+        personaInput.value = message; // Set the message text to the input field
+        document.getElementById('personaModal').classList.remove('hidden'); // Open the modal if it's not already open
 
-// Load the persona template description into the input field
-function loadPersonaTemplate(description) {
-  document.getElementById('personaName').value = description;
-}
+        // Focus on input to encourage immediate editing
+        personaInput.focus();
 
-// Display sent message in a dedicated container with functionality to edit by populating main input field
-function displaySentMessage(message) {
-  const messagesContainer = document.getElementById('sentMessages');
-  const messageDiv = document.createElement('div');
-  messageDiv.textContent = message;
-  messageDiv.classList.add('mt-2', 'p-2', 'border', 'border-black', 'rounded', 'cursor-pointer');
-
-  // Prepend the new message to the container, so it appears above older messages
-  if (messagesContainer.firstChild) {
-    messagesContainer.insertBefore(messageDiv, messagesContainer.firstChild);
-  } else {
-    messagesContainer.appendChild(messageDiv);
-  }
-
-  // Clicking the message populates the main input field for editing
-  messageDiv.addEventListener('click', () => {
-      const personaInput = document.getElementById('personaName');
-      personaInput.value = message; // Set the message text to the input field
-      document.getElementById('personaModal').classList.remove('hidden'); // Open the modal if it's not already open
-
-      // Focus on input to encourage immediate editing
-      personaInput.focus();
-
-      // Modify sendPersonaData to handle update, passing the specific messageDiv
-      const sendButton = document.getElementById('sendPersona');
-      sendButton.onclick = function(event) {
+        // Modify sendPersonaData to handle update, passing the specific messageDiv
+        const sendButton = document.getElementById('sendPersona');
+        sendButton.onclick = function (event) {
           event.preventDefault(); // Prevent form submission defaults
           sendPersonaData(messageDiv, message); // Pass the messageDiv and original message for update
-      };
-  });
-}
+        };
+      });
+    }
 
 
-// Send the persona data from the input field and update the display message
-function sendPersonaData(messageDivToUpdate) {
-  const personaInput = document.getElementById('personaName');
-  const updatedMessage = personaInput.value.trim();
+    // Send the persona data from the input field and update the display message
+    function sendPersonaData(messageDivToUpdate) {
+      const personaInput = document.getElementById('personaName');
+      const updatedMessage = personaInput.value.trim();
 
-  if (updatedMessage) {
-      // Assuming handleSendCommands is your backend update call
-      handleSendCommands({ personas: updatedMessage });      
-      if (messageDivToUpdate) {
+      if (updatedMessage) {
+        // Assuming handleSendCommands is your backend update call
+        handleSendCommands({ personas: updatedMessage });
+        if (messageDivToUpdate) {
           // Update the text of the original message div if this was an update action
           messageDivToUpdate.textContent = updatedMessage;
-      } else {
+        } else {
           // Otherwise, just add a new message to the list
           displaySentMessage(updatedMessage);
+        }
+        personaInput.value = ''; // Clear the input after sending
+        document.getElementById('personaModal').classList.add('hidden'); // Optionally close modal
+      } else {
+        alert('Please enter or select a persona name.');
       }
-      personaInput.value = ''; // Clear the input after sending
-      document.getElementById('personaModal').classList.add('hidden'); // Optionally close modal
-  } else {
-      alert('Please enter or select a persona name.');
-  }
-}
-
-
-
-
-
-
-
-
-
-let currentRating = 0; // Tracks the current star rating after a click
-const modal = document.getElementById('ratingModal');
-const stars = document.querySelectorAll('.star');
-const submitBtn = document.getElementById('submitRating');
-const closeModalBtn = document.getElementById('closeModal');
-const feedbackText = document.getElementById('feedbackText');
-
-stars.forEach((star, idx) => {
-  star.style.cursor = 'pointer';
-  star.addEventListener('mouseenter', () => {
-    updateStars(idx, 'orange');
-  });
-  star.addEventListener('mouseleave', () => {
-    updateStars(currentRating - 1, 'orange');
-  });
-  star.addEventListener('click', () => {
-    currentRating = idx + 1;
-    updateStars(idx, 'orange');
-  });
-});
-
-function updateStars(index, color) {
-  stars.forEach((s, i) => {
-    s.style.color = i <= index ? color : 'gray';
-  });
-}
-
-submitBtn.addEventListener('click', function() {
-  const feedback = feedbackText.value;
-
-  // Send feedback data to the API
-  fetch('/.netlify/functions/submitFeedback', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      rating: currentRating,
-      message: feedback
-    })
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.message) {
-      console.log(data.message);
-    } else {
-      console.log('Failed to submit feedback');
     }
-    modal.classList.add('hidden');
-    feedbackText.value = '';
-    updateStars(-1, 'gray');
-    currentRating = 0;
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    console.log('An error occurred while submitting feedback');
-    modal.classList.add('hidden');
-    feedbackText.value = '';
-    updateStars(-1, 'gray');
-    currentRating = 0;
-  });
-});
-
-closeModalBtn.addEventListener('click', function() {
-  modal.classList.add('hidden');
-  feedbackText.value = '';
-  updateStars(-1, 'gray');
-  currentRating = 0;
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(showModal, 180000); // Show modal after 3 minutes
-});
-
-function showModal() {
-  modal.classList.remove('hidden');
-}
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function() {
-//   setTimeout(() => {
-//     document.getElementById("popup").classList.remove("hidden");
-//     document.getElementById("popup").classList.add("visible");
-//   }, 300000); // 5 minutes in milliseconds
-
-// //   setTimeout(() => {
-// //     closePopup();
-// // }, 10000); // Simulate a 30-second ad
-
-//   function closePopup() {
-//       document.getElementById("popup").classList.remove("visible");
-//       document.getElementById("popup").classList.add("hidden");
-//   }
-// });
 
 
 
 
 
 
-</script>
+
+
+
+    let currentRating = 0; // Tracks the current star rating after a click
+    const modal = document.getElementById('ratingModal');
+    const stars = document.querySelectorAll('.star');
+    const submitBtn = document.getElementById('submitRating');
+    const closeModalBtn = document.getElementById('closeModal');
+    const feedbackText = document.getElementById('feedbackText');
+
+    stars.forEach((star, idx) => {
+      star.style.cursor = 'pointer';
+      star.addEventListener('mouseenter', () => {
+        updateStars(idx, 'orange');
+      });
+      star.addEventListener('mouseleave', () => {
+        updateStars(currentRating - 1, 'orange');
+      });
+      star.addEventListener('click', () => {
+        currentRating = idx + 1;
+        updateStars(idx, 'orange');
+      });
+    });
+
+    function updateStars(index, color) {
+      stars.forEach((s, i) => {
+        s.style.color = i <= index ? color : 'gray';
+      });
+    }
+
+    submitBtn.addEventListener('click', function () {
+      const feedback = feedbackText.value;
+
+      // Send feedback data to the API
+      fetch('/.netlify/functions/submitFeedback', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          rating: currentRating,
+          message: feedback
+        })
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.message) {
+            console.log(data.message);
+          } else {
+            console.log('Failed to submit feedback');
+          }
+          modal.classList.add('hidden');
+          feedbackText.value = '';
+          updateStars(-1, 'gray');
+          currentRating = 0;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          console.log('An error occurred while submitting feedback');
+          modal.classList.add('hidden');
+          feedbackText.value = '';
+          updateStars(-1, 'gray');
+          currentRating = 0;
+        });
+    });
+
+    closeModalBtn.addEventListener('click', function () {
+      modal.classList.add('hidden');
+      feedbackText.value = '';
+      updateStars(-1, 'gray');
+      currentRating = 0;
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(showModal, 180000); // Show modal after 3 minutes
+    });
+
+    function showModal() {
+      modal.classList.remove('hidden');
+    }
+
+
+
+
+
+    // document.addEventListener("DOMContentLoaded", function() {
+    //   setTimeout(() => {
+    //     document.getElementById("popup").classList.remove("hidden");
+    //     document.getElementById("popup").classList.add("visible");
+    //   }, 300000); // 5 minutes in milliseconds
+
+    // //   setTimeout(() => {
+    // //     closePopup();
+    // // }, 10000); // Simulate a 30-second ad
+
+    //   function closePopup() {
+    //       document.getElementById("popup").classList.remove("visible");
+    //       document.getElementById("popup").classList.add("hidden");
+    //   }
+    // });
+
+
+
+
+
+
+  </script>
 
 </body>
+
 </html>
