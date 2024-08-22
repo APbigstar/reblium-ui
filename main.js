@@ -238,6 +238,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // Function to fetch avatar data from the backend API for a specific user_info_id
   async function fetchAvatarData(user_info_id) {
+    console.log(user_info_id);
     try {
       const response = await fetch(
         `/.netlify/functions/getUserAvatars?user_info_id=${user_info_id}`
