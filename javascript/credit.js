@@ -10,7 +10,7 @@ const depositButton = document.getElementById("deposit-button");
 const cardErrors = document.getElementById("card-errors");
 
 const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InByb2R1Y3Rpb25AcmVibGl1bS5jb20iLCJleHAiOjE3MjQzMTA2NDgsImdyb3VwcyI6W3siaWQiOjQxNTEyLCJuYW1lIjoiZGVmYXVsdCIsImlzX2RlZmF1bHQiOnRydWV9XSwiaGFzX2F0dHJzIjp0cnVlLCJpYXQiOjE3MjQyMjQyNDgsImlzX21hc3RlciI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi54c29sbGEuY29tIiwicHJvbW9fZW1haWxfYWdyZWVtZW50IjpmYWxzZSwicHVibGlzaGVyX2lkIjo0MDU0MzUsInN1YiI6IjIwNjUwNTEyLWFmZjUtNDIxZi1iZTRkLTVlMmZkZDZiNzQzYyIsInR5cGUiOiJ4c29sbGFfbG9naW4iLCJ1c2VybmFtZSI6Ik1hbyBMaW4gTGlhbyIsInhzb2xsYV9sb2dpbl9hY2Nlc3Nfa2V5IjoiWUJwekNGbEQzVGs3aVFyODVOMVVkVUcwaXFfemllODJtbTZLMEdsTkJJbyIsInhzb2xsYV9sb2dpbl9wcm9qZWN0X2lkIjoiNGEwNGQwMzctYTFmYi00YmVkLWIyNmItOGZiZDg2Yzk0ODI4In0.gvFi7YTvEdr9XoHSkIO-tHLxMWdql9tX4UFs749JMpg&remember_me=false";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImRlbW9AcmVibGl1bS5jb20iLCJleHAiOjE3MjQ0Mzc2NzgsImdyb3VwcyI6W3siaWQiOjQxNTEyLCJuYW1lIjoiZGVmYXVsdCIsImlzX2RlZmF1bHQiOnRydWV9XSwiaGFzX2F0dHJzIjp0cnVlLCJpYXQiOjE3MjQzNTEyNzgsImlzX21hc3RlciI6dHJ1ZSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi54c29sbGEuY29tIiwicHJvbW9fZW1haWxfYWdyZWVtZW50IjpmYWxzZSwicHVibGlzaGVyX2lkIjo0MDU0MzUsInN1YiI6ImQ2NWUzODBmLThlMTYtNDNjMS1iOTEwLWE0ODVjMTZkM2EyNyIsInR5cGUiOiJ4c29sbGFfbG9naW4iLCJ1c2VybmFtZSI6IkRlbW8gUmVibGl1bSIsInhzb2xsYV9sb2dpbl9hY2Nlc3Nfa2V5IjoiNUN6ZU11MTNmZWY2cXVpR2FDX1pIRzJlcnBFVUhoLUlhTmFIdDl2Y3E0WSIsInhzb2xsYV9sb2dpbl9wcm9qZWN0X2lkIjoiNGEwNGQwMzctYTFmYi00YmVkLWIyNmItOGZiZDg2Yzk0ODI4In0.7IOvVh6ifTrvNZ9om-21UJVG89ZugJ4F8Qi3_-IPzUQ&remember_me=false";
 
 // Add event listeners
 cardElement.on("change", function (event) {
@@ -42,8 +42,7 @@ async function handleDeposit() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          // 'x-xsolla-token': localStorage.getItem('xsollaToken') // Assuming you store the Xsolla token in localStorage
-          //  'x-xsolla-token': token // Assuming you store the Xsolla token in localStorage
+          "x-xsolla-token": token, // Ensure this line is included
         },
         body: JSON.stringify({ amount: amount * 100 }), // Convert to cents
       }

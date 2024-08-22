@@ -10,14 +10,26 @@ const port = process.env.PORT || 5500;
 app.use(cors());
 app.use(express.json());
 
-// Connect to the MySQL database
-connection.connect((err) => {
-  if (err) {
-    console.error("Error connecting to the database:", err);
-    return;
-  }
-  console.log("Connected to the database!");
+const host = process.env.DB_HOST;
+const user = process.env.DB_USER;
+const password = process.env.DB_PASSWORD;
+const database = process.env.DB_DATABASE;
+
+// Create a database connection
+const connection = mysql.createConnection({
+  host: host,
+  user: user,
+  password: password,
+  database: database,
 });
+
+// connection.connect((err) => {
+//   if (err) {
+//     console.error("Error connecting to the database:", err);
+//     return;
+//   }
+//   console.log("Connected to the database!");
+// });
 
 // Define an API endpoint to fetch avatar data for a specific user_info_id
 app.get("/api/user_avatars", (req, res) => {
