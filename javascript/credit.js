@@ -1,5 +1,7 @@
 // Initialize Stripe
-const stripe = Stripe("your_publishable_key");
+const stripe = Stripe(
+  "pk_test_51Lk3NyF22hdHq8pHZqvo4zdHTulTRAOglzRh9mYLFoBTxxNYf6KsBbuE6sva3HMNkoNzK5QG3Dni3trOyyKBTmac00DpBp4Cpb"
+);
 const elements = stripe.elements();
 const cardElement = elements.create("card");
 cardElement.mount("#card-element");
@@ -44,7 +46,7 @@ async function handleDeposit() {
           "Content-Type": "application/json",
           "x-xsolla-token": token, // Ensure this line is included
         },
-        body: JSON.stringify({ amount: amount * 100 }), // Convert to cents
+        body: JSON.stringify({ amount: amount }), // Convert to cents
       }
     );
     const result = await response.json();
@@ -73,6 +75,7 @@ async function handleDeposit() {
     }
 
     if (confirmResult.paymentIntent.status === "succeeded") {
+      console.log("confirm function start--");
       // Payment successful, confirm on your server
       const confirmResponse = await fetch(
         "/.netlify/functions/confirmCreditPaymentIntent",
@@ -88,11 +91,15 @@ async function handleDeposit() {
           }),
         }
       );
+      console.log("confirm function end--");
 
-      const confirmResult = await confirmResponse.json();
+      const confirmResultStatus = await confirmResponse.json();
 
-      if (!confirmResult.success) {
-        throw new Error(confirmResult.error || "Failed to verify payment");
+      if (confirmResultStatus.success !== true) {
+        console.log(";;;Failed!!!!!!!!!!!!!!!!!!!");
+        throw new Error(
+          confirmResultStatus.error || "Failed to verify payment"
+        );
       }
 
       // Reset form and show success message
