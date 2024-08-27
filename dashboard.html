@@ -25,16 +25,13 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://js.stripe.com/v3/"></script>
 
   <!-- Google Fonts Link For Icons -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
-
-  <!-- <script src="https://cdn.tailwindcss.com"></script> -->
-
-
 
   <title>Reblium Avatar System</title>
   <!-- Hotjar Tracking Code for https://reblium.netlify.app/ -->
@@ -52,10 +49,8 @@
 </head>
 
 <body>
-
-
   <script>
-
+    let latestLoadAvatarCommand = null;
     let newWebRTC;
     function handleSendCommands(command) {
       newWebRTC.emitUIInteraction(command);
@@ -69,7 +64,6 @@
       console.log('Sending loadavatar command:', command.resetavatars);
     }
 
-
     // Function to update the slider value and call handleSendCommands
     function updateSliderValue() {
       const slider = document.getElementById('mySlider');
@@ -79,7 +73,6 @@
       // Call the handleSendCommands function with the command object
       handleSendCommands(command);
     }
-
 
     // function handleButtonClick() {
     //   // Call the second function to reload the page
@@ -600,7 +593,8 @@
         <div class="avatar-section" id="toggleAvatarSection">
           <div class="avatar-header" id="avatarSection">
             <h2>My Avatars</h2>
-            <button class="new-avatar" id="create-new" onclick="toggleDashboardAndArtistMode()">+ Create New</button>
+            <button class="new-avatar" id="create-new" onclick="toggleDashboardAndArtistMode()">+ Create
+              New</button>
           </div>
           <p style="color: white; padding-left: 25px;">User created avatars </p>
 
@@ -613,7 +607,7 @@
 
       <!-- PRICING SECTION -->
       <div id="avatar-Pricing" class="bg-black text-white" style="display: none;">
-        <div class="avatar-section" id="toggleAvatarSection">
+        <div class="avatar-section premium-selection-part" id="toggleAvatarSection">
           <div class="avatar-header" id="avatarSection">
             <h2 class="text-5xl font-bold mb-8 text-blue-400">Pricing</h2>
             <div class="flex justify-center mb-8 w-full">
@@ -643,7 +637,10 @@
                 <p class="text-3xl font-bold mb-4">€<span id="premiumPrice">15</span>
                   <span class="text-sm font-normal">/month</span>
                 </p>
-                <button class="bg-blue-starndard text-white px-4 py-2 rounded-full w-full mb-4">Start now</button>
+                <button
+                  class="bg-blue-starndard text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
+                  onclick="showPremiumPriceSection()">Start
+                  now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
                   <li class="font-bold upgrade_plan">• No Watermarks</li>
@@ -658,7 +655,9 @@
                 <p class="text-3xl font-bold mb-4">€<span id="proPrice">120</span>
                   <span class="text-sm font-normal">/month</span>
                 </p>
-                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4">Start now</button>
+                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
+                  onclick="showPremiumPriceSection()">Start
+                  now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
                   <li>• Custom branding</li>
@@ -672,7 +671,9 @@
                 <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
                 <p class="text-blue-400 mb-4">Custom</p>
                 <p class="text-3xl font-bold mb-4">Let's talk</p>
-                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4">Start now</button>
+                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
+                  onclick="showPremiumPriceSection()">Start
+                  now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
                   <li>• Custom branding</li>
@@ -748,10 +749,14 @@
                 </tr>
                 <tr class="border-b border-gray-800">
                   <td class="py-2">Language</td>
-                  <td class="py-2">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese </td>
-                  <td class="py-2">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese </td>
-                  <td class="py-2 text-gray-700">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese </td>
-                  <td class="py-2 text-gray-700">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese </td>
+                  <td class="py-2">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese
+                  </td>
+                  <td class="py-2">English, Spanish, Dutch,French, German,Chinese,Arabic, Japanese
+                  </td>
+                  <td class="py-2 text-gray-700">English, Spanish, Dutch,French,
+                    German,Chinese,Arabic, Japanese </td>
+                  <td class="py-2 text-gray-700">English, Spanish, Dutch,French,
+                    German,Chinese,Arabic, Japanese </td>
                 </tr>
                 <tr class="border-b border-gray-800">
                   <td class="py-2">Max session length</td>
@@ -769,6 +774,27 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+        <div class="avatar-section premium-pay-part" id="toggleAvatarSection" style="display: none;">
+          <div class="" id="avatarSection">
+            <h2 class="text-5xl font-bold mb-8 text-blue-400">Pricing</h2>
+            <div id="account-credit-deposit" class="bg-white rounded-lg shadow-md mt-8 max-w-md mx-auto">
+              <div class="p-6">
+                <div class="mb-4">
+                  <label for="premium-card-element" class="block text-sm font-medium text-gray-700">Card details</label>
+                  <div id="premium-card-element"
+                    class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                  </div>
+                  <div id="premium-card-errors" class="mt-2 text-red-600 text-sm"></div>
+                </div>
+                <div class="mt-6 grid grid-cols-2 gap-4">
+                  <button class="save-exit menu-button premium-start-button" id="openPopup">Start
+                    Now</button>
+                  <button class="exit cancel-premium-pay-button" onclick="cancelPremiumPay()">Cancel</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -846,7 +872,8 @@
 
         <div class="mt-4">
           <label for="card-element" class="block text-sm font-medium text-gray-700">Card details</label>
-          <div id="card-element" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"></div>
+          <div id="card-element" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+          </div>
           <div id="card-errors" class="mt-2 text-red-600 text-sm"></div>
         </div>
         <div class="mt-6 grid grid-cols-2 gap-4">
@@ -997,13 +1024,15 @@
               </div>
               <div>
                 <div id="close-chat" class="close-chat">
-                  <span id="toggle-icon" style="color: black;">+</span> <!-- Assuming Font Awesome icons -->
+                  <span id="toggle-icon" style="color: black;">+</span>
+                  <!-- Assuming Font Awesome icons -->
                 </div>
               </div>
             </div>
             <div id="chatbox" class="chat-content" tyle="height: calc(100vh - 50vh);">
               <div class="message-container">
-                <p class="message-text" style="margin-bottom: 8px;">Hi there 👋 <br>How can I help you today?</p>
+                <p class="message-text" style="margin-bottom: 8px;">Hi there 👋 <br>How can I help you
+                  today?</p>
               </div>
             </div>
             <div id="chat-input" class="chat-input">
@@ -1099,16 +1128,21 @@
             <div class="popup-content">
               <h2>Welcome to Reblium Cloud!</h2>
               <br>
-              <p>Unlock the ultimate Avatar Creation experience with our cutting-edge tools, designed to bring your AI
+              <p>Unlock the ultimate Avatar Creation experience with our cutting-edge tools, designed to
+                bring your AI
                 assistant to life with real-time 3D avatars.</p>
               <br>
               <p>Here's how to get started:</p>
               <ul>
-                <li>Create Your Avatar: Generate a unique 3D avatar in seconds and kickstart your journey.</li>
-                <li>Define Your Persona: Use simple prompts to shape and customize your avatar's personality.</li>
-                <li>Test It Out: Seamlessly switch to conversation mode & design mode and interact with your creation.
+                <li>Create Your Avatar: Generate a unique 3D avatar in seconds and kickstart your
+                  journey.</li>
+                <li>Define Your Persona: Use simple prompts to shape and customize your avatar's
+                  personality.</li>
+                <li>Test It Out: Seamlessly switch to conversation mode & design mode and interact with
+                  your creation.
                 </li>
-                <li>Save your masterpiece—save and share it with your friends in the future (not working atm).</li>
+                <li>Save your masterpiece—save and share it with your friends in the future (not working
+                  atm).</li>
               </ul>
               <br>
               <p>Note: This is a beta version, and some features might change in the final release.</p>
@@ -1134,9 +1168,12 @@
               <h3>Download</h3>
               <!-- New div with export buttons -->
               <div class="export-options">
-                <button id="exportAvatarButton" class="export-button">Export Avatar - 10 Credits</button>
-                <button id="exportRawBaseMeshButton" class="export-button">Export Raw BaseMesh - 20 Credits</button>
-                <button id="exportAvatarHeadButton" class="export-button">Export Avatar (only head Mesh) - 5
+                <button id="exportAvatarButton" class="export-button">Export Avatar - 10
+                  Credits</button>
+                <button id="exportRawBaseMeshButton" class="export-button">Export Raw BaseMesh - 20
+                  Credits</button>
+                <button id="exportAvatarHeadButton" class="export-button">Export Avatar (only head Mesh)
+                  - 5
                   Credits</button>
               </div>
               <div class="modal-buttons-exit">
@@ -1315,7 +1352,8 @@
                             </div>
 
                             <div class="check_container">
-                              <div class="checkbox-label">Indigenous/ Native American</div>
+                              <div class="checkbox-label">Indigenous/ Native American
+                              </div>
                               <label class="checkbox_wrap">
                                 <input type="checkbox" name="Indigenous" class="checkbox_inp" checked>
                                 <span class="checkbox_mark"></span>
@@ -1840,7 +1878,8 @@
                     <button class="transparent-button">Lipstick</button>
                     <div class="content-container" style="display: none;">
 
-                      <button onclick="randomizeLipstick()" style="width: 70%;">Randomize Lipstick</button>
+                      <button onclick="randomizeLipstick()" style="width: 70%;">Randomize
+                        Lipstick</button>
 
                       <div class="image-container">
 
@@ -2036,7 +2075,8 @@
                   <li>
                     <button class="transparent-button">Eye shadow</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEyeShadow()" style="width: 70%;">Randomize Eye Shadow</button>
+                      <button onclick="randomizeEyeShadow()" style="width: 70%;">Randomize Eye
+                        Shadow</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -2143,7 +2183,8 @@
                   <li>
                     <button class="transparent-button">Eyeliner</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEyeliner()" style="width: 70%;">Randomize Eyeliner</button>
+                      <button onclick="randomizeEyeliner()" style="width: 70%;">Randomize
+                        Eyeliner</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -2151,7 +2192,8 @@
                             <img src="/src/no_go.png" onclick="handleSendCommands({ assetname : '00_EyesLine' })"
                               alt="no_go.png">
                           </div>
-                          <div class="image-cell" onclick="toggleActive(this)"> <!-- loads the asset name of Simple -->
+                          <div class="image-cell" onclick="toggleActive(this)">
+                            <!-- loads the asset name of Simple -->
                             <img src="/src/MakeUp/Eyeliner/Eyeliner_Simple_icon.png"
                               onclick="handleSendCommands({ assetname : 'Simple' })" alt="Eyeliner_Simple_icon.png">
                           </div>
@@ -2297,7 +2339,8 @@
                   <li>
                     <button class="transparent-button">Face Paint</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeFacePaint()" style="width: 70%;">Randomize Face Paint</button>
+                      <button onclick="randomizeFacePaint()" style="width: 70%;">Randomize Face
+                        Paint</button>
 
 
                       <div class="image-container">
@@ -2397,7 +2440,8 @@
                   <li>
                     <button class="transparent-button">Tattoo</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeTattoo()" style="width: 70%;">Randomize Tattoo</button>
+                      <button onclick="randomizeTattoo()" style="width: 70%;">Randomize
+                        Tattoo</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -2494,7 +2538,8 @@
                   <li>
                     <button class="transparent-button">Iris Lens</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeIrisLens()" style="width: 70%;">Randomize Iris Lens</button>
+                      <button onclick="randomizeIrisLens()" style="width: 70%;">Randomize Iris
+                        Lens</button>
 
                       <div class="image-container">
 
@@ -2546,7 +2591,8 @@
                   <li>
                     <button class="transparent-button">Iris</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeIris()" style="width: 70%;">Randomize Iris</button>
+                      <button onclick="randomizeIris()" style="width: 70%;">Randomize
+                        Iris</button>
 
                       <div class="image-container">
 
@@ -2620,7 +2666,8 @@
                   <li>
                     <button class="transparent-button">Special</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeSpecial()" style="width: 70%;">Randomize Special</button>
+                      <button onclick="randomizeSpecial()" style="width: 70%;">Randomize
+                        Special</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -2680,7 +2727,8 @@
                   <li>
                     <button class="transparent-button">Hair</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeHair()" style="width: 70%;">Randomize Hair</button>
+                      <button onclick="randomizeHair()" style="width: 70%;">Randomize
+                        Hair</button>
 
 
                       <div class="image-container">
@@ -3083,7 +3131,8 @@
                   <li>
                     <button class="transparent-button">Eyebrows</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEyebrows()" style="width: 70%;">Randomize Eyebrows</button>
+                      <button onclick="randomizeEyebrows()" style="width: 70%;">Randomize
+                        Eyebrows</button>
 
 
                       <div class="image-container">
@@ -3192,37 +3241,52 @@
                       <div class="color-panel">
                         <div class="color-row">
                           <div class="color-cell" style="background-color: #2a0d00;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#2a0d00' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#2a0d00' })">
+                          </div>
                           <div class="color-cell" style="background-color: #622a00;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#622a00' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#622a00' })">
+                          </div>
                           <div class="color-cell" style="background-color: #ab8b0c;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#ab8b0c' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#ab8b0c' })">
+                          </div>
                           <div class="color-cell" style="background-color: #202020;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#202020' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#202020' })">
+                          </div>
                           <div class="color-cell" style="background-color: #644800;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#644800' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#644800' })">
+                          </div>
 
                           <div class="color-cell" style="background-color: #00ffff;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#00ffff' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#00ffff' })">
+                          </div>
                           <div class="color-cell" style="background-color: #bb2900;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb2900' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb2900' })">
+                          </div>
                           <div class="color-cell" style="background-color: #0065bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#0065bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#0065bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #00b8bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#00b8bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#00b8bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #00bb79;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00bb79' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00bb79' })">
+                          </div>
 
                           <div class="color-cell" style="background-color: #bb00b7;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb00b7' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb00b7' })">
+                          </div>
                           <div class="color-cell" style="background-color: #41645a;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#41645a' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#41645a' })">
+                          </div>
                           <div class="color-cell" style="background-color: #6900bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#6900bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#6900bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #bb0074;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb0074' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#bb0074' })">
+                          </div>
                           <div class="color-cell" style="background-color: #ba77a2;"
-                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#ba77a2' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyebrowsColor*#ba77a2' })">
+                          </div>
                         </div>
                       </div>
 
@@ -3231,7 +3295,8 @@
                   <li>
                     <button class="transparent-button">Eyelashes</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEyelashes()" style="width: 70%;">Randomize Eyelashes</button>
+                      <button onclick="randomizeEyelashes()" style="width: 70%;">Randomize
+                        Eyelashes</button>
 
 
                       <div class="image-container">
@@ -3271,37 +3336,52 @@
                       <div class="color-panel">
                         <div class="color-row">
                           <div class="color-cell" style="background-color: #2a0d00;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#2a0d00' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#2a0d00' })">
+                          </div>
                           <div class="color-cell" style="background-color: #622a00;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#622a00' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#622a00' })">
+                          </div>
                           <div class="color-cell" style="background-color: #ab8b0c;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#ab8b0c' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#ab8b0c' })">
+                          </div>
                           <div class="color-cell" style="background-color: #202020;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#202020' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#202020' })">
+                          </div>
                           <div class="color-cell" style="background-color: #644800;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#644800' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#644800' })">
+                          </div>
 
                           <div class="color-cell" style="background-color: #00ffff;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00ffff' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00ffff' })">
+                          </div>
                           <div class="color-cell" style="background-color: #bb2900;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb2900' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb2900' })">
+                          </div>
                           <div class="color-cell" style="background-color: #0065bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#0065bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#0065bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #00b8bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00b8bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00b8bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #00bb79;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00bb79' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#00bb79' })">
+                          </div>
 
                           <div class="color-cell" style="background-color: #bb00b7;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb00b7' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb00b7' })">
+                          </div>
                           <div class="color-cell" style="background-color: #41645a;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#41645a' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#41645a' })">
+                          </div>
                           <div class="color-cell" style="background-color: #6900bb;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#6900bb' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#6900bb' })">
+                          </div>
                           <div class="color-cell" style="background-color: #bb0074;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb0074' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#bb0074' })">
+                          </div>
                           <div class="color-cell" style="background-color: #ba77a2;"
-                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#ba77a2' })"></div>
+                            onclick="handleSendCommands({ vectorname : 'EyelsahesColor*#ba77a2' })">
+                          </div>
                         </div>
                       </div>
 
@@ -3311,7 +3391,8 @@
                     <button class="transparent-button">Mustache</button>
                     <div class="content-container" style="display: none;">
 
-                      <button onclick="randomizeMustache()" style="width: 70%;">Randomize Mustache</button>
+                      <button onclick="randomizeMustache()" style="width: 70%;">Randomize
+                        Mustache</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -3474,7 +3555,8 @@
                   <li>
                     <button class="transparent-button">Beard</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeBeard()" style="width: 70%;">Randomize Beard</button>
+                      <button onclick="randomizeBeard()" style="width: 70%;">Randomize
+                        Beard</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -3680,7 +3762,8 @@
                   <li>
                     <button class="transparent-button">Hair Card</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeHaircard()" style="width: 70%;">Randomize Haircard</button>
+                      <button onclick="randomizeHaircard()" style="width: 70%;">Randomize
+                        Haircard</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -3763,7 +3846,8 @@
                   <li>
                     <button class="transparent-button">Eyes</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEyes()" style="width: 70%;">Randomize Eyes</button>
+                      <button onclick="randomizeEyes()" style="width: 70%;">Randomize
+                        Eyes</button>
 
 
                       <div class="image-container">
@@ -4096,7 +4180,8 @@
                   <li>
                     <button class="transparent-button">Ears</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeEars()" style="width: 70%;">Randomize Ears</button>
+                      <button onclick="randomizeEars()" style="width: 70%;">Randomize
+                        Ears</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -4430,7 +4515,8 @@
                   <li>
                     <button class="transparent-button">Nose</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeNose()" style="width: 70%;">Randomize Nose</button>
+                      <button onclick="randomizeNose()" style="width: 70%;">Randomize
+                        Nose</button>
 
                       <div class="image-container">
                         <div class="image-row">
@@ -4867,7 +4953,8 @@
                   <li>
                     <button class="transparent-button">Mouth</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeMouth()" style="width: 70%;">Randomize Mouth</button>
+                      <button onclick="randomizeMouth()" style="width: 70%;">Randomize
+                        Mouth</button>
 
 
                       <div class="image-container">
@@ -5159,7 +5246,8 @@
                   <li>
                     <button class="transparent-button">Cheeks</button>
                     <div class="content-container" style="display: none;">
-                      <button onclick="randomizeCheeks()" style="width: 70%;">Randomize Cheeks</button>
+                      <button onclick="randomizeCheeks()" style="width: 70%;">Randomize
+                        Cheeks</button>
 
 
                       <div class="image-container">
@@ -5749,9 +5837,10 @@
 
                 <ul id="wardrobeSubMenu" class="sub-menu" style="display: none;">
                   <li>
-                    <div style="display: flex; justify-content: space-between;"> <!-- Added display: flex -->
-                      <button class="transparent-button" id="femaleBtn" style="width: 48%;">Female <i
-                          class="fas fa-venus"></i></button>
+                    <div style="display: flex; justify-content: space-between;">
+                      <!-- Added display: flex -->
+                      <button class="transparent-button" id="femaleBtn" style="width: 48%;">Female
+                        <i class="fas fa-venus"></i></button>
                       <br>
                       <button class="transparent-button" id="maleBtn" style="width: 48%;">Male <i
                           class="fas fa-mars"></i></button>
@@ -6389,121 +6478,6 @@
             </div>
           </div>
           <script>
-            let latestLoadAvatarCommand = null;
-            let selectedHair = "";
-            let selectedBody = "";
-            let chargedCreditAmount = 0;
-            let selectedCreditAmount = 0;
-
-            function setSelectedCreditAmount(amount) {
-              selectedCreditAmount = amount;
-
-              document.querySelectorAll('#buyCreditsConfirmation button').forEach(button => {
-                button.classList.remove('selected-credit');
-              });
-
-              const cardErrors = document.getElementById("card-errors");
-              cardErrors.textContent = "";
-
-              // Add 'selected-credit' class to the clicked button
-              event.target.classList.add('selected-credit');
-            }
-
-            function showSaveAvatarExit() {
-              chargedCreditAmount = 0
-              if (selectedHair || selectedBody) {
-                const avatarSaveModal = document.getElementById("saveAvatarConfirmation");
-                avatarSaveModal.style.display = "block";
-
-                const hairCreditElement = document.getElementsByClassName('hair_credit_element')[0];
-                if (selectedHair) {
-                  hairCreditElement.style.display = "list-item";
-                }
-                const bodyCreditElement = document.getElementsByClassName('body_credit_element')[0];
-                if (selectedBody) {
-                  bodyCreditElement.style.display = "list-item";
-                }
-              } else {
-                handleSendCommands({
-                  saveavatar: parseFloat(document.getElementById("avatarId").textContent),
-                });
-              }
-              // const totalCreditElement = document.getElementsByClassName('total_credit_element')[0];
-              // if (selectedHair || selectedBody) {
-              //   totalCreditElement.style.display = "block";
-              // }
-            }
-
-            function cancelSaveAvatarExit() {
-              const avatarSaveModal = document.getElementById("saveAvatarConfirmation");
-              avatarSaveModal.style.display = "none";
-            }
-
-            function cancelBuyCredits() {
-              const creditBuyModal = document.getElementById("buyCreditsConfirmation");
-              creditBuyModal.style.display = "none";
-            }
-
-            function showBuyCredits() {
-              const creditBuyModal = document.getElementById("buyCreditsConfirmation");
-              creditBuyModal.style.display = "block";
-            }
-
-            async function updateCreditAmount() {
-              try {
-                const response = await fetch('/.netlify/functions/updateUserCreditAmount', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    user_id: globalUserInfoId,
-                    amount: chargedCreditAmount
-                  })
-                });
-
-                const res = await response.json();
-
-                if (res.success) {
-                  chargedCreditAmount = 0;
-                  selectedHair = '';
-                  selectedBody = '';
-                  await getUserCredits();
-                  handleSendCommands({
-                    saveavatar: parseFloat(document.getElementById("avatarId").textContent),
-                  });
-                } else {
-                  console.error('Failed to update credit amount:', res.error);
-                }
-              } catch (error) {
-                console.error('Error updating credit amount:', error);
-              }
-            }
-
-            async function handleSaveCustomizedAvatar() {
-              cancelSaveAvatarExit();
-
-              await getUserCredits();
-
-              if (selectedBody) chargedCreditAmount += 3;
-              if (selectedHair) chargedCreditAmount += 2;
-              if (Number(userCreditAmount) >= Number(chargedCreditAmount)) {
-                await updateCreditAmount()
-              } else {
-                showBuyCredits();
-              }
-            }
-
-            function setSelectedHair(assetName) {
-              selectedHair = assetName;
-              handleSendCommands({ assetname: assetName });
-            }
-
-            function setSelectedBody(assetName) {
-              selectedBody = assetName;
-              handleSendCommands({ assetname: assetName });
-            }
-
             document.getElementById('femaleBtn').addEventListener('click', function () {
               filterItemsByGender('female');
             });
@@ -7046,46 +7020,14 @@
               });
             });
 
-
-            const monthlyBtn = document.getElementById('monthlyBtn');
-            const annuallyBtn = document.getElementById('annuallyBtn');
-            const freeCredits = document.getElementById('freeCredits');
-            const premiumCredits = document.getElementById('premiumCredits');
-            const proCredits = document.getElementById('proCredits');
-            const premiumPrice = document.getElementById('premiumPrice');
-            const proPrice = document.getElementById('proPrice');
-
-            monthlyBtn.addEventListener('click', () => setPrice('monthly'));
-            annuallyBtn.addEventListener('click', () => setPrice('annually'));
-
-            function setPrice(type) {
-              if (type === 'monthly') {
-                monthlyBtn.classList.replace('bg-gray-800', 'bg-blue-starndard');
-                annuallyBtn.classList.replace('bg-blue-starndard', 'bg-gray-800');
-                freeCredits.textContent = '10';
-                premiumCredits.textContent = '100';
-                proCredits.textContent = '400';
-                premiumPrice.textContent = '15';
-                proPrice.textContent = '120';
-              } else {
-                annuallyBtn.classList.replace('bg-gray-800', 'bg-blue-starndard');
-                monthlyBtn.classList.replace('bg-blue-starndard', 'bg-gray-800');
-                freeCredits.textContent = '100';
-                premiumCredits.textContent = '200';
-                proCredits.textContent = '450';
-                premiumPrice.textContent = '12';
-                proPrice.textContent = '99';
-              }
-            }
-
-
           </script>
 
-          <script src="https://js.stripe.com/v3/"></script>
+
 
           <script src="main.js"></script>
-          <script src="javascript/randomize.js"></script>
           <script src="javascript/credit.js"></script>
+          <script src="./javascript/premium.js"></script>
+          <script src="javascript/randomize.js"></script>
           <script src="javascript/chatbot_dashboard.js"></script>
           <script src="javascript/frondend.js"></script>
           <script src="javascript/store.js"></script>

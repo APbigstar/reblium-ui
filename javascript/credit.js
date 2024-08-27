@@ -1,3 +1,8 @@
+let selectedHair = "";
+let selectedBody = "";
+let chargedCreditAmount = 0;
+let selectedCreditAmount = 0;
+
 const stripe = Stripe(
   "pk_test_51Lk3NyF22hdHq8pHZqvo4zdHTulTRAOglzRh9mYLFoBTxxNYf6KsBbuE6sva3HMNkoNzK5QG3Dni3trOyyKBTmac00DpBp4Cpb"
 );
@@ -117,4 +122,119 @@ async function handleDeposit() {
     depositButton.disabled = false;
     depositButton.textContent = "Deposit";
   }
+}
+
+function setSelectedCreditAmount(amount) {
+  selectedCreditAmount = amount;
+
+  document
+    .querySelectorAll("#buyCreditsConfirmation button")
+    .forEach((button) => {
+      button.classList.remove("selected-credit");
+    });
+
+  const cardErrors = document.getElementById("card-errors");
+  cardErrors.textContent = "";
+
+  // Add 'selected-credit' class to the clicked button
+  event.target.classList.add("selected-credit");
+}
+
+function showSaveAvatarExit() {
+  chargedCreditAmount = 0;
+  if (selectedHair || selectedBody) {
+    const avatarSaveModal = document.getElementById("saveAvatarConfirmation");
+    avatarSaveModal.style.display = "block";
+
+    const hairCreditElement = document.getElementsByClassName(
+      "hair_credit_element"
+    )[0];
+    if (selectedHair) {
+      hairCreditElement.style.display = "list-item";
+    }
+    const bodyCreditElement = document.getElementsByClassName(
+      "body_credit_element"
+    )[0];
+    if (selectedBody) {
+      bodyCreditElement.style.display = "list-item";
+    }
+  } else {
+    handleSendCommands({
+      saveavatar: parseFloat(document.getElementById("avatarId").textContent),
+    });
+  }
+  // const totalCreditElement = document.getElementsByClassName('total_credit_element')[0];
+  // if (selectedHair || selectedBody) {
+  //   totalCreditElement.style.display = "block";
+  // }
+}
+
+function cancelSaveAvatarExit() {
+  const avatarSaveModal = document.getElementById("saveAvatarConfirmation");
+  avatarSaveModal.style.display = "none";
+}
+
+function cancelBuyCredits() {
+  const creditBuyModal = document.getElementById("buyCreditsConfirmation");
+  creditBuyModal.style.display = "none";
+}
+
+function showBuyCredits() {
+  const creditBuyModal = document.getElementById("buyCreditsConfirmation");
+  creditBuyModal.style.display = "block";
+}
+
+async function updateCreditAmount() {
+  try {
+    const response = await fetch("/.netlify/functions/updateUserCreditAmount", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_id: globalUserInfoId,
+        amount: chargedCreditAmount,
+      }),
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      chargedCreditAmount = 0;
+      selectedHair = "";
+      selectedBody = "";
+      await getUserCredits();
+      handleSendCommands({
+        saveavatar: parseFloat(document.getElementById("avatarId").textContent),
+      });
+    } else {
+      console.error("Failed to update credit amount:", res.error);
+    }
+  } catch (error) {
+    console.error("Error updating credit amount:", error);
+  }
+}
+
+async function handleSaveCustomizedAvatar() {
+  cancelSaveAvatarExit();
+
+  await getUserCredits();
+
+  if (selectedBody) chargedCreditAmount += 3;
+  if (selectedHair) chargedCreditAmount += 2;
+  if (Number(userCreditAmount) >= Number(chargedCreditAmount)) {
+    await updateCreditAmount();
+  } else {
+    showBuyCredits();
+  }
+}
+
+function setSelectedHair(assetName) {
+  selectedHair = assetName;
+  handleSendCommands({ assetname: assetName });
+}
+
+function setSelectedBody(assetName) {
+  selectedBody = assetName;
+  handleSendCommands({ assetname: assetName });
 }

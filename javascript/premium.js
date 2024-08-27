@@ -3,14 +3,47 @@ const stripe = Stripe(
 );
 const elements = stripe.elements();
 const cardElement = elements.create("card");
+const monthlyBtn = document.getElementById("monthlyBtn");
+const annuallyBtn = document.getElementById("annuallyBtn");
+const freeCredits = document.getElementById("freeCredits");
+const premiumCredits = document.getElementById("premiumCredits");
+const proCredits = document.getElementById("proCredits");
+const premiumPrice = document.getElementById("premiumPrice");
+const proPrice = document.getElementById("proPrice");
+
+monthlyBtn.addEventListener("click", () => setPrice("monthly"));
+annuallyBtn.addEventListener("click", () => setPrice("annually"));
+
+function setPrice(type) {
+  console.log("ckickja;ldsfja;lsdfjkadk;lsf");
+  if (type === "monthly") {
+    monthlyBtn.classList.replace("bg-gray-800", "bg-blue-starndard");
+    annuallyBtn.classList.replace("bg-blue-starndard", "bg-gray-800");
+    freeCredits.textContent = "10";
+    premiumCredits.textContent = "100";
+    proCredits.textContent = "400";
+    premiumPrice.textContent = "15";
+    proPrice.textContent = "120";
+  } else {
+    annuallyBtn.classList.replace("bg-gray-800", "bg-blue-starndard");
+    monthlyBtn.classList.replace("bg-blue-starndard", "bg-gray-800");
+    freeCredits.textContent = "100";
+    premiumCredits.textContent = "200";
+    proCredits.textContent = "450";
+    premiumPrice.textContent = "12";
+    proPrice.textContent = "99";
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
-  cardElement.mount("#card-element");
+  cardElement.mount("#premium-card-element");
 });
 
 async function handleDeposit() {
-  const depositButton = document.getElementById("deposit-button");
-  const cardErrors = document.getElementById("card-errors");
+  const depositButton = document.getElementsByClassName(
+    "premium-start-button"
+  )[0];
+  const cardErrors = document.getElementById("premium-card-errors");
   cardElement.on("change", function (event) {
     if (event.error) {
       cardErrors.textContent = event.error.message;
@@ -112,4 +145,22 @@ async function handleDeposit() {
     depositButton.disabled = false;
     depositButton.textContent = "Deposit";
   }
+}
+
+function showPremiumPriceSection() {
+  const premiumSelectionPart = document.getElementsByClassName(
+    "premium-selection-part"
+  )[0];
+  premiumSelectionPart.style.display = "none";
+  const premiumPayPart = document.getElementsByClassName("premium-pay-part")[0];
+  premiumPayPart.style.display = "block";
+}
+
+function showPremiumPriceSectcancelPremiumPayion() {
+  const premiumSelectionPart = document.getElementsByClassName(
+    "premium-selection-part"
+  )[0];
+  premiumSelectionPart.style.display = "block";
+  const premiumPayPart = document.getElementsByClassName("premium-pay-part")[0];
+  premiumPayPart.style.display = "none";
 }
