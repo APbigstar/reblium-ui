@@ -61,10 +61,10 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    const { amount } = req.body;
+    const { amount, userId, userEmail } = req.body;
     // const userId = req.user.user_id; // Get user ID from Xsolla user info
-    const userId = 154; // Get user ID from Xsolla user info
-    const userEmail = "demo@reblium.com"; // Get user email from Xsolla user info
+    // const userId = 154; // Get user ID from Xsolla user info
+    // const userEmail = "demo@reblium.com"; // Get user email from Xsolla user info
 
     console.log("User ID:", userId, "Email:", userEmail, "Amount", amount);
 

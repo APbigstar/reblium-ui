@@ -38,9 +38,13 @@ async function handleDeposit() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-xsolla-token": token, // Ensure this line is included
+          // "x-xsolla-token": token, // Ensure this line is included
         },
-        body: JSON.stringify({ amount: amount }), // Convert to cents
+        body: JSON.stringify({
+          amount: amount,
+          userId: globalUserInfoId,
+          userEmail: globalUserEmail,
+        }), // Convert to cents
       }
     );
     const result = await response.json();
@@ -82,6 +86,7 @@ async function handleDeposit() {
           body: JSON.stringify({
             payment_intent_id: confirmResult.paymentIntent.id,
             amount: amount,
+            userId: globalUserInfoId,
           }),
         }
       );

@@ -1,5 +1,6 @@
 let globalUserId = null; // Define at a global scope accessible to both functions
 let globalUserInfoId = null;
+let globalUserEmail = null;
 let userCreditAmount = 0;
 
 async function getUserCredits() {
@@ -37,7 +38,8 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       if (response.ok) {
         const userData = await response.json();
-        console.log("user_data=====", userData);
+
+        globalUserEmail = userData.email;
 
         // Display the user's email in your HTML
         document.getElementById("userEmail").textContent = userData.email;
@@ -729,12 +731,13 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       const userId = userData.id;
       globalUserId = userData.id;
-      console.log(userId);
       // Check if the user exists in the database and get the user_info_id
       const checkUserExistsResponse = await fetch(
         `/.netlify/functions/checkUserExists?user_id=${userId}`
       );
       const checkUserExistsData = await checkUserExistsResponse.json();
+
+      console.log("sadadsfasdf", userData);
 
       if (!checkUserExistsData.exists) {
         // User does not exist, so add it to the database

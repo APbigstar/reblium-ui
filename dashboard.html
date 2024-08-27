@@ -6393,10 +6393,7 @@
             let selectedHair = "";
             let selectedBody = "";
             let chargedCreditAmount = 0;
-
-
             let selectedCreditAmount = 0;
-
 
             function setSelectedCreditAmount(amount) {
               selectedCreditAmount = amount;
@@ -6413,6 +6410,7 @@
             }
 
             function showSaveAvatarExit() {
+              chargedCreditAmount = 0
               if (selectedHair || selectedBody) {
                 const avatarSaveModal = document.getElementById("saveAvatarConfirmation");
                 avatarSaveModal.style.display = "block";

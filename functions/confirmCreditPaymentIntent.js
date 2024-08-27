@@ -63,9 +63,9 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    const { payment_intent_id, amount } = req.body;
+    const { payment_intent_id, amount, userId } = req.body;
     // const userId = req.user.user_id; // Get user ID from Xsolla user info
-    const userId = 154; // Get user ID from Xsolla user info
+    // const userId = 154; // Get user ID from Xsolla user info
 
     console.log(payment_intent_id, amount, userId);
 
