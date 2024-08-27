@@ -46,6 +46,8 @@ const verifyXsollaToken = async (req, res, next) => {
 
 // router.post("/", verifyXsollaToken, async (req, res) => {
 router.post("/", async (req, res) => {
+  const creditData = { 12: 100, 30: 250, 60: 500, 96: 800 };
+
   // Get the database connection details from environment variables
   const host = process.env.DB_HOST;
   const user = process.env.DB_USER;
@@ -100,7 +102,7 @@ router.post("/", async (req, res) => {
       );
 
       if (existingUserCredit.length > 0) {
-        const totalAmount = existingUserCredit[0].amount + amount;
+        const totalAmount = existingUserCredit[0].amount + creditData[amount];
         await connection.execute(
           "UPDATE User_Credits SET amount = ? WHERE user_id = ?",
           [totalAmount, userId]
@@ -108,7 +110,7 @@ router.post("/", async (req, res) => {
       } else {
         await connection.execute(
           "INSERT INTO User_Credits (user_id, amount) VALUES (?, ?)",
-          [userId, amount]
+          [userId, creditData[Number(amount)]]
         );
       }
 

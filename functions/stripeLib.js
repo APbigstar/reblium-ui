@@ -100,26 +100,105 @@ function retrievePaymentIntent(paymentIntentId) {
   });
 }
 
-// function constructWebhookEvent(payload, signature) {
-//   let event;
-//   try {
-//     event = stripe.webhooks.constructEvent(
-//       payload,
-//       signature,
-//       process.env.PUBLIC_STRIPE_WEBHOOK_SECRET || ""
-//     );
-//   } catch (err) {
-//     throw new Error(`Webhook Error: ${err.message}`);
-//   }
+function constructWebhookEvent(payload, signature) {
+  let event;
+  try {
+    event = stripe.webhooks.constructEvent(
+      payload,
+      signature,
+      process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET || ""
+    );
+  } catch (err) {
+    throw new Error(`Webhook Error: ${err.message}`);
+  }
 
-//   const data = event.data.object;
-//   const eventType = event.type;
-//   let result = {};
+  const data = event.data.object;
+  const eventType = event.type;
+  let result = {};
 
-//   // ... (rest of the constructWebhookEvent function remains the same)
+  if (eventType.includes("payment_intent") && !data.invoice) {
+    if (eventType === "payment_intent.payment_failed") {
+      result = {
+        type: eventType,
+        id: data.id,
+        status: data.status,
+        complete: false,
+      };
+    } else if (eventType === "payment_intent.succeeded") {
+      result = {
+        type: eventType,
+        id: data.id,
+        status: data.status,
+        complete: true,
+      };
+    }
+  } else if (eventType === "invoice.created") {
+    result = {
+      type: eventType,
+      id: data.subscription,
+      invoice_id: data.id,
+      paid: data.paid,
+      status: data.status,
+      amount: data.amount_due / 100,
+      currency: data.currency,
+    };
+  } else if (eventType === "invoice.paid") {
+    result = {
+      type: eventType,
+      complete: true,
+      id: data.subscription,
+      invoice_id: data.id,
+      paid: data.paid,
+      status: data.status,
+      amount: data.amount_due / 100,
+      currency: data.currency,
+    };
+  } else if (
+    [
+      "invoice.payment_action_required",
+      "invoice.payment_failed",
+      "invoice.updated",
+    ].includes(eventType)
+  ) {
+    result = {
+      type: eventType,
+      id: data.subscription,
+      invoice_id: data.id,
+      paid: data.paid,
+      status: data.status,
+      amount: data.amount_due / 100,
+      currency: data.currency,
+    };
+  } else if (eventType === "customer.subscription.deleted") {
+    result = {
+      type: eventType,
+      id: data.id,
+      status: data.status,
+    };
+  } else if (eventType === "customer.subscription.created") {
+    result = {
+      complete: ["active", "trialing"].includes(data.status),
+      type: eventType,
+      id: data.id,
+      status: data.status,
+      trial: !!data.trial_end,
+    };
+  } else if (eventType === "customer.subscription.updated") {
+    result = {
+      complete: ["active", "trialing", "past_due"].includes(data.status),
+      type: eventType,
+      id: data.id,
+      status: data.status,
+      expires_at: data.cancel_at,
+      trial: !!data.trial_end,
+    };
+  } else {
+    console.log(`Unhandled event type ${eventType}`);
+    return null;
+  }
 
-//   return result;
-// }
+  return result;
+}
 
 function updateSubscriptionEndPeriod(subscriptionId, cancelAtPeriodEnd) {
   return stripe.subscriptions
@@ -177,7 +256,7 @@ module.exports = {
   createSubscription,
   createPaymentIntent,
   retrievePaymentIntent,
-  // constructWebhookEvent,
+  constructWebhookEvent,
   updateSubscriptionEndPeriod,
   cancelSubscription,
   retrieveSubscription,

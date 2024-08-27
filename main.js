@@ -1,4 +1,22 @@
 let globalUserId = null; // Define at a global scope accessible to both functions
+let globalUserInfoId = null;
+let userCreditAmount = 0;
+
+async function getUserCredits() {
+  const checkUserCreditAmount = await fetch(
+    `/.netlify/functions/getUserCreditAmount?user_id=${globalUserInfoId}`
+  );
+
+  const creditData = await checkUserCreditAmount.json();
+  console.log(creditData);
+  if (creditData.amount) {
+    userCreditAmount = creditData.amount;
+    document.getElementById("exportCredits").textContent = userCreditAmount;
+  } else {
+    userCreditAmount = 0;
+    document.getElementById("exportCredits").textContent = userCreditAmount;
+  }
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
   const confirmButton = document.getElementById("confirmButton");
@@ -19,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       if (response.ok) {
         const userData = await response.json();
-        // console.log(userData);
+        console.log("user_data=====", userData);
 
         // Display the user's email in your HTML
         document.getElementById("userEmail").textContent = userData.email;
@@ -27,6 +45,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         if (userData.picture) {
           // Display the user image if it exists in the response
           document.getElementById("userImage").src = userData.picture;
+        } else {
+          document.getElementById("userImage").src =
+            "https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-479x512-n8sg74wg.png";
         }
 
         // console.log('User ID from XSolla:', userData.id); // Display the user ID in the console log
@@ -43,36 +64,36 @@ document.addEventListener("DOMContentLoaded", async function () {
   const userToken = urlParams.get("token");
 
   // Function to fetch user's export credits
-  async function fetchExportCredits(userToken) {
-    const query = new URLSearchParams({ platform: "xsolla" }).toString();
-    const projectId = "218213";
+  // async function fetchExportCredits(userToken) {
+  //   const query = new URLSearchParams({ platform: "xsolla" }).toString();
+  //   const projectId = "218213";
 
-    try {
-      const resp = await fetch(
-        `https://store.xsolla.com/api/v2/project/${projectId}/user/virtual_currency_balance?${query}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
+  //   try {
+  //     const resp = await fetch(
+  //       `https://store.xsolla.com/api/v2/project/${projectId}/user/virtual_currency_balance?${query}`,
+  //       {
+  //         method: "GET",
+  //         headers: {
+  //           Authorization: `Bearer ${userToken}`,
+  //         },
+  //       }
+  //     );
 
-      if (resp.ok) {
-        const data = await resp.json();
-        if (data.items && data.items.length > 0) {
-          const exportCredits = data.items[0].amount;
-          document.getElementById("exportCredits").textContent = exportCredits; // Display credits in the HTML element
-        }
-      } else {
-        console.error("Failed to fetch export credits data");
-      }
-    } catch (error) {
-      console.error("Error fetching export credits data:", error);
-    }
-  }
+  //     if (resp.ok) {
+  //       const data = await resp.json();
+  //       if (data.items && data.items.length > 0) {
+  //         const exportCredits = data.items[0].amount;
+  //         document.getElementById("exportCredits").textContent = exportCredits; // Display credits in the HTML element
+  //       }
+  //     } else {
+  //       console.error("Failed to fetch export credits data");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching export credits data:", error);
+  //   }
+  // }
 
-  window.fetchExportCredits = fetchExportCredits;
+  // window.fetchExportCredits = fetchExportCredits;
 
   // Function to consume credits and update the display
   async function consumeCredits(userToken, sku, quantity) {
@@ -98,9 +119,8 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (resp.ok) {
         // Add a delay of 500 milliseconds (adjust as needed)
         // await new Promise(resolve => setTimeout(resolve, 100));
-
         // Update the display after consuming
-        await fetchExportCredits(userToken);
+        // await fetchExportCredits(userToken);
       } else {
         console.error("Failed to consume credits");
       }
@@ -164,7 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Call the function when the page loads
   window.addEventListener("load", async () => {
     try {
-      await fetchExportCredits(userToken);
+      // await fetchExportCredits(userToken);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -239,6 +259,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   // Function to fetch avatar data from the backend API for a specific user_info_id
   async function fetchAvatarData(user_info_id) {
     console.log(user_info_id);
+
     try {
       const response = await fetch(
         `/.netlify/functions/getUserAvatars?user_info_id=${user_info_id}`
@@ -718,10 +739,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (!checkUserExistsData.exists) {
         // User does not exist, so add it to the database
         user_info_id = await createUser(userId);
+        globalUserInfoId = user_info_id;
         // console.log('New user created with user_info_id:', user_info_id);
       } else {
         // User already exists, get the user_info_id
         user_info_id = checkUserExistsData.user_info_id;
+        globalUserInfoId = user_info_id;
         // console.log('User already exists in the database:', user_info_id);
       }
 
@@ -732,8 +755,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
       await fetchPersonalizedAvatars(user_info_id);
       await fetchTierName(user_info_id);
-
-      // Fetch and display the avatars for the user with matching user_info_id
+      await getUserCredits();
       const avatars = await fetchAvatarData(user_info_id);
       displayAvatarNames(avatars);
     } catch (error) {
