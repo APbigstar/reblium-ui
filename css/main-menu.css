@@ -1325,7 +1325,7 @@ input[type="range"]:focus {
 .popup form input {
   display: block;
   height: 50px;
-  width: calc(100% - 20px);
+  width: 100%;
   /* Subtract the padding from the width */
   background-color: rgba(255, 255, 255, 0.128);
   border-radius: 3px;
