@@ -1838,7 +1838,7 @@ input[type="range"]:focus {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 100px;
+  height: auto;
   width: 300px;
   background-color: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(5px);
@@ -2751,7 +2751,7 @@ loader::after,
 }
 
 .languagePopup form {
-  height: 200px;
+  height: auto;
   /* Adjusted height for smaller form */
   width: 300px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -2823,7 +2823,7 @@ loader::after,
 }
 
 .voicePopup form {
-  height: 200px;
+  height: auto;
   /* Adjusted height for smaller form */
   width: 300px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -2903,7 +2903,7 @@ loader::after,
 }
 
 .sharePopup form {
-  height: 200px;
+  height: auto;
   /* Adjusted height for smaller form */
   width: 300px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -3041,7 +3041,7 @@ loader::after,
 }
 
 .apiPopup form {
-  height: 200px;
+  height: auto;
   /* Adjusted height for smaller form */
   width: 300px;
   background-color: rgba(0, 0, 0, 0.8);
@@ -3104,7 +3104,7 @@ loader::after,
 }
 
 .dhs-popup form {
-  height: 260px;
+  height: auto;
   width: 300px;
   background-color: rgba(0, 0, 0, 0.8);
   position: relative;
