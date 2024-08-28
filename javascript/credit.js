@@ -193,7 +193,8 @@ async function updateCreditAmount() {
       },
       body: JSON.stringify({
         user_id: globalUserInfoId,
-        amount: chargedCreditAmount,
+        amount: -chargedCreditAmount,
+        premium: "",
       }),
     });
 

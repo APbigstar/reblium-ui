@@ -15,14 +15,6 @@ const router = express.Router();
 
 app.use(express.json());
 
-// Database connection configuration
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
-
 // Middleware to verify Xsolla token and get user info
 const verifyXsollaToken = async (req, res, next) => {
   const xsollaToken = req.headers["x-xsolla-token"];
@@ -66,8 +58,20 @@ const verifyXsollaToken = async (req, res, next) => {
   }
 };
 
-router.post("/", verifyXsollaToken, async (req, res) => {
-  const connection = await mysql.createConnection(dbConfig);
+// router.post("/", verifyXsollaToken, async (req, res) => {
+router.post("/", async (req, res) => {
+  const host = process.env.DB_HOST;
+  const user = process.env.DB_USER;
+  const password = process.env.DB_PASSWORD;
+  const database = process.env.DB_DATABASE;
+
+  // Create a database connection
+  const connection = await mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database,
+  });
 
   try {
     const { plan_id, userId, userEmail } = req.body;
@@ -88,7 +92,7 @@ router.post("/", verifyXsollaToken, async (req, res) => {
 
     // Fetch user plans
     const [userPlans] = await connection.execute(
-      "SELECT * FROM User_Plans WHERE user_id = ? AND plan_id = ? AND complete = false ORDER BY id DESC",
+      "SELECT * FROM User_Plans WHERE user_id = ? AND plan_id = ? AND complete = 0 ORDER BY id DESC",
       [userId, plan_id]
     );
 

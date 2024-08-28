@@ -86,8 +86,6 @@
       });
     });
 
-
-
     // Async function to load and send avatar data
     async function loadAndSendAvatarData(jsonFilePath) {
       await waitForVideoLoad(); // Wait for video to load
@@ -627,11 +625,15 @@
                   <li>• Cancel anytime</li>
                   <li>• Watermarks</li>
                   <li>• Standard avatars</li>
-                  <li>• 5 mins sesion length</li>
+                  <li class="font-bold">• Max 5 mins per session</li>
                 </ul>
               </div>
               <!-- Premium Plan -->
-              <div class="bg-gray-900 p-6 rounded-lg">
+              <div class="bg-gray-900 p-6 rounded-lg" style="position: relative;">
+                <div id="premium-plan-selected" class="text-blue-starndard premium-selected"
+                  style="position: absolute; top: 10px; right: 20px; display: none;"><i class="fas fa-star"></i><span>
+                    Current</span>
+                </div>
                 <h3 class="text-2xl font-bold mb-2">Premium</h3>
                 <p class="text-blue-400 mb-4"><span id="premiumCredits">100</span> credits</p>
                 <p class="text-3xl font-bold mb-4">€<span id="premiumPrice">15</span>
@@ -639,48 +641,56 @@
                 </p>
                 <button
                   class="bg-blue-starndard text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
-                  onclick="showPremiumPriceSection()">Start
+                  id="premium-subscription-start-button">Start
                   now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
                   <li class="font-bold upgrade_plan">• No Watermarks</li>
                   <li class="font-bold upgrade_plan">• Premium avatars</li>
-                  <li class="font-bold upgrade_plan">• Max 10 mins </li>
+                  <li class="font-bold upgrade_plan">• 120 mins streaming </li>
                 </ul>
               </div>
               <!-- Pro Plan -->
-              <div class="bg-gray-900 p-6 rounded-lg opacity-50">
+              <div class="bg-gray-900 p-6 rounded-lg opacity-50" style="position: relative;">
+                <div class="text-blue-starndard premium-selected"
+                  style="position: absolute; top: 10px; right: 20px; display: none;"><i class="fas fa-star"></i><span>
+                    Current</span>
+                </div>
                 <h3 class="text-2xl font-bold mb-2">Pro</h3>
                 <p class="text-blue-400 mb-4"><span id="proCredits">400</span> credits</p>
                 <p class="text-3xl font-bold mb-4">€<span id="proPrice">120</span>
                   <span class="text-sm font-normal">/month</span>
                 </p>
-                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
-                  onclick="showPremiumPriceSection()">Start
+                <button
+                  class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button">Start
                   now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
-                  <li>• Custom branding</li>
-                  <li>• Custom avatars</li>
-                  <li>• Max 20 mins</li>
-                  <li>• Website embedding</li>
+                  <li class="font-bold">• Custom branding</li>
+                  <li class="font-bold">• Custom avatars</li>
+                  <li class="font-bold">• 500 mins streaming</li>
+                  <li class="font-bold">• Website embedding</li>
                 </ul>
               </div>
               <!-- Enterprise Plan -->
-              <div class="bg-gray-900 p-6 rounded-lg opacity-50">
+              <div class="bg-gray-900 p-6 rounded-lg opacity-50" style="position: relative;">
+                <div class="text-blue-starndard premium-selected"
+                  style="position: absolute; top: 10px; right: 20px; display: none;"><i class="fas fa-star"></i><span>
+                    Current</span>
+                </div>
                 <h3 class="text-2xl font-bold mb-2">Enterprise</h3>
                 <p class="text-blue-400 mb-4">Custom</p>
                 <p class="text-3xl font-bold mb-4">Let's talk</p>
-                <button class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button"
-                  onclick="showPremiumPriceSection()">Start
+                <button
+                  class="bg-gray-800 text-white px-4 py-2 rounded-full w-full mb-4 premium-selection-start-button">Start
                   now</button>
                 <ul class="space-y-2 text-gray-400">
                   <li>• Cancel anytime</li>
                   <li>• Custom branding</li>
                   <li>• Custom avatars</li>
-                  <li>• No time limit</li>
-                  <li>• Website embedding</li>
-                  <li>• Full Web API Access</li>
+                  <li class="font-bold">• No time limit</li>
+                  <li class="font-bold">• Website embedding</li>
+                  <li class="font-bold">• Full Web API Access</li>
                 </ul>
               </div>
             </div>
@@ -722,8 +732,8 @@
                 <tr class="border-b border-gray-800">
                   <td class="py-2">Credits</td>
                   <td class="py-2">20</td>
-                  <td class="py-2">200</td>
-                  <td class="py-2 text-gray-700">400</td>
+                  <td class="py-2">100</td>
+                  <td class="py-2 text-gray-700">200</td>
                   <td class="py-2 text-gray-700">Custom plan</td>
                 </tr>
                 <tr class="border-b border-gray-800">
@@ -759,11 +769,11 @@
                     German,Chinese,Arabic, Japanese </td>
                 </tr>
                 <tr class="border-b border-gray-800">
-                  <td class="py-2">Max session length</td>
-                  <td class="py-2">5min</td>
-                  <td class="py-2">10min</td>
-                  <td class="py-2 text-gray-700">20min</td>
-                  <td class="py-2 text-gray-700">No limit</td>
+                  <td class="py-2">Uploading knowledge</td>
+                  <td class="py-2">Text/Prompt</td>
+                  <td class="py-2">PDF/DOC</td>
+                  <td class="py-2 text-gray-700">PDF/DOC</td>
+                  <td class="py-2 text-gray-700">PDF/DOC</td>
                 </tr>
                 <tr class="border-b border-gray-800">
                   <td class="py-2">Website embedding</td>
@@ -789,9 +799,10 @@
                   <div id="premium-card-errors" class="mt-2 text-red-600 text-sm"></div>
                 </div>
                 <div class="mt-6 grid grid-cols-2 gap-4">
-                  <button class="save-exit menu-button premium-start-button" id="openPopup">Start
+                  <button class="save-exit menu-button" id="premium-start-button" onclick="handlePremiumPay()">Start
                     Now</button>
-                  <button class="exit cancel-premium-pay-button" onclick="cancelPremiumPay()">Cancel</button>
+                  <button class="exit cancel-premium-pay-button" onclick="cancelPremiumPay()"
+                    style="color: black;">Cancel</button>
                 </div>
               </div>
             </div>
@@ -6478,6 +6489,10 @@
             </div>
           </div>
           <script>
+
+
+
+
             document.getElementById('femaleBtn').addEventListener('click', function () {
               filterItemsByGender('female');
             });
@@ -6830,8 +6845,6 @@
               });
             });
 
-
-
             function toggleFullScreen() {
               var fullScreenIcon = document.getElementById('fullScreenIcon');
 
@@ -6855,12 +6868,6 @@
                 fullScreenIcon.classList.add('fa-maximize');
               }
             }
-
-
-
-
-
-
 
             document.addEventListener('DOMContentLoaded', () => {
               // Lazy load images
@@ -7022,11 +7029,9 @@
 
           </script>
 
-
-
           <script src="main.js"></script>
+          <script src="javascript/premium.js"></script>
           <script src="javascript/credit.js"></script>
-          <script src="./javascript/premium.js"></script>
           <script src="javascript/randomize.js"></script>
           <script src="javascript/chatbot_dashboard.js"></script>
           <script src="javascript/frondend.js"></script>

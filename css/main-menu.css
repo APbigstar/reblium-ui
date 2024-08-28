@@ -35,6 +35,10 @@ html {
   background-color: var(--secondary-color);
 }
 
+.text-blue-starndard {
+  color: var(--secondary-color);
+}
+
 .navbar {
   position: absolute;
   top: 0;

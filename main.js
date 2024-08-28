@@ -2,6 +2,8 @@ let globalUserId = null; // Define at a global scope accessible to both function
 let globalUserInfoId = null;
 let globalUserEmail = null;
 let userCreditAmount = 0;
+let selectedSubscription = null;
+let selectedUserPlanId = null;
 
 async function getUserCredits() {
   const checkUserCreditAmount = await fetch(
@@ -16,6 +18,104 @@ async function getUserCredits() {
   } else {
     userCreditAmount = 0;
     document.getElementById("exportCredits").textContent = userCreditAmount;
+  }
+}
+
+async function getSelectedSubscription() {
+  const checkCurrentUserSubscription = await fetch(
+    `/.netlify/functions/getSelectedSubscription?user_id=${globalUserInfoId}`
+  );
+  const subscriptionData = await checkCurrentUserSubscription.json();
+  console.log("subscriptionData", subscriptionData);
+  if (subscriptionData.plan) {
+    selectedSubscription = subscriptionData.plan;
+    selectedUserPlanId = subscriptionData.userPlanId;
+  } else {
+    selectedSubscription = null;
+    selectedUserPlanId = null;
+  }
+}
+
+async function setCurrentPremium() {
+  console.log("Setting current premium");
+  const premiumButton = document.getElementById(
+    "premium-subscription-start-button"
+  );
+  const currentSelectedPlanShow = document.getElementById(
+    "premium-plan-selected"
+  );
+
+  // Remove any existing event listeners
+  premiumButton.removeEventListener("click", cancelPremiumPriceSection);
+  premiumButton.removeEventListener("click", () =>
+    showPremiumPriceSection("premium")
+  );
+
+  if (selectedSubscription == 1 || selectedSubscription == 2) {
+    premiumButton.addEventListener("click", cancelPremiumPriceSection);
+    currentSelectedPlanShow.style.display = "block";
+    premiumButton.textContent = "Cancel";
+    try {
+      const response = await fetch(
+        "/.netlify/functions/updateUserCreditAmount",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            user_id: globalUserInfoId,
+            amount: 100,
+            premium: "premium",
+          }),
+        }
+      );
+
+      const res = await response.json();
+
+      if (res.success) {
+        chargedCreditAmount = 0;
+        selectedHair = "";
+        selectedBody = "";
+        await getUserCredits();
+      } else {
+        console.error("Failed to update credit amount:", res.error);
+      }
+    } catch (error) {
+      console.error("Error updating credit amount:", error);
+    }
+  } else {
+    premiumButton.addEventListener("click", () =>
+      showPremiumPriceSection("premium")
+    );
+    currentSelectedPlanShow.style.display = "none";
+    premiumButton.textContent = "Start now";
+  }
+}
+
+async function cancelPremiumPriceSection() {
+  console.log("Click Cancel Subscription Button.");
+  try {
+    const response = await fetch("/.netlify/functions/cancelSubscription", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user_plan_id: selectedUserPlanId,
+      }),
+    });
+
+    const res = await response.json();
+
+    if (res.success) {
+      await getSelectedSubscription();
+      await setCurrentPremium();
+    } else {
+      console.error("Failed to cancel subscription:", res.error);
+    }
+  } catch (error) {
+    console.error("Error canceling subscription", error);
   }
 }
 
@@ -737,8 +837,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       );
       const checkUserExistsData = await checkUserExistsResponse.json();
 
-      console.log("sadadsfasdf", userData);
-
       if (!checkUserExistsData.exists) {
         // User does not exist, so add it to the database
         user_info_id = await createUser(userId);
@@ -759,6 +857,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       await fetchPersonalizedAvatars(user_info_id);
       await fetchTierName(user_info_id);
       await getUserCredits();
+      await getSelectedSubscription();
+      await setCurrentPremium();
+
       const avatars = await fetchAvatarData(user_info_id);
       displayAvatarNames(avatars);
     } catch (error) {

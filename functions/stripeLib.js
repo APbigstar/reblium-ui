@@ -45,7 +45,7 @@ function createSubscription(customerId, productId, email) {
     payment_behavior: paymentBehavior,
     payment_settings: paymentSettings,
     metadata: { email },
-    coupon: "lNWcivga",
+    // coupon: "lNWcivga",
   };
 
   return stripe.subscriptions

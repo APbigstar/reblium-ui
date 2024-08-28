@@ -9,14 +9,6 @@ const router = express.Router();
 
 app.use(express.json());
 
-// Database connection configuration
-const dbConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-};
-
 // Middleware to verify Xsolla token and get user info
 const verifyXsollaToken = async (req, res, next) => {
   const xsollaToken = req.headers["x-xsolla-token"];
@@ -59,18 +51,27 @@ const verifyXsollaToken = async (req, res, next) => {
 
 // router.post('/', verifyXsollaToken, async (req, res) => {
 router.post("/", async (req, res) => {
-  const connection = await mysql.createConnection(dbConfig);
+  const host = process.env.DB_HOST;
+  const user = process.env.DB_USER;
+  const password = process.env.DB_PASSWORD;
+  const database = process.env.DB_DATABASE;
+
+  // Create a database connection
+  const connection = await mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database,
+  });
 
   try {
-    const { payment_intent_id } = req.body;
+    const { payment_intent_id, userId } = req.body;
 
     if (!payment_intent_id) {
       return res
         .status(400)
         .json({ success: false, error: "Missing payment_intent_id" });
     }
-
-    const userId = req.user.user_id;
 
     const payment_intent = await retrievePaymentIntent(payment_intent_id);
 

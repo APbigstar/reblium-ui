@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
   });
 
   try {
-    const { user_id, amount } = req.body;
+    const { user_id, amount, premium } = req.body;
 
     if (!user_id || amount === undefined) {
       return res
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
     // Check current credit amount
     const [currentCredits] = await connection.execute(
-      "SELECT amount FROM User_Credits WHERE user_id = ? FOR UPDATE",
+      "SELECT amount, premium_status FROM User_Credits WHERE user_id = ? FOR UPDATE",
       [user_id]
     );
 
@@ -47,17 +47,26 @@ router.post("/", async (req, res) => {
     }
 
     const currentAmount = currentCredits[0].amount;
+    let newAmount;
 
-    if (currentAmount < amount) {
+    if (premium == "") {
+      newAmount = currentAmount + amount;
+    }
+    if (
+      currentCredits[0].premium_status == "free" &&
+      (premium == "premium" || premium == "pro")
+    ) {
+      newAmount = currentAmount + amount;
+    }
+
+    if (newAmount < 0) {
       await connection.rollback();
       return res.status(400).json({ error: "Insufficient credits" });
     }
 
-    // Reduce credit amount
-    const newAmount = currentAmount - amount;
     await connection.execute(
-      "UPDATE User_Credits SET amount = ? WHERE user_id = ?",
-      [newAmount, user_id]
+      "UPDATE User_Credits SET amount = ?, premium_status = ? WHERE user_id = ?",
+      [newAmount, premium, user_id]
     );
 
     // Commit the transaction
